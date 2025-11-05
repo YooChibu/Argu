@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드 - Argu Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 사이드바 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <h1>Argu Admin</h1>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item active">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <!-- 메인 컨텐츠 -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>대시보드</h2>
+                <div class="admin-header-actions">
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 통계 카드 -->
+                <div class="stats-grid-admin">
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">👥</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 회원</div>
+                            <div class="stat-value-admin">1,234</div>
+                            <div class="stat-change positive">+12 오늘</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">💬</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 논쟁</div>
+                            <div class="stat-value-admin">567</div>
+                            <div class="stat-change positive">+5 오늘</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">💭</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 댓글</div>
+                            <div class="stat-value-admin">3,456</div>
+                            <div class="stat-change positive">+89 오늘</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">🔥</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">활성 논쟁</div>
+                            <div class="stat-value-admin">123</div>
+                            <div class="stat-change neutral">진행중</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">🚨</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">미처리 신고</div>
+                            <div class="stat-value-admin">23</div>
+                            <div class="stat-change warning">처리 필요</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">📊</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">오늘 방문자</div>
+                            <div class="stat-value-admin">5,678</div>
+                            <div class="stat-change positive">+234 어제 대비</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 최근 활동 -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>최근 가입 회원</h3>
+                            <a href="users.html" class="more-link">전체 보기 →</a>
+                        </div>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>아이디</th>
+                                    <th>이메일</th>
+                                    <th>닉네임</th>
+                                    <th>가입일시</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newuser1</td>
+                                    <td>newuser1@example.com</td>
+                                    <td>신규유저1</td>
+                                    <td>2025-01-15 14:25</td>
+                                </tr>
+                                <tr>
+                                    <td>newuser2</td>
+                                    <td>newuser2@example.com</td>
+                                    <td>신규유저2</td>
+                                    <td>2025-01-15 13:45</td>
+                                </tr>
+                                <tr>
+                                    <td>newuser3</td>
+                                    <td>newuser3@example.com</td>
+                                    <td>신규유저3</td>
+                                    <td>2025-01-15 12:30</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>인기 논쟁 TOP 5</h3>
+                            <a href="argu.html" class="more-link">전체 보기 →</a>
+                        </div>
+                        <div class="top-list">
+                            <div class="top-item">
+                                <span class="rank">1</span>
+                                <div class="top-content">
+                                    <div class="top-title">AI가 인간의 일자리를 대체할 것인가?</div>
+                                    <div class="top-meta">조회수: 5,678 | 좋아요: 1,234</div>
+                                </div>
+                            </div>
+                            <div class="top-item">
+                                <span class="rank">2</span>
+                                <div class="top-content">
+                                    <div class="top-title">원격 근무가 사무실 문화를 파괴하는가?</div>
+                                    <div class="top-meta">조회수: 3,456 | 좋아요: 892</div>
+                                </div>
+                            </div>
+                            <div class="top-item">
+                                <span class="rank">3</span>
+                                <div class="top-content">
+                                    <div class="top-title">K-pop의 세계화가 한국 문화에 긍정적인 영향을 미치는가?</div>
+                                    <div class="top-meta">조회수: 8,901 | 좋아요: 2,345</div>
+                                </div>
+                            </div>
+                            <div class="top-item">
+                                <span class="rank">4</span>
+                                <div class="top-content">
+                                    <div class="top-title">전기차가 정말 친환경적인가?</div>
+                                    <div class="top-meta">조회수: 2,567 | 좋아요: 654</div>
+                                </div>
+                            </div>
+                            <div class="top-item">
+                                <span class="rank">5</span>
+                                <div class="top-content">
+                                    <div class="top-title">기본소득 도입이 사회에 도움이 될까요?</div>
+                                    <div class="top-meta">조회수: 2,123 | 좋아요: 654</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 미처리 신고 -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>미처리 신고 (우선 처리 필요)</h3>
+                        <a href="reports.html" class="more-link">전체 보기 →</a>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>신고일시</th>
+                                <th>신고자</th>
+                                <th>대상 타입</th>
+                                <th>신고 사유</th>
+                                <th>처리</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="urgent">
+                                <td>2025-01-15 14:20</td>
+                                <td>user123</td>
+                                <td>논쟁</td>
+                                <td>부적절한 내용</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">처리하기</button>
+                                </td>
+                            </tr>
+                            <tr class="urgent">
+                                <td>2025-01-15 13:45</td>
+                                <td>debater99</td>
+                                <td>댓글</td>
+                                <td>욕설/비방</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">처리하기</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2025-01-15 12:30</td>
+                                <td>thinker77</td>
+                                <td>사용자</td>
+                                <td>스팸 계정</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">처리하기</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-secondary);
+        }
+
+        .admin-sidebar {
+            width: 260px;
+            background-color: var(--text-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .admin-nav {
+            flex: 1;
+            padding: 1rem 0;
+        }
+
+        .admin-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .admin-nav .nav-item:hover,
+        .admin-nav .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .admin-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-role {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background-color: var(--bg-primary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        .stats-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card-admin {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon-admin {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+        }
+
+        .stat-info-admin {
+            flex: 1;
+        }
+
+        .stat-label-admin {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value-admin {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+
+        .stat-change.warning {
+            color: var(--warning-color);
+        }
+
+        .stat-change.neutral {
+            color: var(--text-secondary);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .admin-table tr.urgent {
+            background-color: #fef2f2;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .top-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .top-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+        }
+
+        .rank {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .top-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .top-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
+

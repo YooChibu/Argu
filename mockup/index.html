@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Argu - 논쟁 플랫폼</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link active">홈</a>
+            <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="auth/login.html" class="btn btn-outline">로그인</a>
+            <a href="auth/register.html" class="btn btn-primary">회원가입</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main">
+        <!-- 통합 검색 영역 -->
+        <section class="search-section">
+          <div class="container">
+          <div class="search-container">
+            <h1 class="search-title">논쟁을 검색하고 참여하세요</h1>
+            <p class="search-subtitle">관심 있는 주제의 논쟁을 찾아 건설적인 토론에 참여해보세요</p>
+            <form action="search.html" method="get" class="search-form-main">
+              <div class="search-box-main">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="논쟁 제목, 내용, 작성자, 카테고리로 검색..."
+                  class="search-input-main"
+                  autocomplete="off"
+                />
+                <button type="submit" class="search-btn-main">
+                  <span>🔍</span> 검색
+                </button>
+              </div>
+              <div class="search-options">
+                <label class="search-option-label">
+                  <input type="radio" name="type" value="all" checked />
+                  <span>전체</span>
+                </label>
+                <label class="search-option-label">
+                  <input type="radio" name="type" value="argu" />
+                  <span>논쟁</span>
+                </label>
+                <label class="search-option-label">
+                  <input type="radio" name="type" value="user" />
+                  <span>사용자</span>
+                </label>
+                <label class="search-option-label">
+                  <input type="radio" name="type" value="category" />
+                  <span>카테고리</span>
+                </label>
+              </div>
+            </form>
+            <div class="search-popular">
+              <span class="popular-label">인기 검색어:</span>
+              <a href="search.html?q=AI" class="popular-tag">AI</a>
+              <a href="search.html?q=원격근무" class="popular-tag">원격근무</a>
+              <a href="search.html?q=기본소득" class="popular-tag">기본소득</a>
+              <a href="search.html?q=K-pop" class="popular-tag">K-pop</a>
+              <a href="search.html?q=전기차" class="popular-tag">전기차</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="container">
+        <!-- 인기 논쟁 -->
+        <section class="section">
+          <div class="section-header">
+            <h2>🔥 인기 논쟁</h2>
+            <a href="argu-list.html?sort=popular" class="more-link">더보기 →</a>
+          </div>
+          <div class="argu-grid">
+            <div class="argu-card">
+              <div class="argu-card-header">
+                <span class="category-badge">정치</span>
+                <span class="status-badge status-active">진행중</span>
+              </div>
+              <h3 class="argu-title">AI가 인간의 일자리를 대체할 것인가?</h3>
+              <p class="argu-excerpt">
+                인공지능의 발전으로 많은 직업이 사라질 것이라는 예측이 나오고
+                있습니다...
+              </p>
+              <div class="argu-meta">
+                <span class="author">작성자: user123</span>
+                <span class="date">2025-01-15</span>
+              </div>
+              <div class="argu-stats">
+                <span class="stat">👍 1,234</span>
+                <span class="stat">💬 567</span>
+                <span class="stat">👁️ 5,678</span>
+              </div>
+              <div class="argu-vote">
+                <span class="vote-count vote-for">찬성 65%</span>
+                <span class="vote-count vote-against">반대 35%</span>
+              </div>
+            </div>
+            <div class="argu-card">
+              <div class="argu-card-header">
+                <span class="category-badge">사회</span>
+                <span class="status-badge status-active">진행중</span>
+              </div>
+              <h3 class="argu-title">원격 근무가 사무실 문화를 파괴하는가?</h3>
+              <p class="argu-excerpt">
+                코로나 이후 원격 근무가 보편화되면서 회사 문화의 변화가
+                두드러집니다...
+              </p>
+              <div class="argu-meta">
+                <span class="author">작성자: debater99</span>
+                <span class="date">2025-01-14</span>
+              </div>
+              <div class="argu-stats">
+                <span class="stat">👍 892</span>
+                <span class="stat">💬 423</span>
+                <span class="stat">👁️ 3,456</span>
+              </div>
+              <div class="argu-vote">
+                <span class="vote-count vote-for">찬성 48%</span>
+                <span class="vote-count vote-against">반대 52%</span>
+              </div>
+            </div>
+            <div class="argu-card">
+              <div class="argu-card-header">
+                <span class="category-badge">경제</span>
+                <span class="status-badge status-scheduled">예정</span>
+              </div>
+              <h3 class="argu-title">기본소득 도입이 사회에 도움이 될까요?</h3>
+              <p class="argu-excerpt">
+                4차 산업혁명 시대에 기본소득 도입 논의가 활발합니다...
+              </p>
+              <div class="argu-meta">
+                <span class="author">작성자: thinker77</span>
+                <span class="date">2025-01-13</span>
+              </div>
+              <div class="argu-stats">
+                <span class="stat">👍 654</span>
+                <span class="stat">💬 289</span>
+                <span class="stat">👁️ 2,123</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 최신 논쟁 -->
+        <section class="section">
+          <div class="section-header">
+            <h2>📢 최신 논쟁</h2>
+            <a href="argu-list.html?sort=latest" class="more-link">더보기 →</a>
+          </div>
+          <div class="argu-list">
+            <div class="argu-item">
+              <div class="argu-item-header">
+                <span class="category-badge">문화</span>
+                <span class="status-badge status-active">진행중</span>
+              </div>
+              <h3 class="argu-item-title">
+                <a href="argu-detail.html?id=1"
+                  >K-pop의 세계화가 한국 문화에 긍정적인 영향을 미치는가?</a
+                >
+              </h3>
+              <div class="argu-item-meta">
+                <span class="author">작성자: kpopfan</span>
+                <span class="date">2시간 전</span>
+                <span class="stat">👍 234 | 💬 56</span>
+              </div>
+            </div>
+            <div class="argu-item">
+              <div class="argu-item-header">
+                <span class="category-badge">환경</span>
+                <span class="status-badge status-active">진행중</span>
+              </div>
+              <h3 class="argu-item-title">
+                <a href="argu-detail.html?id=2">전기차가 정말 친환경적인가?</a>
+              </h3>
+              <div class="argu-item-meta">
+                <span class="author">작성자: eco2025</span>
+                <span class="date">5시간 전</span>
+                <span class="stat">👍 456 | 💬 123</span>
+              </div>
+            </div>
+            <div class="argu-item">
+              <div class="argu-item-header">
+                <span class="category-badge">교육</span>
+                <span class="status-badge status-scheduled">예정</span>
+              </div>
+              <h3 class="argu-item-title">
+                <a href="argu-detail.html?id=3"
+                  >대학 입시에서 정시와 수시의 비중은 어느 정도가 적절한가?</a
+                >
+              </h3>
+              <div class="argu-item-meta">
+                <span class="author">작성자: student2025</span>
+                <span class="date">1일 전</span>
+                <span class="stat">👍 789 | 💬 234</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 카테고리별 미리보기 -->
+        <section class="section">
+          <div class="section-header">
+            <h2>📂 카테고리별 논쟁</h2>
+            <a href="categories.html" class="more-link">전체 보기 →</a>
+          </div>
+          <div class="category-preview">
+            <div class="category-card">
+              <h3 class="category-name">정치</h3>
+              <p class="category-count">45개 논쟁</p>
+              <a href="categories.html?category=politics" class="category-link"
+                >보기 →</a
+              >
+            </div>
+            <div class="category-card">
+              <h3 class="category-name">사회</h3>
+              <p class="category-count">32개 논쟁</p>
+              <a href="categories.html?category=society" class="category-link"
+                >보기 →</a
+              >
+            </div>
+            <div class="category-card">
+              <h3 class="category-name">경제</h3>
+              <p class="category-count">28개 논쟁</p>
+              <a href="categories.html?category=economy" class="category-link"
+                >보기 →</a
+              >
+            </div>
+            <div class="category-card">
+              <h3 class="category-name">문화</h3>
+              <p class="category-count">21개 논쟁</p>
+              <a href="categories.html?category=culture" class="category-link"
+                >보기 →</a
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- 랭킹 -->
+        <section class="section">
+          <div class="section-header">
+            <h2>🏆 랭킹</h2>
+          </div>
+          <div class="ranking-grid">
+            <div class="ranking-box">
+              <h3>인기 논쟁 TOP 5</h3>
+              <ol class="ranking-list">
+                <li>AI가 인간의 일자리를 대체할 것인가?</li>
+                <li>원격 근무가 사무실 문화를 파괴하는가?</li>
+                <li>K-pop의 세계화가 한국 문화에 긍정적인 영향을 미치는가?</li>
+                <li>전기차가 정말 친환경적인가?</li>
+                <li>기본소득 도입이 사회에 도움이 될까요?</li>
+              </ol>
+            </div>
+            <div class="ranking-box">
+              <h3>인기 사용자 TOP 5</h3>
+              <ol class="ranking-list">
+                <li>user123 (1,234점)</li>
+                <li>debater99 (987점)</li>
+                <li>thinker77 (765점)</li>
+                <li>kpopfan (654점)</li>
+                <li>eco2025 (543점)</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Argu - 검색</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+        <nav class="nav">
+          <a href="index.html" class="nav-link">홈</a>
+          <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+        </nav>
+          <div class="header-actions">
+            <a href="auth/login.html" class="btn btn-outline">로그인</a>
+            <a href="auth/register.html" class="btn btn-primary">회원가입</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="page-header">
+          <h1>🔎 논쟁 검색</h1>
+          <p class="page-description">키워드로 원하는 논쟁을 찾아보세요.</p>
+        </div>
+
+        <div class="search-section-page">
+          <form class="search-form-large" action="" method="get">
+            <div class="search-box-large">
+              <input
+                type="text"
+                name="q"
+                placeholder="검색어를 입력하세요..."
+                class="search-input-large"
+                value=""
+              />
+              <button type="submit" class="search-btn-large">검색</button>
+            </div>
+          </form>
+
+          <!-- 검색 결과 예시 -->
+          <div class="search-results-section">
+            <div class="search-results-header">
+              <h2>검색 결과</h2>
+              <p class="search-results-count">총 <strong>0</strong>개의 결과</p>
+            </div>
+            <div class="search-results-empty">
+              <p>검색어를 입력하고 검색 버튼을 눌러주세요.</p>
+            </div>
+          </div>
+
+          <!-- 검색 결과가 있을 때 예시 (주석 처리) -->
+          <!--
+          <div class="search-results-section">
+            <div class="search-results-header">
+              <h2>검색 결과</h2>
+              <p class="search-results-count">총 <strong>3</strong>개의 결과</p>
+            </div>
+            <div class="argu-list">
+              <div class="argu-item">
+                <div class="argu-item-header">
+                  <span class="category-badge">정치</span>
+                  <span class="status-badge status-active">진행중</span>
+                </div>
+                <h3 class="argu-item-title">
+                  <a href="argu-detail.html?id=1">AI가 인간의 일자리를 대체할 것인가?</a>
+                </h3>
+                <p class="argu-excerpt">
+                  인공지능의 발전으로 많은 직업이 사라질 것이라는 예측이 나오고 있습니다...
+                </p>
+                <div class="argu-item-meta">
+                  <span class="author">작성자: user123</span>
+                  <span class="date">2025-01-15</span>
+                  <span class="stat">👍 1,234 | 💬 567</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .page-header {
+        margin-bottom: 3rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+      }
+
+      .search-section-page {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .search-form-large {
+        margin-bottom: 2rem;
+      }
+
+      .search-box-large {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .search-input-large {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .search-input-large:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+
+      .search-btn-large {
+        padding: 1rem 2rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .search-btn-large:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .search-results-section {
+        margin-top: 2rem;
+      }
+
+      .search-results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .search-results-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .search-results-count {
+        color: var(--text-secondary);
+      }
+
+      .search-results-empty {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-secondary);
+      }
+
+      .search-results-empty p {
+        font-size: 1.125rem;
+      }
+    </style>
+  </body>
+</html>

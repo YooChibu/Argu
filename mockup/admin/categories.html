@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카테고리 관리 - Argu Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <h1>Argu Admin</h1>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item active">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>카테고리 관리</h2>
+                <div class="admin-header-actions">
+                    <button class="btn btn-primary" onclick="openCreateModal()">+ 카테고리 추가</button>
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 카테고리 목록 -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>순서</th>
+                                <th>카테고리명</th>
+                                <th>설명</th>
+                                <th>논쟁 수</th>
+                                <th>생성일시</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>정치</td>
+                                <td>정치 제도, 정책, 선거 등 정치 관련 논쟁</td>
+                                <td>45</td>
+                                <td>2025-01-01 10:00</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(1)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>사회</td>
+                                <td>사회 문제, 복지, 문화 등 사회 전반의 논쟁</td>
+                                <td>32</td>
+                                <td>2025-01-01 10:05</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(2)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>경제</td>
+                                <td>경제 정책, 금융, 산업 등 경제 관련 논쟁</td>
+                                <td>28</td>
+                                <td>2025-01-01 10:10</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(3)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>문화</td>
+                                <td>예술, 엔터테인먼트, 문화 전반의 논쟁</td>
+                                <td>21</td>
+                                <td>2025-01-01 10:15</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(4)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>환경</td>
+                                <td>기후 변화, 환경 보호, 친환경 정책 등</td>
+                                <td>14</td>
+                                <td>2025-01-01 10:20</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(5)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn-icon-small">⬆️</button>
+                                    <button class="btn-icon-small">⬇️</button>
+                                </td>
+                                <td>교육</td>
+                                <td>교육 정책, 입시 제도, 교육 방법 등</td>
+                                <td>9</td>
+                                <td>2025-01-01 10:25</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="openEditModal(6)">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 카테고리 생성/수정 모달 -->
+    <div id="categoryModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">카테고리 추가</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label class="form-label">카테고리명 *</label>
+                        <input type="text" class="form-input" id="categoryName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">설명</label>
+                        <textarea class="form-textarea" id="categoryDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">표시 순서</label>
+                        <input type="number" class="form-input" id="categoryOrder" value="0">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">취소</button>
+                <button class="btn btn-primary" onclick="saveCategory()">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-secondary);
+        }
+
+        .admin-sidebar {
+            width: 260px;
+            background-color: var(--text-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .admin-nav {
+            flex: 1;
+            padding: 1rem 0;
+        }
+
+        .admin-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .admin-nav .nav-item:hover,
+        .admin-nav .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .admin-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-role {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background-color: var(--bg-primary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        .admin-table-container {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .btn-icon-small {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-icon-small:hover {
+            opacity: 0.7;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+
+    <script>
+        function openCreateModal() {
+            document.getElementById('modalTitle').textContent = '카테고리 추가';
+            document.getElementById('categoryForm').reset();
+            document.getElementById('categoryModal').style.display = 'flex';
+        }
+
+        function openEditModal(id) {
+            document.getElementById('modalTitle').textContent = '카테고리 수정';
+            // 실제로는 서버에서 데이터를 가져와서 폼에 채워야 함
+            document.getElementById('categoryModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('categoryModal').style.display = 'none';
+        }
+
+        function saveCategory() {
+            // 실제로는 서버로 데이터를 전송해야 함
+            alert('카테고리가 저장되었습니다.');
+            closeModal();
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('categoryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

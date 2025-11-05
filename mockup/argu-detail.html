@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI가 인간의 일자리를 대체할 것인가? - Argu</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="argu-create.html" class="btn btn-primary">논쟁 작성</a>
+            <a href="my-page.html" class="btn btn-outline">마이페이지</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <!-- 논쟁 상세 정보 -->
+        <article class="argu-detail">
+          <div class="argu-detail-header">
+            <div class="argu-meta-top">
+              <span class="category-badge">정치</span>
+              <span class="status-badge status-active">진행중</span>
+              <span class="period-badge">2025-01-15 ~ 2025-01-22</span>
+            </div>
+            <h1 class="argu-detail-title">
+              AI가 인간의 일자리를 대체할 것인가?
+            </h1>
+            <div class="argu-author-info">
+              <div class="author-avatar">👤</div>
+              <div class="author-details">
+                <a href="user-profile.html?user=user123" class="author-name"
+                  >user123</a
+                >
+                <span class="author-date">2025-01-15 14:30</span>
+              </div>
+               <div class="argu-actions">
+                 <button class="btn-icon">📢 신고</button>
+                 <a href="argu-edit.html?id=1" class="btn-icon">✏️ 수정</a>
+                 <button class="btn-icon">🗑️ 삭제</button>
+               </div>
+            </div>
+          </div>
+
+          <div class="argu-detail-content">
+            <p>
+              인공지능의 급속한 발전으로 많은 전문가들이 AI가 인간의 일자리를
+              대체할 것이라고 경고하고 있습니다. 특히 단순 반복 작업이나 데이터
+              분석 업무에서 AI의 영향력이 커지고 있습니다.
+            </p>
+            <p>
+              하지만 동시에 AI는 새로운 산업과 일자리를 창출할 것이라는 견해도
+              있습니다. AI 개발자, 데이터 분석가, AI 윤리 전문가 등 새로운
+              직업군이 등장하고 있습니다.
+            </p>
+            <p>
+              여러분은 어떻게 생각하시나요? AI는 인간의 일자리를 위협하는
+              존재인가요, 아니면 새로운 기회를 만들어내는 도구인가요?
+            </p>
+          </div>
+
+          <div class="argu-stats-detail">
+            <div class="stat-item">
+              <span class="stat-label">조회수</span>
+              <span class="stat-value">5,678</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">좋아요</span>
+              <span class="stat-value">1,234</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">댓글</span>
+              <span class="stat-value">567</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">북마크</span>
+              <span class="stat-value">89</span>
+            </div>
+          </div>
+
+          <div class="argu-interactions">
+            <button class="btn btn-primary">👍 좋아요 (1,234)</button>
+            <button class="btn btn-outline">🔖 북마크</button>
+          </div>
+        </article>
+
+        <!-- 투표 섹션 -->
+        <section class="vote-section">
+          <h2>당신의 입장을 선택하세요</h2>
+          <div class="vote-options">
+            <div class="vote-option vote-for-option">
+              <h3>찬성</h3>
+              <p>AI는 인간의 일자리를 대체할 것입니다.</p>
+              <button class="btn btn-primary" style="width: 100%">
+                찬성 선택
+              </button>
+              <div class="vote-result">
+                <div class="vote-bar">
+                  <div class="vote-bar-fill vote-for" style="width: 65%"></div>
+                </div>
+                <p class="vote-percentage">65% (1,234명)</p>
+              </div>
+            </div>
+            <div class="vote-option vote-against-option">
+              <h3>반대</h3>
+              <p>AI는 새로운 일자리를 창출할 것입니다.</p>
+              <button class="btn btn-danger" style="width: 100%">
+                반대 선택
+              </button>
+              <div class="vote-result">
+                <div class="vote-bar">
+                  <div
+                    class="vote-bar-fill vote-against"
+                    style="width: 35%"
+                  ></div>
+                </div>
+                <p class="vote-percentage">35% (665명)</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 댓글 섹션 -->
+        <section class="comments-section">
+          <div class="comments-header">
+            <h2>댓글 (567)</h2>
+            <button class="btn btn-primary">댓글 작성</button>
+          </div>
+
+          <div class="comment-form">
+            <textarea
+              class="form-textarea"
+              placeholder="댓글을 입력하세요..."
+            ></textarea>
+            <div class="comment-form-actions">
+              <button class="btn btn-primary">등록</button>
+              <button class="btn btn-outline">취소</button>
+            </div>
+          </div>
+
+          <div class="comments-list">
+            <div class="comment-item">
+              <div class="comment-header">
+                <div class="comment-author">
+                  <div class="author-avatar-small">👤</div>
+                  <div>
+                    <a
+                      href="user-profile.html?user=debater1"
+                      class="comment-author-name"
+                      >debater1</a
+                    >
+                    <span class="comment-date">2시간 전</span>
+                  </div>
+                </div>
+                <div class="comment-actions">
+                  <button class="btn-icon-small">신고</button>
+                </div>
+              </div>
+              <div class="comment-content">
+                <p>
+                  AI는 확실히 많은 일자리를 대체할 것입니다. 하지만 우리는 과거
+                  산업혁명을 통해 알 수 있듯이, 새로운 기술은 항상 새로운
+                  일자리를 만들어냅니다.
+                </p>
+              </div>
+              <div class="comment-interactions">
+                <button class="btn-icon-small">👍 좋아요 (23)</button>
+                <button class="btn-icon-small">💬 답글</button>
+              </div>
+              <!-- 대댓글 -->
+              <div class="comment-replies">
+                <div class="comment-item reply">
+                  <div class="comment-header">
+                    <div class="comment-author">
+                      <div class="author-avatar-small">👤</div>
+                      <div>
+                        <a
+                          href="user-profile.html?user=thinker2"
+                          class="comment-author-name"
+                          >thinker2</a
+                        >
+                        <span class="comment-date">1시간 전</span>
+                      </div>
+                    </div>
+                    <div class="comment-actions">
+                      <button class="btn-icon-small">신고</button>
+                    </div>
+                  </div>
+                  <div class="comment-content">
+                    <p>
+                      동의합니다. 핵심은 우리가 어떻게 AI와 공존할 수 있는지
+                      배우는 것입니다.
+                    </p>
+                  </div>
+                  <div class="comment-interactions">
+                    <button class="btn-icon-small">👍 좋아요 (5)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="comment-item">
+              <div class="comment-header">
+                <div class="comment-author">
+                  <div class="author-avatar-small">👤</div>
+                  <div>
+                    <a
+                      href="user-profile.html?user=analyst3"
+                      class="comment-author-name"
+                      >analyst3</a
+                    >
+                    <span class="comment-date">3시간 전</span>
+                  </div>
+                </div>
+                <div class="comment-actions">
+                  <button class="btn-icon-small">신고</button>
+                </div>
+              </div>
+              <div class="comment-content">
+                <p>
+                  저는 반대 입장입니다. AI는 단순히 기존 일자리를 대체하는 것이
+                  아니라, 인간이 더 창의적이고 의미 있는 일에 집중할 수 있도록
+                  도와줍니다.
+                </p>
+              </div>
+              <div class="comment-interactions">
+                <button class="btn-icon-small">👍 좋아요 (45)</button>
+                <button class="btn-icon-small">💬 답글</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination">
+            <a href="#" class="page-link">이전</a>
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <a href="#" class="page-link">다음</a>
+          </div>
+        </section>
+
+        <!-- 채팅 섹션 (논쟁 기간 동안만 활성화) -->
+        <section class="chat-section">
+          <div class="chat-header">
+            <h2>실시간 채팅</h2>
+            <span class="chat-status">온라인 23명</span>
+          </div>
+          <div class="chat-messages">
+            <div class="chat-message">
+              <div class="chat-author">user456</div>
+              <div class="chat-content">
+                AI가 일자리를 대체한다는 주장은 과장된 것 같습니다.
+              </div>
+              <div class="chat-time">14:25</div>
+            </div>
+            <div class="chat-message">
+              <div class="chat-author">debater789</div>
+              <div class="chat-content">
+                하지만 이미 많은 직업이 자동화되고 있는 것은 사실입니다.
+              </div>
+              <div class="chat-time">14:26</div>
+            </div>
+          </div>
+          <div class="chat-input">
+            <input
+              type="text"
+              placeholder="메시지를 입력하세요..."
+              class="chat-input-field"
+            />
+            <button class="btn btn-primary">전송</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .argu-detail {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .argu-detail-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .argu-meta-top {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .period-badge {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+      }
+
+      .argu-detail-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      .argu-author-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--bg-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .author-details {
+        flex: 1;
+      }
+
+      .author-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .author-date {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .argu-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+       .btn-icon {
+         background: none;
+         border: none;
+         color: var(--text-secondary);
+         cursor: pointer;
+         padding: 0.5rem;
+         border-radius: 0.5rem;
+         transition: background-color 0.3s;
+         text-decoration: none;
+         display: inline-block;
+       }
+
+      .btn-icon:hover {
+        background-color: var(--bg-secondary);
+      }
+
+      .argu-detail-content {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      .argu-detail-content p {
+        margin-bottom: 1rem;
+      }
+
+      .argu-stats-detail {
+        display: flex;
+        gap: 2rem;
+        padding: 1.5rem;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .argu-interactions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .vote-section {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .vote-section h2 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .vote-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .vote-option {
+        padding: 1.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.75rem;
+        text-align: center;
+      }
+
+      .vote-for-option {
+        border-color: var(--success-color);
+      }
+
+      .vote-against-option {
+        border-color: var(--danger-color);
+      }
+
+      .vote-option h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .vote-option p {
+        margin-bottom: 1.5rem;
+        color: var(--text-secondary);
+      }
+
+      .vote-result {
+        margin-top: 1rem;
+      }
+
+      .vote-bar {
+        height: 8px;
+        background-color: var(--bg-secondary);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+      }
+
+      .vote-bar-fill {
+        height: 100%;
+        border-radius: 4px;
+      }
+
+      .vote-percentage {
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .comments-section {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .comments-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .comment-form {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem;
+      }
+
+      .comment-form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: flex-end;
+      }
+
+      .comment-item {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .comment-item:last-child {
+        border-bottom: none;
+      }
+
+      .comment-item.reply {
+        margin-left: 3rem;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem;
+      }
+
+      .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .comment-author {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .author-avatar-small {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--bg-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .comment-author-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .comment-date {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-left: 0.5rem;
+      }
+
+      .comment-content {
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+      }
+
+      .comment-interactions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn-icon-small {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .btn-icon-small:hover {
+        color: var(--primary-color);
+      }
+
+      .comment-replies {
+        margin-top: 1rem;
+      }
+
+      .chat-section {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .chat-status {
+        color: var(--success-color);
+        font-weight: 600;
+      }
+
+      .chat-messages {
+        height: 300px;
+        overflow-y: auto;
+        padding: 1rem;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .chat-message {
+        margin-bottom: 1rem;
+      }
+
+      .chat-author {
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .chat-content {
+        background-color: white;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        display: inline-block;
+        max-width: 70%;
+      }
+
+      .chat-time {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+      }
+
+      .chat-input {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .chat-input-field {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+      }
+    </style>
+  </body>
+</html>

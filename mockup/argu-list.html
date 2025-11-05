@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>논쟁 목록 - Argu</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="argu-list.html" class="nav-link active">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="argu-create.html" class="btn btn-primary">논쟁 작성</a>
+            <a href="my-page.html" class="btn btn-outline">마이페이지</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="page-header">
+          <h1>논쟁 목록</h1>
+          <a href="argu-create.html" class="btn btn-primary">새 논쟁 작성</a>
+        </div>
+
+        <!-- 필터 및 정렬 -->
+        <div class="filter-section">
+          <div class="filters">
+            <select
+              class="form-select"
+              style="width: auto; display: inline-block"
+            >
+              <option>전체 카테고리</option>
+              <option>정치</option>
+              <option>사회</option>
+              <option>경제</option>
+              <option>문화</option>
+              <option>환경</option>
+              <option>교육</option>
+            </select>
+            <select
+              class="form-select"
+              style="width: auto; display: inline-block"
+            >
+              <option>전체 상태</option>
+              <option>예정</option>
+              <option>진행중</option>
+              <option>종료</option>
+            </select>
+            <select
+              class="form-select"
+              style="width: auto; display: inline-block"
+            >
+              <option>정렬: 최신순</option>
+              <option>인기순</option>
+              <option>댓글 많은순</option>
+              <option>조회수순</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 논쟁 목록 -->
+        <div class="argu-list">
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">정치</span>
+              <span class="status-badge status-active">진행중</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=1"
+                >AI가 인간의 일자리를 대체할 것인가?</a
+              >
+            </h3>
+            <p class="argu-excerpt">
+              인공지능의 발전으로 많은 직업이 사라질 것이라는 예측이 나오고
+              있습니다. 하지만 동시에 새로운 일자리도 창출될 것이라는 견해도
+              있습니다. 여러분의 생각은 어떠신가요?
+            </p>
+            <div class="argu-item-meta">
+              <span class="author"
+                >작성자:
+                <a href="user-profile.html?user=user123">user123</a></span
+              >
+              <span class="date">2025-01-15 14:30</span>
+              <span class="period">기간: 2025-01-15 ~ 2025-01-22</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 1,234</span>
+              <span class="stat">💬 567</span>
+              <span class="stat">👁️ 5,678</span>
+              <span class="stat">🔖 89</span>
+            </div>
+            <div class="argu-vote">
+              <span class="vote-count vote-for">찬성 65% (1,234명)</span>
+              <span class="vote-count vote-against">반대 35% (665명)</span>
+            </div>
+          </div>
+
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">사회</span>
+              <span class="status-badge status-active">진행중</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=2"
+                >원격 근무가 사무실 문화를 파괴하는가?</a
+              >
+            </h3>
+            <p class="argu-excerpt">
+              코로나 이후 원격 근무가 보편화되면서 회사 문화의 변화가
+              두드러집니다. 팀워크와 소통이 약해진다는 지적과 함께, 업무
+              효율성과 워라밸이 개선되었다는 긍정적 평가도 있습니다.
+            </p>
+            <div class="argu-item-meta">
+              <span class="author"
+                >작성자:
+                <a href="user-profile.html?user=debater99">debater99</a></span
+              >
+              <span class="date">2025-01-14 10:15</span>
+              <span class="period">기간: 2025-01-14 ~ 2025-01-21</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 892</span>
+              <span class="stat">💬 423</span>
+              <span class="stat">👁️ 3,456</span>
+              <span class="stat">🔖 67</span>
+            </div>
+            <div class="argu-vote">
+              <span class="vote-count vote-for">찬성 48% (856명)</span>
+              <span class="vote-count vote-against">반대 52% (928명)</span>
+            </div>
+          </div>
+
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">경제</span>
+              <span class="status-badge status-scheduled">예정</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=3"
+                >기본소득 도입이 사회에 도움이 될까요?</a
+              >
+            </h3>
+            <p class="argu-excerpt">
+              4차 산업혁명 시대에 기본소득 도입 논의가 활발합니다. 빈부격차
+              해소와 사회 안정을 가져올 수 있다는 주장과, 재정 부담과 근로 의욕
+              저하를 우려하는 의견이 대립하고 있습니다.
+            </p>
+            <div class="argu-item-meta">
+              <span class="author"
+                >작성자:
+                <a href="user-profile.html?user=thinker77">thinker77</a></span
+              >
+              <span class="date">2025-01-13 16:45</span>
+              <span class="period">기간: 2025-01-20 ~ 2025-01-27</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 654</span>
+              <span class="stat">💬 289</span>
+              <span class="stat">👁️ 2,123</span>
+              <span class="stat">🔖 45</span>
+            </div>
+          </div>
+
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">문화</span>
+              <span class="status-badge status-ended">종료</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=4"
+                >K-pop의 세계화가 한국 문화에 긍정적인 영향을 미치는가?</a
+              >
+            </h3>
+            <p class="argu-excerpt">
+              K-pop의 글로벌 성공이 한국 문화 전반에 미치는 영향에 대해 다양한
+              의견이 제시되고 있습니다.
+            </p>
+            <div class="argu-item-meta">
+              <span class="author"
+                >작성자:
+                <a href="user-profile.html?user=kpopfan">kpopfan</a></span
+              >
+              <span class="date">2025-01-10 09:00</span>
+              <span class="period">기간: 2025-01-10 ~ 2025-01-17 (종료)</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 2,345</span>
+              <span class="stat">💬 1,123</span>
+              <span class="stat">👁️ 8,901</span>
+              <span class="stat">🔖 234</span>
+            </div>
+            <div class="argu-vote">
+              <span class="vote-count vote-for">찬성 72% (2,456명)</span>
+              <span class="vote-count vote-against">반대 28% (956명)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+          <a href="#" class="page-link">이전</a>
+          <a href="#" class="page-link active">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <a href="#" class="page-link">4</a>
+          <a href="#" class="page-link">5</a>
+          <a href="#" class="page-link">다음</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .filter-section {
+        background-color: var(--bg-primary);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .filters {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+      }
+
+      .page-link {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        transition: all 0.3s;
+      }
+
+      .page-link:hover,
+      .page-link.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+    </style>
+  </body>
+</html>

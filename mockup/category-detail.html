@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정치 카테고리 - Argu</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="argu-create.html" class="btn btn-primary">논쟁 작성</a>
+            <a href="my-page.html" class="btn btn-outline">마이페이지</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="category-header">
+          <div class="breadcrumb">
+            <a href="index.html">홈</a>
+            <span> / </span>
+            <a href="categories.html">카테고리</a>
+            <span> / </span>
+            <span>정치</span>
+          </div>
+          <h1>📂 정치 카테고리</h1>
+          <p class="category-description">정치 관련 논쟁들을 모아봤습니다. (총 45개 논쟁)</p>
+        </div>
+
+        <!-- 필터 및 정렬 -->
+        <div class="filter-section">
+          <div class="filters">
+            <select class="form-select" style="width: auto; display: inline-block">
+              <option>전체 상태</option>
+              <option>예정</option>
+              <option>진행중</option>
+              <option>종료</option>
+            </select>
+            <select class="form-select" style="width: auto; display: inline-block">
+              <option>정렬: 최신순</option>
+              <option>인기순</option>
+              <option>댓글 많은순</option>
+              <option>조회수순</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 논쟁 목록 -->
+        <div class="argu-list">
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">정치</span>
+              <span class="status-badge status-active">진행중</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=1">AI가 인간의 일자리를 대체할 것인가?</a>
+            </h3>
+            <p class="argu-excerpt">
+              인공지능의 발전으로 많은 직업이 사라질 것이라는 예측이 나오고 있습니다. 하지만 동시에 새로운 일자리도 창출될 것이라는 견해도 있습니다.
+            </p>
+            <div class="argu-item-meta">
+              <span class="author">작성자: <a href="user-profile.html?user=user123">user123</a></span>
+              <span class="date">2025-01-15 14:30</span>
+              <span class="period">기간: 2025-01-15 ~ 2025-01-22</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 1,234</span>
+              <span class="stat">💬 567</span>
+              <span class="stat">👁️ 5,678</span>
+              <span class="stat">🔖 89</span>
+            </div>
+            <div class="argu-vote">
+              <span class="vote-count vote-for">찬성 65% (1,234명)</span>
+              <span class="vote-count vote-against">반대 35% (665명)</span>
+            </div>
+          </div>
+
+          <div class="argu-item">
+            <div class="argu-item-header">
+              <span class="category-badge">정치</span>
+              <span class="status-badge status-scheduled">예정</span>
+            </div>
+            <h3 class="argu-item-title">
+              <a href="argu-detail.html?id=6">대통령제와 의원내각제 중 어느 것이 더 나은가?</a>
+            </h3>
+            <p class="argu-excerpt">
+              각 정치 체제의 장단점을 비교하여 논의합니다.
+            </p>
+            <div class="argu-item-meta">
+              <span class="author">작성자: <a href="user-profile.html?user=politician1">politician1</a></span>
+              <span class="date">2025-01-12 10:00</span>
+              <span class="period">기간: 2025-01-20 ~ 2025-01-27</span>
+            </div>
+            <div class="argu-stats">
+              <span class="stat">👍 456</span>
+              <span class="stat">💬 123</span>
+              <span class="stat">👁️ 1,234</span>
+              <span class="stat">🔖 34</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+          <a href="#" class="page-link">이전</a>
+          <a href="#" class="page-link active">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <a href="#" class="page-link">다음</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .category-header {
+        margin-bottom: 2rem;
+      }
+
+      .breadcrumb {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .category-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .category-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+      }
+
+      .filter-section {
+        background-color: var(--bg-primary);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .filters {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+      }
+
+      .page-link {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        transition: all 0.3s;
+      }
+
+      .page-link:hover,
+      .page-link.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+    </style>
+  </body>
+</html>
+

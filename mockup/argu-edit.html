@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>논쟁 수정 - Argu</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="argu-create.html" class="btn btn-primary">논쟁 작성</a>
+            <a href="my-page.html" class="btn btn-outline">마이페이지</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="page-header">
+          <h1>논쟁 수정</h1>
+          <div class="page-header-actions">
+            <a href="argu-detail.html?id=1" class="btn btn-outline">취소</a>
+            <button class="btn btn-danger" onclick="handleDelete()">삭제</button>
+          </div>
+        </div>
+
+        <div class="alert alert-warning">
+          <strong>⚠️ 주의:</strong> 논쟁이 시작되면 수정/삭제가 불가능합니다. 현재 상태: <span class="status-badge status-scheduled">예정</span>
+        </div>
+
+        <form class="argu-create-form">
+          <div class="form-section">
+            <h2>기본 정보</h2>
+
+            <div class="form-group">
+              <label class="form-label">제목 *</label>
+              <input
+                type="text"
+                class="form-input"
+                value="AI가 인간의 일자리를 대체할 것인가?"
+                required
+              />
+              <p class="form-hint">명확하고 구체적인 제목을 작성해주세요.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">카테고리 *</label>
+              <select class="form-select" required>
+                <option value="politics" selected>정치</option>
+                <option value="society">사회</option>
+                <option value="economy">경제</option>
+                <option value="culture">문화</option>
+                <option value="environment">환경</option>
+                <option value="education">교육</option>
+                <option value="technology">기술</option>
+                <option value="health">건강</option>
+                <option value="sports">스포츠</option>
+                <option value="other">기타</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">내용 *</label>
+              <textarea
+                class="form-textarea"
+                rows="10"
+                required
+              >인공지능의 급속한 발전으로 많은 전문가들이 AI가 인간의 일자리를 대체할 것이라고 경고하고 있습니다. 특히 단순 반복 작업이나 데이터 분석 업무에서 AI의 영향력이 커지고 있습니다.
+
+하지만 동시에 AI는 새로운 산업과 일자리를 창출할 것이라는 견해도 있습니다. AI 개발자, 데이터 분석가, AI 윤리 전문가 등 새로운 직업군이 등장하고 있습니다.
+
+여러분은 어떻게 생각하시나요? AI는 인간의 일자리를 위협하는 존재인가요, 아니면 새로운 기회를 만들어내는 도구인가요?</textarea>
+              <p class="form-hint">
+                최소 100자 이상 작성해주세요. 건설적인 논쟁을 위해 배경 지식과
+                함께 작성해주시면 좋습니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>논쟁 입장 설정</h2>
+
+            <div class="form-group">
+              <label class="form-label">찬성 입장 설명</label>
+              <textarea
+                class="form-textarea"
+                rows="4"
+                placeholder="찬성 입장의 주요 논점을 간단히 설명해주세요 (선택사항)"
+              >AI는 인간의 일자리를 대체할 것입니다.</textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">반대 입장 설명</label>
+              <textarea
+                class="form-textarea"
+                rows="4"
+                placeholder="반대 입장의 주요 논점을 간단히 설명해주세요 (선택사항)"
+              >AI는 새로운 일자리를 창출할 것입니다.</textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>논쟁 기간 설정 *</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">시작일시 *</label>
+                <input type="datetime-local" class="form-input" value="2025-01-15T14:00" required />
+                <p class="form-hint">
+                  논쟁이 시작되는 시점입니다. 시작 전까지는 수정/삭제가
+                  가능합니다.
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">종료일시 *</label>
+                <input type="datetime-local" class="form-input" value="2025-01-22T23:59" required />
+                <p class="form-hint">
+                  논쟁이 종료되는 시점입니다. 종료 후에는 투표와 채팅이
+                  불가능합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>추가 설정</h2>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" />
+                <span
+                  >익명 투표 허용 (찬성/반대 투표 시 작성자 정보가 공개되지
+                  않습니다)</span
+                >
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" />
+                <span
+                  >댓글 작성 시 입장 선택 필수 (댓글 작성 전 찬성/반대 입장을
+                  선택해야 합니다)</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="window.location.href='argu-detail.html?id=1'">취소</button>
+            <button type="button" class="btn btn-outline">임시 저장</button>
+            <button type="submit" class="btn btn-primary">수정 완료</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .alert {
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .alert-warning {
+        background-color: #fef3c7;
+        border: 1px solid #fbbf24;
+        color: #92400e;
+      }
+
+      .page-header-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .argu-create-form {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      .form-section {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .form-section:last-of-type {
+        border-bottom: none;
+      }
+
+      .form-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .form-hint {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        cursor: pointer;
+      }
+
+      .checkbox-label input[type="checkbox"] {
+        margin-top: 0.25rem;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--border-color);
+      }
+
+      @media (max-width: 768px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+    </style>
+
+    <script>
+      function handleDelete() {
+        if (confirm('정말 이 논쟁을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+          alert('논쟁이 삭제되었습니다.');
+          window.location.href = 'argu-list.html';
+        }
+      }
+    </script>
+  </body>
+</html>
+

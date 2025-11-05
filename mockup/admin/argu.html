@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>논쟁 관리 - Argu Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <h1>Argu Admin</h1>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item active">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>논쟁 관리</h2>
+                <div class="admin-header-actions">
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 검색 및 필터 -->
+                <div class="admin-toolbar">
+                    <div class="search-box-admin">
+                        <input type="text" placeholder="제목, 내용, 작성자로 검색..." class="search-input-admin">
+                        <button class="btn btn-primary">검색</button>
+                    </div>
+                    <div class="filter-buttons">
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 카테고리</option>
+                            <option>정치</option>
+                            <option>사회</option>
+                            <option>경제</option>
+                            <option>문화</option>
+                        </select>
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 상태</option>
+                            <option>예정</option>
+                            <option>진행중</option>
+                            <option>종료</option>
+                        </select>
+                        <select class="form-select" style="width: auto;">
+                            <option>정렬: 최신순</option>
+                            <option>인기순</option>
+                            <option>댓글 많은순</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 논쟁 목록 -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>카테고리</th>
+                                <th>상태</th>
+                                <th>기간</th>
+                                <th>통계</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td class="argu-title-cell">
+                                    <a href="../argu-detail.html?id=1">AI가 인간의 일자리를 대체할 것인가?</a>
+                                </td>
+                                <td>user123</td>
+                                <td><span class="category-badge">정치</span></td>
+                                <td><span class="status-badge status-active">진행중</span></td>
+                                <td>2025-01-15 ~ 2025-01-22</td>
+                                <td>👍1,234 💬567</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-danger btn-sm">숨김</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td class="argu-title-cell">
+                                    <a href="../argu-detail.html?id=2">원격 근무가 사무실 문화를 파괴하는가?</a>
+                                </td>
+                                <td>debater99</td>
+                                <td><span class="category-badge">사회</span></td>
+                                <td><span class="status-badge status-active">진행중</span></td>
+                                <td>2025-01-14 ~ 2025-01-21</td>
+                                <td>👍892 💬423</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-danger btn-sm">숨김</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td class="argu-title-cell">
+                                    <a href="../argu-detail.html?id=3">기본소득 도입이 사회에 도움이 될까요?</a>
+                                </td>
+                                <td>thinker77</td>
+                                <td><span class="category-badge">경제</span></td>
+                                <td><span class="status-badge status-scheduled">예정</span></td>
+                                <td>2025-01-20 ~ 2025-01-27</td>
+                                <td>👍654 💬289</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-outline btn-sm">수정</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                            <tr class="hidden-row">
+                                <td>4</td>
+                                <td class="argu-title-cell">
+                                    <a href="../argu-detail.html?id=4">K-pop의 세계화가 한국 문화에...</a>
+                                </td>
+                                <td>kpopfan</td>
+                                <td><span class="category-badge">문화</span></td>
+                                <td><span class="status-badge status-ended">종료</span></td>
+                                <td>2025-01-10 ~ 2025-01-17</td>
+                                <td>👍2,345 💬1,123</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-primary btn-sm">숨김 해제</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <a href="#" class="page-link">이전</a>
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link">다음</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-secondary);
+        }
+
+        .admin-sidebar {
+            width: 260px;
+            background-color: var(--text-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .admin-nav {
+            flex: 1;
+            padding: 1rem 0;
+        }
+
+        .admin-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .admin-nav .nav-item:hover,
+        .admin-nav .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .admin-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-role {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background-color: var(--bg-primary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        .admin-toolbar {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-box-admin {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input-admin {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .admin-table-container {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .admin-table tr.hidden-row {
+            background-color: #f3f4f6;
+            opacity: 0.7;
+        }
+
+        .argu-title-cell {
+            max-width: 300px;
+        }
+
+        .argu-title-cell a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .argu-title-cell a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .page-link {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s;
+        }
+
+        .page-link:hover,
+        .page-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</body>
+</html>

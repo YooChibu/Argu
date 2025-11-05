@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Argu - 카테고리</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+        <nav class="nav">
+          <a href="index.html" class="nav-link">홈</a>
+          <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+        </nav>
+          <div class="header-actions">
+            <a href="auth/login.html" class="btn btn-outline">로그인</a>
+            <a href="auth/register.html" class="btn btn-primary">회원가입</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="page-header">
+          <h1>📂 카테고리</h1>
+          <p class="page-description">관심 있는 주제의 카테고리를 선택하여 논쟁을 탐색해보세요.</p>
+        </div>
+
+        <div class="category-grid">
+          <div class="category-card-large">
+            <div class="category-icon">🏛️</div>
+            <h3 class="category-name-large">정치</h3>
+            <p class="category-count-large">45개 논쟁</p>
+            <p class="category-description-small">정치 제도, 정책, 선거 등 정치 관련 논쟁</p>
+            <a href="category-detail.html?category=politics" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+
+          <div class="category-card-large">
+            <div class="category-icon">👥</div>
+            <h3 class="category-name-large">사회</h3>
+            <p class="category-count-large">32개 논쟁</p>
+            <p class="category-description-small">사회 문제, 복지, 문화 등 사회 전반의 논쟁</p>
+            <a href="category-detail.html?category=society" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+
+          <div class="category-card-large">
+            <div class="category-icon">💰</div>
+            <h3 class="category-name-large">경제</h3>
+            <p class="category-count-large">28개 논쟁</p>
+            <p class="category-description-small">경제 정책, 금융, 산업 등 경제 관련 논쟁</p>
+            <a href="category-detail.html?category=economy" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+
+          <div class="category-card-large">
+            <div class="category-icon">🎭</div>
+            <h3 class="category-name-large">문화</h3>
+            <p class="category-count-large">21개 논쟁</p>
+            <p class="category-description-small">예술, 엔터테인먼트, 문화 전반의 논쟁</p>
+            <a href="category-detail.html?category=culture" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+
+          <div class="category-card-large">
+            <div class="category-icon">🌱</div>
+            <h3 class="category-name-large">환경</h3>
+            <p class="category-count-large">14개 논쟁</p>
+            <p class="category-description-small">기후 변화, 환경 보호, 친환경 정책 등</p>
+            <a href="category-detail.html?category=environment" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+
+          <div class="category-card-large">
+            <div class="category-icon">📚</div>
+            <h3 class="category-name-large">교육</h3>
+            <p class="category-count-large">9개 논쟁</p>
+            <p class="category-description-small">교육 정책, 입시 제도, 교육 방법 등</p>
+            <a href="category-detail.html?category=education" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">보기</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .page-header {
+        margin-bottom: 3rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-description {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+      }
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .category-card-large {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .category-card-large:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .category-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .category-name-large {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .category-count-large {
+        color: var(--primary-color);
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      .category-description-small {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+    </style>
+  </body>
+</html>
