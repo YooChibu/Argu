@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>참여한 논쟁 - Argu</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="index.html">
+              <img src="images/ARGU.png" alt="Argu" class="logo-img" />
+            </a>
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="argu-list.html" class="nav-link">논쟁 목록</a>
+          </nav>
+          <div class="header-actions">
+            <a href="argu-create.html" class="btn btn-primary">논쟁 작성</a>
+            <a href="my-page.html" class="btn btn-outline">마이페이지</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <div class="my-page-layout">
+          <!-- 사이드바 -->
+          <aside class="my-page-sidebar">
+            <div class="profile-card">
+              <div class="profile-avatar">👤</div>
+              <h2 class="profile-name">user123</h2>
+              <p class="profile-bio">건설적인 논쟁을 추구합니다.</p>
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <span class="stat-value">12</span>
+                  <span class="stat-label">작성한 논쟁</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">45</span>
+                  <span class="stat-label">참여한 논쟁</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">234</span>
+                  <span class="stat-label">받은 좋아요</span>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <a
+                  href="my-page-edit.html"
+                  class="btn btn-outline"
+                  style="width: 100%"
+                  >프로필 수정</a
+                >
+                <a
+                  href="my-page-settings.html"
+                  class="btn btn-outline"
+                  style="width: 100%; margin-top: 0.5rem"
+                  >계정 설정</a
+                >
+              </div>
+            </div>
+
+            <nav class="my-page-nav">
+              <a href="my-page.html" class="nav-item">대시보드</a>
+              <a href="my-page-argu.html" class="nav-item">내 논쟁</a>
+              <a href="my-page-participated.html" class="nav-item active"
+                >참여한 논쟁</a
+              >
+              <a href="my-page-comments.html" class="nav-item">내 댓글</a>
+              <a href="my-page-bookmarks.html" class="nav-item">북마크</a>
+              <a href="my-page-activity.html" class="nav-item">활동 내역</a>
+            </nav>
+          </aside>
+
+          <!-- 메인 컨텐츠 -->
+          <div class="my-page-content">
+            <div class="page-header">
+              <h1>참여한 논쟁</h1>
+            </div>
+
+            <!-- 필터 -->
+            <div class="filter-section" style="margin-bottom: 2rem;">
+              <div class="filters">
+                <select class="form-select" style="width: auto; display: inline-block">
+                  <option>전체</option>
+                  <option>찬성</option>
+                  <option>반대</option>
+                </select>
+                <select class="form-select" style="width: auto; display: inline-block">
+                  <option>정렬: 최신순</option>
+                  <option>인기순</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 참여한 논쟁 목록 -->
+            <div class="argu-list">
+              <div class="argu-item">
+                <div class="argu-item-header">
+                  <span class="category-badge">사회</span>
+                  <span class="status-badge status-active">진행중</span>
+                  <span class="vote-badge" style="background-color: #d1fae5; color: var(--accent-dark); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 500;">찬성</span>
+                </div>
+                <h3 class="argu-item-title">
+                  <a href="argu-detail.html?id=2"
+                    >원격 근무가 사무실 문화를 파괴하는가?</a
+                  >
+                </h3>
+                <div class="argu-item-meta">
+                  <span class="author">작성자: debater99</span>
+                  <span class="date">2025-01-14</span>
+                  <span class="stat">👍 892 | 💬 423</span>
+                </div>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.875rem;">
+                  참여일: 2025-01-15 | 댓글 3개 작성
+                </div>
+              </div>
+
+              <div class="argu-item">
+                <div class="argu-item-header">
+                  <span class="category-badge">환경</span>
+                  <span class="status-badge status-active">진행중</span>
+                  <span class="vote-badge" style="background-color: #fee2e2; color: #991b1b; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 500;">반대</span>
+                </div>
+                <h3 class="argu-item-title">
+                  <a href="argu-detail.html?id=4">전기차가 정말 친환경적인가?</a>
+                </h3>
+                <div class="argu-item-meta">
+                  <span class="author">작성자: eco2025</span>
+                  <span class="date">2025-01-13</span>
+                  <span class="stat">👍 456 | 💬 123</span>
+                </div>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.875rem;">
+                  참여일: 2025-01-14 | 댓글 1개 작성
+                </div>
+              </div>
+
+              <div class="argu-item">
+                <div class="argu-item-header">
+                  <span class="category-badge">정치</span>
+                  <span class="status-badge status-active">진행중</span>
+                  <span class="vote-badge" style="background-color: #d1fae5; color: var(--accent-dark); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 500;">찬성</span>
+                </div>
+                <h3 class="argu-item-title">
+                  <a href="argu-detail.html?id=6">정치 개혁의 필요성</a>
+                </h3>
+                <div class="argu-item-meta">
+                  <span class="author">작성자: politics2025</span>
+                  <span class="date">2025-01-12</span>
+                  <span class="stat">👍 234 | 💬 56</span>
+                </div>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.875rem;">
+                  참여일: 2025-01-13 | 댓글 2개 작성
+                </div>
+              </div>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <div class="pagination" style="margin-top: 2rem; justify-content: center;">
+              <a href="#" class="page-link">이전</a>
+              <a href="#" class="page-link active">1</a>
+              <a href="#" class="page-link">2</a>
+              <a href="#" class="page-link">3</a>
+              <a href="#" class="page-link">다음</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Argu</h4>
+            <p>건설적인 논쟁을 통한 성장</p>
+          </div>
+          <div class="footer-section">
+            <h4>이용안내</h4>
+            <a href="about.html">소개</a>
+            <a href="rules.html">이용규칙</a>
+          </div>
+          <div class="footer-section">
+            <h4>문의</h4>
+            <p>contact@argu.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Argu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .my-page-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .my-page-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .profile-card {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: var(--bg-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        margin: 0 auto 1rem;
+      }
+
+      .profile-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .profile-bio {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 1rem 0;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-stats .stat-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .profile-stats .stat-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .profile-stats .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .my-page-nav {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s;
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background-color: var(--bg-secondary);
+        color: var(--primary-color);
+      }
+
+      .my-page-content {
+        background-color: var(--bg-primary);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .argu-item-header {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      @media (max-width: 968px) {
+        .my-page-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .my-page-sidebar {
+          order: 2;
+        }
+
+        .my-page-content {
+          order: 1;
+        }
+      }
+    </style>
+  </body>
+</html>
+

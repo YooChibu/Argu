@@ -46,6 +46,48 @@
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* 다크모드 변수 */
+[data-theme="dark"] {
+    /* 신뢰 - 깊은 블루 (다크모드에서는 약간 밝게) */
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    
+    /* 열정 - 코랄 오렌지 (다크모드에서는 약간 밝게) */
+    --secondary-color: #fb923c;
+    --secondary-dark: #f97316;
+    --secondary-light: #fdba74;
+    
+    /* 균형 - 에메랄드 그린 (다크모드에서는 약간 밝게) */
+    --accent-color: #34d399;
+    --accent-dark: #10b981;
+    --accent-light: #6ee7b7;
+    
+    /* 상태 색상 (다크모드) */
+    --success-color: #34d399;
+    --danger-color: #f87171;
+    --warning-color: #fbbf24;
+    --info-color: #60a5fa;
+    
+    /* 텍스트 색상 (다크모드) */
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+    
+    /* 배경 색상 (다크모드) */
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --bg-tertiary: #0f172a;
+    
+    /* 테두리 및 그림자 (다크모드) */
+    --border-color: #374151;
+    --border-light: #1f2937;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-primary);
@@ -122,6 +164,36 @@ body {
 .header-actions {
     display: flex;
     gap: 1rem;
+    align-items: center;
+}
+
+/* 테마 토글 버튼 */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+}
+
+.theme-toggle:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }
 
 /* 버튼 */
@@ -643,10 +715,11 @@ body {
 
 /* 푸터 */
 .footer {
-    background-color: var(--text-primary);
-    color: white;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
     padding: 3rem 0 1rem;
     margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -658,23 +731,50 @@ body {
 
 .footer-section h4 {
     margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .footer-section a {
     display: block;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-secondary);
     text-decoration: none;
     margin-bottom: 0.5rem;
+    transition: color 0.3s;
 }
 
 .footer-section a:hover {
-    color: white;
+    color: var(--primary-color);
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+/* 다크모드 푸터 스타일 */
+[data-theme="dark"] .footer {
+    background-color: #0f172a;
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .footer-section h4 {
+    color: white;
+}
+
+[data-theme="dark"] .footer-section a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .footer-section a:hover {
+    color: white;
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top-color: var(--border-color);
     color: rgba(255, 255, 255, 0.6);
 }
 

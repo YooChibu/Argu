@@ -1,28 +1,209 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>신고 관리 - Argu Admin</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="css/admin.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
     <div class="admin-layout">
-      <aside class="admin-sidebar">
-        <div class="admin-logo"><h1>Argu Admin</h1></div>
-        <nav class="admin-nav">
-          <a href="index.html" class="nav-item">📊 대시보드</a>
-          <a href="users.html" class="nav-item">👥 회원 관리</a>
-          <a href="reports.html" class="nav-item active">🚨 신고 관리</a>
-        </nav>
-      </aside>
-      <main class="admin-main">
-        <header class="admin-header"><h2>신고 관리</h2></header>
-        <div class="admin-content">
-          <p>사용자 신고 목록을 검토하고 조치하는 목업입니다.</p>
-        </div>
-      </main>
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <a href="index.html" style="display: block;">
+                    <img src="../user/images/ARGU.png" alt="Argu Admin" />
+                </a>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item active">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>신고 관리</h2>
+                <div class="admin-header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 검색 및 필터 -->
+                <div class="admin-toolbar">
+                    <div class="search-box-admin">
+                        <input type="text" placeholder="신고자, 피신고자, 내용으로 검색..." class="search-input-admin">
+                        <button class="btn btn-primary">검색</button>
+                    </div>
+                    <div class="filter-buttons">
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 상태</option>
+                            <option>미처리</option>
+                            <option>처리중</option>
+                            <option>처리완료</option>
+                        </select>
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 유형</option>
+                            <option>논쟁</option>
+                            <option>댓글</option>
+                            <option>사용자</option>
+                        </select>
+                        <select class="form-select" style="width: auto;">
+                            <option>정렬: 최신순</option>
+                            <option>오래된순</option>
+                            <option>긴급순</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 신고 목록 -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>신고일시</th>
+                                <th>신고자</th>
+                                <th>대상 유형</th>
+                                <th>대상 내용</th>
+                                <th>신고 사유</th>
+                                <th>상태</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="urgent">
+                                <td>1</td>
+                                <td>2025-01-15 14:20</td>
+                                <td>user123</td>
+                                <td>논쟁</td>
+                                <td><a href="../user/argu-detail.html?id=1">AI가 인간의 일자리를...</a></td>
+                                <td>부적절한 내용</td>
+                                <td><span class="status-badge status-warning">미처리</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">처리하기</button>
+                                </td>
+                            </tr>
+                            <tr class="urgent">
+                                <td>2</td>
+                                <td>2025-01-15 13:45</td>
+                                <td>debater99</td>
+                                <td>댓글</td>
+                                <td><a href="../user/argu-detail.html?id=2#comment-3">욕설/비방 댓글...</a></td>
+                                <td>욕설/비방</td>
+                                <td><span class="status-badge status-warning">미처리</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">처리하기</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>2025-01-15 12:30</td>
+                                <td>thinker77</td>
+                                <td>사용자</td>
+                                <td><a href="../user/user-profile.html?id=spammer1">spammer1</a></td>
+                                <td>스팸 계정</td>
+                                <td><span class="status-badge status-active">처리완료</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>2025-01-14 18:20</td>
+                                <td>kpopfan</td>
+                                <td>논쟁</td>
+                                <td><a href="../user/argu-detail.html?id=3">원격 근무가...</a></td>
+                                <td>허위 정보</td>
+                                <td><span class="status-badge status-active">처리완료</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>2025-01-14 15:10</td>
+                                <td>eco2025</td>
+                                <td>댓글</td>
+                                <td><a href="../user/argu-detail.html?id=4#comment-5">부적절한 댓글...</a></td>
+                                <td>부적절한 내용</td>
+                                <td><span class="status-badge status-active">처리완료</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <a href="#" class="page-link">이전</a>
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link">다음</a>
+                </div>
+            </div>
+        </main>
     </div>
-  </body>
+    <script src="js/theme.js"></script>
+</body>
 </html>

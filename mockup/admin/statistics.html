@@ -1,29 +1,254 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>통계 및 분석 - Argu Admin</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="css/admin.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
     <div class="admin-layout">
-      <aside class="admin-sidebar">
-        <div class="admin-logo"><h1>Argu Admin</h1></div>
-        <nav class="admin-nav">
-          <a href="index.html" class="nav-item">📊 대시보드</a>
-          <a href="statistics.html" class="nav-item active">📈 통계 및 분석</a>
-        </nav>
-      </aside>
-      <main class="admin-main">
-        <header class="admin-header"><h2>통계 및 분석</h2></header>
-        <div class="admin-content">
-          <p>
-            사이트 트래픽, 활동량, 인기 논쟁 등의 통계를 보여주는 목업입니다.
-          </p>
-        </div>
-      </main>
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <a href="index.html" style="display: block;">
+                    <img src="../user/images/ARGU.png" alt="Argu Admin" />
+                </a>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item active">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>통계 및 분석</h2>
+                <div class="admin-header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
+                    <button class="btn btn-primary">📥 CSV 다운로드</button>
+                    <button class="btn btn-outline">📊 Excel 다운로드</button>
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 기간 선택 -->
+                <div class="admin-toolbar">
+                    <div class="filter-buttons">
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 기간</option>
+                            <option>오늘</option>
+                            <option>이번 주</option>
+                            <option>이번 달</option>
+                            <option>올해</option>
+                        </select>
+                        <input type="date" class="form-input" style="width: auto;">
+                        <span>~</span>
+                        <input type="date" class="form-input" style="width: auto;">
+                        <button class="btn btn-primary">적용</button>
+                    </div>
+                </div>
+
+                <!-- 통계 카드 -->
+                <div class="stats-grid-admin">
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">👥</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 회원</div>
+                            <div class="stat-value-admin">1,234</div>
+                            <div class="stat-change positive">+12 이번 달</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">💬</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 논쟁</div>
+                            <div class="stat-value-admin">567</div>
+                            <div class="stat-change positive">+5 이번 달</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">💭</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">전체 댓글</div>
+                            <div class="stat-value-admin">3,456</div>
+                            <div class="stat-change positive">+89 이번 달</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon-admin">📊</div>
+                        <div class="stat-info-admin">
+                            <div class="stat-label-admin">일평균 방문자</div>
+                            <div class="stat-value-admin">5,678</div>
+                            <div class="stat-change positive">+234 전월 대비</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 차트 영역 -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>회원 가입 추이</h3>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            [차트 영역: 회원 가입 추이 그래프가 여기에 표시됩니다]
+                            <div style="margin-top: 1rem; font-size: 0.875rem;">
+                                Chart.js 또는 Recharts를 사용하여 구현 예정
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>논쟁 작성 추이</h3>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            [차트 영역: 논쟁 작성 추이 그래프가 여기에 표시됩니다]
+                            <div style="margin-top: 1rem; font-size: 0.875rem;">
+                                Chart.js 또는 Recharts를 사용하여 구현 예정
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>카테고리별 논쟁 수</h3>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            [차트 영역: 카테고리별 논쟁 수 파이 차트가 여기에 표시됩니다]
+                            <div style="margin-top: 1rem; font-size: 0.875rem;">
+                                Chart.js 또는 Recharts를 사용하여 구현 예정
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>일별 활동 통계</h3>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            [차트 영역: 일별 활동 통계 그래프가 여기에 표시됩니다]
+                            <div style="margin-top: 1rem; font-size: 0.875rem;">
+                                Chart.js 또는 Recharts를 사용하여 구현 예정
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상세 통계 테이블 -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>카테고리별 상세 통계</h3>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>논쟁 수</th>
+                                <th>댓글 수</th>
+                                <th>참여자 수</th>
+                                <th>평균 좋아요</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>정치</td>
+                                <td>45</td>
+                                <td>234</td>
+                                <td>567</td>
+                                <td>89</td>
+                            </tr>
+                            <tr>
+                                <td>사회</td>
+                                <td>32</td>
+                                <td>189</td>
+                                <td>432</td>
+                                <td>67</td>
+                            </tr>
+                            <tr>
+                                <td>경제</td>
+                                <td>28</td>
+                                <td>156</td>
+                                <td>345</td>
+                                <td>54</td>
+                            </tr>
+                            <tr>
+                                <td>문화</td>
+                                <td>21</td>
+                                <td>123</td>
+                                <td>278</td>
+                                <td>45</td>
+                            </tr>
+                            <tr>
+                                <td>환경</td>
+                                <td>14</td>
+                                <td>98</td>
+                                <td>189</td>
+                                <td>32</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
     </div>
-  </body>
+    <script src="js/theme.js"></script>
+</body>
 </html>

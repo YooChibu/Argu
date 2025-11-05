@@ -1,27 +1,237 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시스템 설정 - Argu Admin</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="css/admin.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
     <div class="admin-layout">
-      <aside class="admin-sidebar">
-        <div class="admin-logo"><h1>Argu Admin</h1></div>
-        <nav class="admin-nav">
-          <a href="index.html" class="nav-item">📊 대시보드</a>
-          <a href="settings.html" class="nav-item active">⚙️ 시스템 설정</a>
-        </nav>
-      </aside>
-      <main class="admin-main">
-        <header class="admin-header"><h2>시스템 설정</h2></header>
-        <div class="admin-content">
-          <p>사이트 전역 설정, 이메일/SNS 연동 등을 구성하는 목업입니다.</p>
-        </div>
-      </main>
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <a href="index.html" style="display: block;">
+                    <img src="../user/images/ARGU.png" alt="Argu Admin" />
+                </a>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="argu.html" class="nav-item">
+                    <span>💬</span> 논쟁 관리
+                </a>
+                <a href="comments.html" class="nav-item">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <span>📂</span> 카테고리 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>시스템 설정</h2>
+                <div class="admin-header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 사이트 기본 설정 -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>사이트 기본 설정</h3>
+                    </div>
+                    <form style="padding: 1.5rem;">
+                        <div class="form-group">
+                            <label class="form-label">사이트 이름</label>
+                            <input type="text" class="form-input" value="Argu" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">사이트 설명</label>
+                            <textarea class="form-textarea" rows="3">건설적인 논쟁과 토론을 위한 플랫폼</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">사이트 URL</label>
+                            <input type="url" class="form-input" value="https://argu.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">관리자 이메일</label>
+                            <input type="email" class="form-input" value="admin@argu.com" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">저장</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 이용 규칙 관리 -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>이용 규칙 관리</h3>
+                        <button class="btn btn-primary btn-sm">+ 규칙 추가</button>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>순서</th>
+                                    <th>제목</th>
+                                    <th>내용</th>
+                                    <th>상태</th>
+                                    <th>작업</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>욕설 및 비방 금지</td>
+                                    <td>다른 사용자에 대한 욕설이나 비방은 금지됩니다.</td>
+                                    <td><span class="status-badge status-active">활성</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>허위 정보 금지</td>
+                                    <td>사실과 다른 정보를 제공하는 것은 금지됩니다.</td>
+                                    <td><span class="status-badge status-active">활성</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>스팸 및 광고 금지</td>
+                                    <td>스팸이나 광고성 내용은 금지됩니다.</td>
+                                    <td><span class="status-badge status-active">활성</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 공지사항 관리 -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>공지사항 관리</h3>
+                        <button class="btn btn-primary btn-sm">+ 공지사항 추가</button>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>제목</th>
+                                    <th>작성일시</th>
+                                    <th>상태</th>
+                                    <th>작업</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>새로운 기능 업데이트 안내</td>
+                                    <td>2025-01-10 10:00</td>
+                                    <td><span class="status-badge status-active">공개</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>이용 규칙 개정 안내</td>
+                                    <td>2025-01-05 14:30</td>
+                                    <td><span class="status-badge status-active">공개</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>시스템 점검 안내</td>
+                                    <td>2025-01-01 09:00</td>
+                                    <td><span class="status-badge status-ended">종료</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm">수정</button>
+                                        <button class="btn btn-danger btn-sm">삭제</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 이메일 템플릿 관리 (추후 작업 예정) -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>이메일 템플릿 관리</h3>
+                    </div>
+                    <div style="padding: 1.5rem; text-align: center; color: var(--text-secondary);">
+                        <p>이메일 템플릿 관리 기능은 추후 구현 예정입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </body>
+    <script src="js/theme.js"></script>
+</body>
 </html>

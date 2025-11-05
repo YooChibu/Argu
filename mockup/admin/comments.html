@@ -4,13 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>댓글 관리 - Argu Admin</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <div class="admin-logo">
-                <h1>Argu Admin</h1>
+                <a href="index.html" style="display: block;">
+                    <img src="../user/images/ARGU.png" alt="Argu Admin" />
+                </a>
             </div>
             <nav class="admin-nav">
                 <a href="index.html" class="nav-item">
@@ -54,6 +73,11 @@
             <header class="admin-header">
                 <h2>댓글 관리</h2>
                 <div class="admin-header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
                     <span class="current-time">2025-01-15 14:30</span>
                 </div>
             </header>
@@ -97,7 +121,7 @@
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td><a href="../argu-detail.html?id=1">AI가 인간의 일자리를...</a></td>
+                                <td><a href="../user/argu-detail.html?id=1">AI가 인간의 일자리를...</a></td>
                                 <td>debater1</td>
                                 <td class="comment-preview">AI는 확실히 많은 일자리를 대체할 것입니다. 하지만 우리는 과거 산업혁명을 통해 알 수 있듯이...</td>
                                 <td>2025-01-15 12:30</td>
@@ -110,7 +134,7 @@
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td><a href="../argu-detail.html?id=1">AI가 인간의 일자리를...</a></td>
+                                <td><a href="../user/argu-detail.html?id=1">AI가 인간의 일자리를...</a></td>
                                 <td>thinker2</td>
                                 <td class="comment-preview">동의합니다. 핵심은 우리가 어떻게 AI와 공존할 수 있는지 배우는 것입니다.</td>
                                 <td>2025-01-15 13:15</td>
@@ -123,7 +147,7 @@
                             </tr>
                             <tr class="reported">
                                 <td>3</td>
-                                <td><a href="../argu-detail.html?id=2">원격 근무가 사무실...</a></td>
+                                <td><a href="../user/argu-detail.html?id=2">원격 근무가 사무실...</a></td>
                                 <td>spammer1</td>
                                 <td class="comment-preview">부적절한 내용의 댓글입니다...</td>
                                 <td>2025-01-14 15:20</td>
@@ -149,230 +173,6 @@
             </div>
         </main>
     </div>
-
-    <style>
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-            background-color: var(--bg-secondary);
-        }
-
-        .admin-sidebar {
-            width: 260px;
-            background-color: var(--text-primary);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .admin-logo {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-logo h1 {
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .admin-nav {
-            flex: 1;
-            padding: 1rem 0;
-        }
-
-        .admin-nav .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .admin-nav .nav-item:hover,
-        .admin-nav .nav-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .admin-footer {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .admin-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .admin-name {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .admin-role {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .logout-btn {
-            display: block;
-            width: 100%;
-            padding: 0.5rem;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            transition: background-color 0.3s;
-        }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-main {
-            flex: 1;
-            margin-left: 260px;
-            min-height: 100vh;
-        }
-
-        .admin-header {
-            background-color: var(--bg-primary);
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .admin-content {
-            padding: 2rem;
-        }
-
-        .admin-toolbar {
-            background-color: var(--bg-primary);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .search-box-admin {
-            display: flex;
-            gap: 0.5rem;
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .search-input-admin {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .admin-table-container {
-            background-color: var(--bg-primary);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1200px;
-        }
-
-        .admin-table th {
-            text-align: left;
-            padding: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .admin-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .admin-table tr:hover {
-            background-color: var(--bg-secondary);
-        }
-
-        .admin-table tr.reported {
-            background-color: #fef2f2;
-        }
-
-        .comment-preview {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .status-suspended {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .page-link {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            text-decoration: none;
-            color: var(--text-primary);
-            background-color: var(--bg-primary);
-            transition: all 0.3s;
-        }
-
-        .page-link:hover,
-        .page-link.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-    </style>
+    <script src="js/theme.js"></script>
 </body>
 </html>

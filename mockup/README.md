@@ -6,32 +6,42 @@
 
 ```
 mockup/
-├── index.html              # 메인 페이지
-├── argu-list.html          # 논쟁 목록 페이지
-├── argu-detail.html        # 논쟁 상세 페이지
-├── argu-create.html        # 논쟁 작성 페이지
-├── argu-edit.html          # 논쟁 수정 페이지
-├── categories.html         # 카테고리 목록 페이지
-├── category-detail.html    # 카테고리별 논쟁 페이지
-├── search.html             # 검색 페이지
-├── user-profile.html       # 사용자 프로필 페이지
-├── my-page.html            # 마이페이지 (대시보드)
-├── auth/
-│   ├── login.html          # 로그인 페이지
-│   └── register.html       # 회원가입 페이지
-├── admin/
-│   ├── index.html          # 관리자 대시보드
-│   ├── users.html          # 회원 관리 페이지
-│   ├── argu.html           # 논쟁 관리 페이지
-│   ├── comments.html       # 댓글 관리 페이지
-│   ├── categories.html     # 카테고리 관리 페이지
-│   ├── reports.html        # 신고 관리 페이지
-│   ├── statistics.html     # 통계 및 분석 페이지
-│   ├── settings.html       # 시스템 설정 페이지
-│   ├── admins.html         # 관리자 관리 페이지
-│   └── login.html          # 관리자 로그인 페이지
-└── css/
-    └── style.css           # 공통 스타일시트
+├── user/                    # 사용자 사이트
+│   ├── index.html          # 메인 페이지
+│   ├── argu-list.html      # 논쟁 목록 페이지
+│   ├── argu-detail.html    # 논쟁 상세 페이지
+│   ├── argu-create.html    # 논쟁 작성 페이지
+│   ├── argu-edit.html      # 논쟁 수정 페이지
+│   ├── categories.html     # 카테고리 목록 페이지
+│   ├── category-detail.html # 카테고리별 논쟁 페이지
+│   ├── search.html         # 검색 페이지
+│   ├── user-profile.html   # 사용자 프로필 페이지
+│   ├── my-page.html        # 마이페이지 (대시보드)
+│   ├── my-page-argu.html   # 내 논쟁
+│   ├── my-page-participated.html # 참여한 논쟁
+│   ├── my-page-comments.html # 내 댓글
+│   ├── my-page-bookmarks.html # 북마크
+│   ├── my-page-activity.html # 활동 내역
+│   ├── auth/
+│   │   ├── login.html      # 로그인 페이지
+│   │   └── register.html    # 회원가입 페이지
+│   ├── css/
+│   │   └── style.css       # 사용자 사이트 스타일시트
+│   └── images/
+│       └── ARGU.png        # 로고 이미지
+└── admin/                   # 관리자 사이트
+    ├── index.html          # 관리자 대시보드
+    ├── users.html          # 회원 관리 페이지
+    ├── argu.html           # 논쟁 관리 페이지
+    ├── comments.html       # 댓글 관리 페이지
+    ├── categories.html     # 카테고리 관리 페이지
+    ├── reports.html        # 신고 관리 페이지
+    ├── statistics.html     # 통계 및 분석 페이지
+    ├── settings.html       # 시스템 설정 페이지
+    ├── admins.html         # 관리자 관리 페이지
+    ├── login.html          # 관리자 로그인 페이지
+    └── css/
+        └── admin.css       # 관리자 전용 스타일시트
 ```
 
 ## 🎨 사용자 사이트 페이지
@@ -93,8 +103,9 @@ mockup/
 ## 🎨 디자인 특징
 
 ### 색상 테마
-- Primary: #6366f1 (인디고)
-- Secondary: #8b5cf6 (보라)
+- **Primary (신뢰)**: #1e40af (깊은 블루) - 신뢰와 안정감을 표현
+- **Secondary (열정)**: #f97316 (코랄 오렌지) - 열정과 에너지를 표현
+- **Accent (균형)**: #10b981 (에메랄드 그린) - 균형과 조화를 표현
 - Success: #10b981 (녹색)
 - Danger: #ef4444 (빨강)
 - Warning: #f59e0b (주황)
@@ -114,9 +125,9 @@ mockup/
 
 ## 📝 사용 방법
 
-1. 브라우저에서 `index.html` 파일을 열어 메인 페이지를 확인합니다.
-2. 각 페이지의 링크를 통해 다른 페이지로 이동할 수 있습니다.
-3. 관리자 페이지는 `admin/` 디렉토리 내에 있습니다.
+1. **사용자 사이트**: 브라우저에서 `user/index.html` 파일을 열어 메인 페이지를 확인합니다.
+2. **관리자 사이트**: 브라우저에서 `admin/index.html` 파일을 열어 관리자 대시보드를 확인합니다.
+3. 각 페이지의 링크를 통해 다른 페이지로 이동할 수 있습니다.
 
 ## ✅ 완성된 페이지
 
@@ -130,7 +141,12 @@ mockup/
 - ✅ 카테고리별 논쟁
 - ✅ 검색 페이지
 - ✅ 사용자 프로필
-- ✅ 마이페이지
+- ✅ 마이페이지 (대시보드)
+- ✅ 내 논쟁
+- ✅ 참여한 논쟁
+- ✅ 내 댓글
+- ✅ 북마크
+- ✅ 활동 내역
 - ✅ 로그인/회원가입
 
 ### 관리자 사이트
