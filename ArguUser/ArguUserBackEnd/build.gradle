@@ -65,6 +65,9 @@ dependencies {
     // 테스트 관련 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'  // Spring Boot 테스트 스타터
     testImplementation 'org.springframework.security:spring-security-test'  // Spring Security 테스트
+
+    // Spring Boot Actuator - 애플리케이션 모니터링 및 관리 엔드포인트 제공
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 // 테스트 태스크 설정

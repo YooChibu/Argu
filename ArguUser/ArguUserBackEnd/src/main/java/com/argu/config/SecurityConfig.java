@@ -74,6 +74,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/argu/**").permitAll()       // 논쟁 조회 API는 모두 허용
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger UI 허용
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()     // API 문서 허용
+                        // Actuator 엔드포인트: 개발 환경에서는 허용, 프로덕션에서는 인증 필요하도록 설정 가능
+                        .requestMatchers("/actuator/health", "/actuator/info", "/actuator/loggers/**").permitAll()  // 개발용: 인증 없이 접근 가능 (loggers 하위 경로 포함)
+                        // 프로덕션에서는 아래 주석을 해제하고 위의 permitAll()을 제거하세요:
+                        // .requestMatchers("/actuator/health", "/actuator/info", "/actuator/loggers/**").authenticated()  // 프로덕션용: 인증 필요
                         .anyRequest().authenticated()                       // 그 외 모든 요청은 인증 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // JWT 필터를 인증 필터 전에 추가

@@ -54,4 +54,29 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
 
+# 애플리케이션 정보 설정 (Actuator info 엔드포인트에 표시됨)
+info:
+  app:
+    name: ${spring.application.name}  # 애플리케이션 이름
+    version: 1.0.0                   # 애플리케이션 버전
+    description: 논쟁 플랫폼 사용자 백엔드 API  # 애플리케이션 설명
+  java:
+    version: ${java.version}          # Java 버전
+  spring:
+    version: ${spring.version}         # Spring 버전
+
+# Spring Boot Actuator 설정
+# 기본 설정: 프로덕션 환경을 고려한 안전한 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,loggers  # health, info, loggers 노출 (loggers는 개발용)
+  endpoint:
+    health:
+      show-details: when-authorized  # 헬스 상세 정보는 인증된 사용자에게만 (프로덕션 기본값)
+  info:
+    env:
+      enabled: true  # 환경 정보 포함
+
 
