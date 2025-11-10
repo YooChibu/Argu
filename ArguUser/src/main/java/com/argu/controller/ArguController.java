@@ -5,6 +5,9 @@ import com.argu.dto.response.ApiResponse;
 import com.argu.dto.response.ArguResponse;
 import com.argu.service.ArguService;
 import com.argu.util.SecurityUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * 논쟁(Argu) 관련 REST API 컨트롤러
  * 논쟁 생성, 조회, 검색, 삭제 등의 기능을 제공합니다.
  */
+@Tag(name = "논쟁 API", description = "논쟁 생성, 조회, 검색, 삭제 등 논쟁 관련 API")
 @RestController
 @RequestMapping("/api/argu")
 @RequiredArgsConstructor
@@ -30,6 +34,8 @@ public class ArguController {
      * @param request 논쟁 생성 요청 데이터 (제목, 내용, 카테고리, 시작일시, 종료일시)
      * @return 생성된 논쟁 정보
      */
+    @Operation(summary = "논쟁 생성", description = "새로운 논쟁을 생성합니다. 인증이 필요합니다.")
+    @SecurityRequirement(name = "JWT")
     @PostMapping
     public ResponseEntity<ApiResponse<ArguResponse>> createArgu(
             @Valid @RequestBody CreateArguRequest request) {
@@ -106,6 +112,8 @@ public class ArguController {
      * @param id 삭제할 논쟁 ID
      * @return 삭제 결과
      */
+    @Operation(summary = "논쟁 삭제", description = "논쟁을 삭제합니다. 작성자만 삭제 가능하며, 논쟁이 시작되기 전에만 삭제 가능합니다.")
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Object>> deleteArgu(@PathVariable Long id) {
         // 현재 로그인한 사용자 ID 조회

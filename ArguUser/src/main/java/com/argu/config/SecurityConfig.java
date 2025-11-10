@@ -72,6 +72,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()        // 인증 관련 API는 모두 허용
                         .requestMatchers("/api/categories/**").permitAll()  // 카테고리 API는 모두 허용
                         .requestMatchers("/api/argu/**").permitAll()       // 논쟁 조회 API는 모두 허용
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger UI 허용
+                        .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()     // API 문서 허용
                         .anyRequest().authenticated()                       // 그 외 모든 요청은 인증 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // JWT 필터를 인증 필터 전에 추가
