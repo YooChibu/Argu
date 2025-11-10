@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gradle: build",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew.bat",
+      "args": ["build"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "gradle: bootRun",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew.bat",
+      "args": ["bootRun"],
+      "group": "build",
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "gradle: clean",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew.bat",
+      "args": ["clean"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "gradle: clean build",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew.bat",
+      "args": ["clean", "build"],
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}
+
+
+

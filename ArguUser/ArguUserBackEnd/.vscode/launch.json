@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ArguUserApplication",
+      "request": "launch",
+      "mainClass": "com.argu.ArguUserApplication",
+      "projectName": "ArguUser"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot - ArguUserApplication",
+      "request": "launch",
+      "mainClass": "com.argu.ArguUserApplication",
+      "projectName": "argu-user",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "-Dspring.profiles.active=dev",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "type": "java",
+      "name": "Gradle BootRun",
+      "request": "launch",
+      "mainClass": "com.argu.ArguUserApplication",
+      "projectName": "argu-user",
+      "preLaunchTask": "gradle: bootRun"
+    }
+  ]
+}
