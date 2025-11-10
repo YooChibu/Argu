@@ -1,0 +1,67 @@
+package com.argu.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "comments", indexes = {
+    @Index(name = "idx_user_id", columnList = "user_id"),
+    @Index(name = "idx_argu_id", columnList = "argu_id"),
+    @Index(name = "idx_parent_id", columnList = "parent_id"),
+    @Index(name = "idx_created_at", columnList = "created_at")
+})
+@org.hibernate.annotations.Comment("댓글 테이블")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EntityListeners(AuditingEntityListener.class)
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.hibernate.annotations.Comment("댓글 ID")
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_comment_user"))
+    @org.hibernate.annotations.Comment("댓글 작성자 ID")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "argu_id", nullable = false, foreignKey = @ForeignKey(name = "fk_comment_argu"))
+    @org.hibernate.annotations.Comment("논쟁 ID")
+    private Argu argu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_comment_parent"))
+    @org.hibernate.annotations.Comment("부모 댓글 ID (대댓글인 경우)")
+    private Comment parent;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    @org.hibernate.annotations.Comment("댓글 내용")
+    private String content;
+
+    @Column(name = "is_hidden", nullable = false)
+    @org.hibernate.annotations.Comment("숨김 여부")
+    @Builder.Default
+    private Boolean isHidden = false;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @org.hibernate.annotations.Comment("생성 일시")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    @org.hibernate.annotations.Comment("수정 일시")
+    private LocalDateTime updatedAt;
+}
+
+
+

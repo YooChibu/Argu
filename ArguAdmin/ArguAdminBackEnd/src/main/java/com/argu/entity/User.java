@@ -1,0 +1,89 @@
+package com.argu.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Comment;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+/**
+ * 사용자 엔티티
+ * 논쟁 플랫폼의 사용자 정보를 저장하는 테이블
+ */
+@Entity
+@Table(name = "users", indexes = {
+    @Index(name = "idx_email", columnList = "email"),
+    @Index(name = "idx_username", columnList = "username"),
+    @Index(name = "idx_status", columnList = "status"),
+    @Index(name = "idx_created_at", columnList = "created_at")
+})
+@Comment("사용자 정보 테이블")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EntityListeners(AuditingEntityListener.class)
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Comment("사용자 ID")
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 255)
+    @Comment("이메일 주소 (로그인 ID)")
+    private String email;
+
+    @Column(nullable = false, length = 255)
+    @Comment("비밀번호 (BCrypt 해시)")
+    private String password;
+
+    @Column(nullable = false, unique = true, length = 50)
+    @Comment("사용자명 (고유값)")
+    private String username;
+
+    @Column(nullable = false, length = 50)
+    @Comment("닉네임")
+    private String nickname;
+
+    @Column(name = "profile_image", length = 500)
+    @Comment("프로필 이미지 URL")
+    private String profileImage;
+
+    @Column(columnDefinition = "TEXT")
+    @Comment("자기소개")
+    private String bio;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Comment("사용자 상태 (ACTIVE: 활성, SUSPENDED: 정지, DELETED: 삭제)")
+    @Builder.Default
+    private UserStatus status = UserStatus.ACTIVE;
+
+    @Column(name = "email_verified", nullable = false)
+    @Comment("이메일 인증 여부")
+    @Builder.Default
+    private Boolean emailVerified = false;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @Comment("생성 일시")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    @Comment("수정 일시")
+    private LocalDateTime updatedAt;
+
+    public enum UserStatus {
+        ACTIVE,    // 활성
+        SUSPENDED, // 정지
+        DELETED    // 삭제
+    }
+}
+
+
+
