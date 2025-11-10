@@ -1,13 +1,40 @@
 <!doctype html>
+<!--
+  Argu User Frontend - HTML 진입점
+  
+  이 파일은 애플리케이션의 HTML 진입점입니다.
+  Vite는 이 파일을 기반으로 개발 서버를 실행하고 빌드를 수행합니다.
+  
+  주요 내용:
+  - 메타 태그 설정 (문자 인코딩, 뷰포트)
+  - React 애플리케이션 마운트 지점 (div#root)
+  - 메인 JavaScript 모듈 로드 (main.jsx)
+-->
 <html lang="ko">
   <head>
+    <!-- 문자 인코딩: UTF-8 -->
     <meta charset="UTF-8" />
+    
+    <!-- 파비콘 (사이트 아이콘) -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- 뷰포트 설정: 반응형 디자인을 위한 메타 태그 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- 페이지 제목 -->
     <title>Argu - 논쟁 플랫폼</title>
   </head>
   <body>
+    <!-- 
+      React 애플리케이션이 마운트될 루트 요소
+      main.jsx에서 ReactDOM.createRoot()로 이 요소에 앱을 렌더링합니다.
+    -->
     <div id="root"></div>
+    
+    <!-- 
+      메인 JavaScript 모듈
+      type="module"로 ES 모듈로 로드되며, Vite가 이를 처리합니다.
+    -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

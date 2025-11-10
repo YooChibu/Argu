@@ -1,17 +1,44 @@
+/**
+ * ArguCard 컴포넌트 스타일
+ * 
+ * 논쟁 목록에서 각 논쟁을 카드 형태로 표시하는 컴포넌트의 스타일입니다.
+ * 
+ * 주요 기능:
+ * - 카드 레이아웃 및 호버 효과
+ * - 카테고리 및 상태 배지
+ * - 논쟁 제목, 내용 미리보기
+ * - 작성자 정보 및 통계 표시
+ */
+
+/* ============================================
+   카드 컨테이너 (Card Container)
+   ============================================ */
+/* 
+ * 논쟁 카드 기본 스타일
+ * 호버 시 살짝 위로 올라가는 효과 (transform)와 그림자 강화
+ */
 .argu-card {
   background-color: var(--bg-primary);
   border-radius: 0.75rem;
   padding: 1.5rem;
   box-shadow: var(--shadow);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 전환 효과 */
   margin-bottom: 1.5rem;
 }
 
+/* 호버 효과: 카드가 위로 살짝 올라가고 그림자가 강해짐 */
 .argu-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
+/* ============================================
+   카드 헤더 (Card Header)
+   ============================================ */
+/* 
+ * 카테고리 및 상태 배지 컨테이너
+ * flex-wrap으로 작은 화면에서 줄바꿈 가능
+ */
 .argu-card-header {
   display: flex;
   gap: 0.5rem;
@@ -19,6 +46,10 @@
   flex-wrap: wrap;
 }
 
+/* ============================================
+   배지 스타일 (Badge Styles)
+   ============================================ */
+/* 카테고리 배지: 메인 색상 사용 */
 .category-badge {
   background-color: var(--primary-color);
   color: white;
@@ -28,6 +59,7 @@
   font-weight: 600;
 }
 
+/* 상태 배지 기본 스타일 */
 .status-badge {
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
@@ -35,43 +67,57 @@
   font-weight: 600;
 }
 
+/* 예정 상태: 경고 색상 (노란색) */
 .status-scheduled {
   background-color: var(--warning-color);
   color: white;
 }
 
+/* 진행중 상태: 성공 색상 (초록색) */
 .status-active {
   background-color: var(--success-color);
   color: white;
 }
 
+/* 종료 상태: 보조 텍스트 색상 (회색) */
 .status-ended {
   background-color: var(--text-secondary);
   color: white;
 }
 
+/* ============================================
+   카드 콘텐츠 (Card Content)
+   ============================================ */
+/* 논쟁 제목 */
 .argu-title {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
 }
 
+/* 제목 링크 스타일 */
 .argu-title a {
   color: var(--text-primary);
   text-decoration: none;
   transition: color 0.3s;
 }
 
+/* 제목 링크 호버 효과 */
 .argu-title a:hover {
   color: var(--primary-color);
 }
 
+/* 논쟁 내용 미리보기 */
 .argu-excerpt {
   color: var(--text-secondary);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
+/* ============================================
+   메타 정보 (Meta Information)
+   ============================================ */
+/* 작성자 및 작성일 정보 */
 .argu-meta {
   display: flex;
   gap: 1rem;
@@ -81,15 +127,21 @@
   flex-wrap: wrap;
 }
 
+/* 메타 정보 내 링크 (작성자 이름 등) */
 .argu-meta a {
   color: var(--primary-color);
   text-decoration: none;
 }
 
+/* 메타 정보 링크 호버 효과 */
 .argu-meta a:hover {
   text-decoration: underline;
 }
 
+/* ============================================
+   통계 정보 (Statistics)
+   ============================================ */
+/* 통계 컨테이너 (좋아요, 댓글, 조회수) */
 .argu-stats {
   display: flex;
   gap: 1rem;
@@ -97,6 +149,7 @@
   color: var(--text-secondary);
 }
 
+/* 개별 통계 항목 */
 .stat {
   display: inline-flex;
   align-items: center;

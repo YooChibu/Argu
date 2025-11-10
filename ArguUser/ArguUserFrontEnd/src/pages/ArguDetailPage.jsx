@@ -1,3 +1,16 @@
+/**
+ * ArguDetailPage 컴포넌트
+ * 
+ * 논쟁 상세 페이지입니다.
+ * 
+ * 주요 기능:
+ * - 논쟁 상세 정보 표시
+ * - 댓글 목록 및 작성
+ * - 찬성/반대 의견 작성 및 통계 표시
+ * - 좋아요 기능
+ * - 논쟁 수정/삭제 (작성자만 가능)
+ */
+
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
@@ -8,26 +21,44 @@ import { likeService } from '../services/likeService'
 import { format } from 'date-fns'
 import './ArguDetailPage.css'
 
+/**
+ * ArguDetailPage 컴포넌트
+ * 
+ * @returns {JSX.Element} 논쟁 상세 페이지 컴포넌트
+ */
 const ArguDetailPage = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { user, isAuthenticated } = useAuth()
-  const [argu, setArgu] = useState(null)
-  const [comments, setComments] = useState([])
-  const [opinions, setOpinions] = useState([])
-  const [isLiked, setIsLiked] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [commentContent, setCommentContent] = useState('')
-  const [selectedSide, setSelectedSide] = useState(null)
-  const [opinionContent, setOpinionContent] = useState('')
+  // 훅 사용
+  const { id } = useParams() // URL 파라미터에서 논쟁 ID 가져오기
+  const navigate = useNavigate() // 페이지 네비게이션
+  const { user, isAuthenticated } = useAuth() // 인증 정보
 
+  // 상태 관리
+  const [argu, setArgu] = useState(null) // 논쟁 정보
+  const [comments, setComments] = useState([]) // 댓글 목록
+  const [opinions, setOpinions] = useState([]) // 의견 목록 (찬성/반대)
+  const [isLiked, setIsLiked] = useState(false) // 좋아요 여부
+  const [loading, setLoading] = useState(true) // 로딩 상태
+  const [commentContent, setCommentContent] = useState('') // 댓글 작성 내용
+  const [selectedSide, setSelectedSide] = useState(null) // 선택한 입장 (찬성/반대)
+  const [opinionContent, setOpinionContent] = useState('') // 의견 작성 내용
+
+  /**
+   * 논쟁 ID 변경 시 데이터 로딩
+   */
   useEffect(() => {
     fetchData()
   }, [id])
 
+  /**
+   * 데이터 가져오기
+   * 
+   * 논쟁 정보, 댓글 목록, 의견 목록을 병렬로 가져옵니다.
+   * 로그인한 경우 좋아요 여부도 확인합니다.
+   */
   const fetchData = async () => {
     try {
       setLoading(true)
+      // 논쟁 정보, 댓글 목록, 의견 목록을 병렬로 가져오기
       const [arguResponse, commentsResponse, opinionsResponse] = await Promise.all([
         arguService.getArguById(id),
         commentService.getCommentsByArgu(id),
@@ -39,6 +70,7 @@ const ArguDetailPage = () => {
       setComments((commentsResponse.data || commentsResponse)?.content || [])
       setOpinions((opinionsResponse.data || opinionsResponse) || [])
 
+      // 로그인한 경우 좋아요 여부 확인
       if (isAuthenticated) {
         const liked = await likeService.isLiked(id)
         setIsLiked(liked)
@@ -50,6 +82,12 @@ const ArguDetailPage = () => {
     }
   }
 
+  /**
+   * 좋아요 토글 처리
+   * 
+   * 비로그인 사용자는 로그인 페이지로 이동하고,
+   * 로그인한 사용자는 좋아요를 추가/제거합니다.
+   */
   const handleLike = async () => {
     if (!isAuthenticated) {
       navigate('/auth/login')
@@ -59,12 +97,21 @@ const ArguDetailPage = () => {
     try {
       await likeService.toggleLike(id)
       setIsLiked(!isLiked)
+      // 좋아요 수 업데이트를 위해 데이터 다시 가져오기
       fetchData()
     } catch (error) {
       console.error('좋아요 처리 실패:', error)
     }
   }
 
+  /**
+   * 댓글 작성 처리
+   * 
+   * 비로그인 사용자는 로그인 페이지로 이동하고,
+   * 로그인한 사용자는 댓글을 작성합니다.
+   * 
+   * @param {Event} e - 폼 제출 이벤트
+   */
   const handleCreateComment = async (e) => {
     e.preventDefault()
     if (!isAuthenticated) {
@@ -78,12 +125,21 @@ const ArguDetailPage = () => {
         content: commentContent,
       })
       setCommentContent('')
+      // 댓글 목록 업데이트를 위해 데이터 다시 가져오기
       fetchData()
     } catch (error) {
       console.error('댓글 작성 실패:', error)
     }
   }
 
+  /**
+   * 의견 작성 처리 (찬성/반대)
+   * 
+   * 비로그인 사용자는 로그인 페이지로 이동하고,
+   * 로그인한 사용자는 논쟁에 대한 의견(찬성 또는 반대)을 작성합니다.
+   * 
+   * @param {string} side - 의견 방향 ('FOR' 또는 'AGAINST')
+   */
   const handleCreateOpinion = async (side) => {
     if (!isAuthenticated) {
       navigate('/auth/login')
@@ -98,17 +154,24 @@ const ArguDetailPage = () => {
       })
       setSelectedSide(null)
       setOpinionContent('')
+      // 의견 목록 업데이트를 위해 데이터 다시 가져오기
       fetchData()
     } catch (error) {
       console.error('입장 선택 실패:', error)
     }
   }
 
+  /**
+   * 논쟁 삭제 처리
+   * 
+   * 작성자만 삭제할 수 있으며, 논쟁이 시작되기 전(SCHEDULED 상태)에만 삭제 가능합니다.
+   */
   const handleDelete = async () => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return
 
     try {
       await arguService.deleteArgu(id)
+      // 삭제 성공 시 논쟁 목록 페이지로 이동
       navigate('/argu')
     } catch (error) {
       console.error('삭제 실패:', error)

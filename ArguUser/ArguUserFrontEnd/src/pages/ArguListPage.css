@@ -1,3 +1,22 @@
+/**
+ * ArguListPage 스타일 (논쟁 목록 페이지)
+ * 
+ * 논쟁 목록 페이지의 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 페이지 헤더 및 필터 섹션
+ * - 논쟁 목록 레이아웃
+ * - 페이지네이션
+ * - 빈 상태 표시
+ */
+
+/* ============================================
+   페이지 헤더 (Page Header)
+   ============================================ */
+/* 
+ * 페이지 제목과 액션 버튼을 나란히 배치
+ * Flexbox를 사용하여 양쪽 정렬
+ */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -5,11 +24,19 @@
   margin-bottom: 2rem;
 }
 
+/* 페이지 제목 */
 .page-header h1 {
   font-size: 2rem;
   font-weight: 700;
 }
 
+/* ============================================
+   필터 섹션 (Filter Section)
+   ============================================ */
+/* 
+ * 필터 컨테이너
+ * 카테고리, 상태, 정렬 옵션을 포함하는 섹션
+ */
 .filter-section {
   background-color: var(--bg-primary);
   padding: 1.5rem;
@@ -18,12 +45,17 @@
   box-shadow: var(--shadow);
 }
 
+/* 필터 옵션 컨테이너 */
 .filters {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
 }
 
+/* ============================================
+   선택 필드 (Select Field)
+   ============================================ */
+/* 필터용 선택 드롭다운 */
 .form-select {
   padding: 0.75rem;
   border: 1px solid var(--border-color);
@@ -34,24 +66,37 @@
   cursor: pointer;
 }
 
+/* 포커스 상태: 테두리 색상 변경 및 그림자 효과 */
 .form-select:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
 }
 
+/* ============================================
+   논쟁 목록 (Argu List)
+   ============================================ */
+/* 논쟁 카드 목록 컨테이너 */
 .argu-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+/* ============================================
+   빈 상태 (Empty State)
+   ============================================ */
+/* 논쟁이 없을 때 표시되는 메시지 */
 .empty-state {
   text-align: center;
   padding: 4rem 2rem;
   color: var(--text-secondary);
 }
 
+/* ============================================
+   페이지네이션 (Pagination)
+   ============================================ */
+/* 페이지네이션 컨테이너 */
 .pagination {
   display: flex;
   justify-content: center;
@@ -59,6 +104,7 @@
   margin-top: 3rem;
 }
 
+/* 페이지 링크 버튼 */
 .page-link {
   padding: 0.5rem 1rem;
   border: 1px solid var(--border-color);
@@ -71,6 +117,7 @@
   font-size: 1rem;
 }
 
+/* 페이지 링크 호버 및 활성 상태 */
 .page-link:hover:not(:disabled),
 .page-link.active {
   background-color: var(--primary-color);
@@ -78,6 +125,7 @@
   border-color: var(--primary-color);
 }
 
+/* 비활성화된 페이지 링크 (첫 페이지/마지막 페이지) */
 .page-link:disabled {
   opacity: 0.5;
   cursor: not-allowed;

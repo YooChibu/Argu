@@ -1,4 +1,19 @@
-# Logs
+# ============================================
+# Git Ignore 설정 파일
+# 
+# Git 버전 관리에서 제외할 파일과 디렉토리를 지정합니다.
+# 
+# 주요 제외 항목:
+# - 로그 파일
+# - 의존성 디렉토리 (node_modules)
+# - 빌드 결과물 (dist)
+# - 에디터 설정 파일
+# ============================================
+
+# ============================================
+# 로그 파일 (Log Files)
+# ============================================
+# 모든 로그 파일 제외
 logs
 *.log
 npm-debug.log*
@@ -7,20 +22,41 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ============================================
+# 의존성 및 빌드 결과물 (Dependencies & Build Output)
+# ============================================
+# Node.js 의존성 디렉토리
 node_modules
+
+# Vite 빌드 결과물
 dist
 dist-ssr
+
+# 로컬 환경 변수 파일
 *.local
 
-# Package manager lock files
+# ============================================
+# 패키지 매니저 Lock 파일 (Package Manager Lock Files)
+# ============================================
 # yarn.lock과 package-lock.json은 버전 관리에 포함됩니다
+# (프로젝트에서 npm과 yarn 모두 사용 가능하도록)
+# pnpm-lock.yaml은 제외
 pnpm-lock.yaml
 
-# Editor directories and files
+# ============================================
+# 에디터 디렉토리 및 파일 (Editor Directories and Files)
+# ============================================
+# Visual Studio Code 설정 (extensions.json은 포함)
 .vscode/*
 !.vscode/extensions.json
+
+# IntelliJ IDEA / WebStorm 설정
 .idea
+
+# macOS 시스템 파일
 .DS_Store
+
+# Visual Studio 설정 파일
 *.suo
 *.ntvs*
 *.njsproj

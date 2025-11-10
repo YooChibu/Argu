@@ -1,20 +1,47 @@
+/**
+ * Auth 페이지 스타일 (로그인/회원가입)
+ * 
+ * 로그인 및 회원가입 페이지의 공통 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 중앙 정렬된 인증 폼
+ * - 폼 입력 필드 스타일
+ * - 에러 메시지 표시
+ * - 링크 스타일
+ */
+
+/* ============================================
+   인증 페이지 컨테이너 (Auth Page Container)
+   ============================================ */
+/* 
+ * 인증 페이지 기본 레이아웃
+ * 화면 중앙에 폼을 배치하기 위한 Flexbox 레이아웃
+ */
 .auth-page {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 200px); /* 헤더/푸터를 제외한 최소 높이 */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem 0;
 }
 
+/* ============================================
+   인증 폼 컨테이너 (Auth Form Container)
+   ============================================ */
+/* 
+ * 인증 폼 카드 스타일
+ * 중앙에 배치되는 폼 컨테이너
+ */
 .auth-container {
   background-color: var(--bg-primary);
   border-radius: 0.75rem;
   padding: 3rem;
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 500px;
+  max-width: 500px; /* 최대 너비 제한 */
 }
 
+/* 폼 제목 (h1) */
 .auth-container h1 {
   text-align: center;
   margin-bottom: 2rem;
@@ -22,23 +49,36 @@
   font-weight: 700;
 }
 
+/* ============================================
+   폼 스타일 (Form Styles)
+   ============================================ */
+/* 인증 폼 레이아웃 */
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+/* 폼 그룹 (입력 필드와 라벨) */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+/* 폼 라벨 */
 .form-group label {
   font-weight: 600;
   color: var(--text-primary);
 }
 
+/* ============================================
+   에러 메시지 (Error Message)
+   ============================================ */
+/* 
+ * 에러 메시지 스타일
+ * 빨간색 배경으로 에러를 강조
+ */
 .error-message {
   background-color: #fee2e2;
   color: var(--danger-color);
@@ -48,6 +88,13 @@
   font-weight: 600;
 }
 
+/* ============================================
+   인증 링크 (Auth Links)
+   ============================================ */
+/* 
+ * 회원가입/로그인 전환 링크 컨테이너
+ * 폼 하단에 배치되는 링크들
+ */
 .auth-links {
   margin-top: 1.5rem;
   text-align: center;
@@ -56,12 +103,14 @@
   gap: 0.5rem;
 }
 
+/* 인증 링크 스타일 */
 .auth-links a {
   color: var(--primary-color);
   text-decoration: none;
   transition: color 0.3s;
 }
 
+/* 인증 링크 호버 효과 */
 .auth-links a:hover {
   color: var(--primary-dark);
 }

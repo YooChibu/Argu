@@ -1,3 +1,15 @@
+/**
+ * HomePage 컴포넌트
+ * 
+ * 애플리케이션의 메인 페이지입니다.
+ * 
+ * 주요 기능:
+ * - 통합 검색 기능
+ * - 인기 논쟁 미리보기
+ * - 최신 논쟁 목록
+ * - 카테고리별 미리보기
+ */
+
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { arguService } from '../services/arguService'
@@ -5,22 +17,37 @@ import { categoryService } from '../services/categoryService'
 import ArguCard from '../components/argu/ArguCard'
 import './HomePage.css'
 
+/**
+ * HomePage 컴포넌트
+ * 
+ * @returns {JSX.Element} 홈페이지 컴포넌트
+ */
 const HomePage = () => {
-  const [popularArgus, setPopularArgus] = useState([])
-  const [latestArgus, setLatestArgus] = useState([])
-  const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [searchKeyword, setSearchKeyword] = useState('')
+  // 상태 관리
+  const [popularArgus, setPopularArgus] = useState([]) // 인기 논쟁 목록
+  const [latestArgus, setLatestArgus] = useState([]) // 최신 논쟁 목록
+  const [categories, setCategories] = useState([]) // 카테고리 목록
+  const [loading, setLoading] = useState(true) // 로딩 상태
+  const [searchKeyword, setSearchKeyword] = useState('') // 검색 키워드
 
+  /**
+   * 컴포넌트 마운트 시 데이터 로딩
+   */
   useEffect(() => {
     fetchData()
   }, [])
 
+  /**
+   * 데이터 가져오기
+   * 
+   * 논쟁 목록과 카테고리 목록을 병렬로 가져옵니다.
+   */
   const fetchData = async () => {
     try {
       setLoading(true)
+      // 논쟁 목록과 카테고리 목록을 병렬로 가져오기
       const [argusRes, categoriesRes] = await Promise.all([
-        arguService.getAllArgus(0, 6),
+        arguService.getAllArgus(0, 6), // 최대 6개 논쟁 가져오기
         categoryService.getAllCategories(),
       ])
       
@@ -28,6 +55,7 @@ const HomePage = () => {
       const argusData = argusRes.data || argusRes
       const categoriesData = categoriesRes.data || categoriesRes
       
+      // 인기 논쟁과 최신 논쟁을 동일한 데이터로 설정 (실제로는 정렬 기준에 따라 다를 수 있음)
       setPopularArgus(argusData.content || [])
       setLatestArgus(argusData.content || [])
       setCategories(categoriesData || [])
@@ -38,9 +66,17 @@ const HomePage = () => {
     }
   }
 
+  /**
+   * 검색 처리 함수
+   * 
+   * 검색어를 입력하고 검색 페이지로 이동합니다.
+   * 
+   * @param {Event} e - 폼 제출 이벤트
+   */
   const handleSearch = (e) => {
     e.preventDefault()
     if (searchKeyword.trim()) {
+      // 검색 페이지로 이동 (쿼리 파라미터로 검색어 전달)
       window.location.href = `/search?q=${encodeURIComponent(searchKeyword)}`
     }
   }

@@ -1,25 +1,53 @@
+/**
+ * RegisterPage 컴포넌트
+ * 
+ * 사용자 회원가입 페이지입니다.
+ * 
+ * 주요 기능:
+ * - 이메일, 아이디, 닉네임, 비밀번호 입력
+ * - 비밀번호 확인
+ * - 비밀번호 일치 검증
+ * - 회원가입 성공 시 자동 로그인 및 메인 페이지로 이동
+ */
+
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './Auth.css'
 
+/**
+ * RegisterPage 컴포넌트
+ * 
+ * @returns {JSX.Element} 회원가입 페이지 컴포넌트
+ */
 const RegisterPage = () => {
-  const navigate = useNavigate()
-  const { register } = useAuth()
-  const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    passwordConfirm: '',
-    nickname: '',
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  // 훅 사용
+  const navigate = useNavigate() // 페이지 네비게이션
+  const { register } = useAuth() // 회원가입 함수
 
+  // 상태 관리
+  const [formData, setFormData] = useState({
+    email: '', // 이메일
+    username: '', // 아이디
+    password: '', // 비밀번호
+    passwordConfirm: '', // 비밀번호 확인
+    nickname: '', // 닉네임
+  })
+  const [error, setError] = useState('') // 에러 메시지
+  const [loading, setLoading] = useState(false) // 로딩 상태
+
+  /**
+   * 폼 제출 처리 함수
+   * 
+   * 회원가입 요청을 보내고 성공 시 메인 페이지로 이동합니다.
+   * 
+   * @param {Event} e - 폼 제출 이벤트
+   */
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
+    // 비밀번호 일치 검증
     if (formData.password !== formData.passwordConfirm) {
       setError('비밀번호가 일치하지 않습니다.')
       return
@@ -28,14 +56,17 @@ const RegisterPage = () => {
     setLoading(true)
 
     try {
+      // 회원가입 요청 (성공 시 자동으로 로그인됨)
       await register({
         email: formData.email,
         username: formData.username,
         password: formData.password,
         nickname: formData.nickname,
       })
+      // 회원가입 성공 시 메인 페이지로 이동
       navigate('/')
     } catch (error) {
+      // 에러 메시지 표시
       setError(error.response?.data?.message || '회원가입에 실패했습니다.')
     } finally {
       setLoading(false)

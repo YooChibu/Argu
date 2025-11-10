@@ -1,13 +1,37 @@
+/**
+ * Header 컴포넌트
+ * 
+ * 애플리케이션의 상단 네비게이션 헤더입니다.
+ * 
+ * 주요 기능:
+ * - 로고 및 메인 네비게이션
+ * - 테마 전환 버튼
+ * - 인증 상태에 따른 버튼 표시 (로그인/회원가입 또는 논쟁 작성/마이페이지/로그아웃)
+ */
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import './Header.css'
 
+/**
+ * Header 컴포넌트
+ * 
+ * @returns {JSX.Element} 헤더 컴포넌트
+ */
 const Header = () => {
+  // 인증 관련 훅
   const { user, logout, isAuthenticated } = useAuth()
+  // 테마 관련 훅
   const { theme, toggleTheme } = useTheme()
+  // 네비게이션 훅
   const navigate = useNavigate()
 
+  /**
+   * 로그아웃 처리 함수
+   * 
+   * 로그아웃 후 메인 페이지로 이동합니다.
+   */
   const handleLogout = () => {
     logout()
     navigate('/')
@@ -17,11 +41,14 @@ const Header = () => {
     <header className="header">
       <div className="container">
         <div className="header-content">
+          {/* 로고 영역 */}
           <div className="logo">
             <Link to="/">
-              <span className="logo-text">Argu</span>
+              <img src="/images/ARGU.png" alt="Argu" className="logo-img" />
             </Link>
           </div>
+          
+          {/* 메인 네비게이션 */}
           <nav className="nav">
             <Link to="/" className="nav-link">
               홈
@@ -30,7 +57,10 @@ const Header = () => {
               논쟁 목록
             </Link>
           </nav>
+          
+          {/* 헤더 액션 버튼들 */}
           <div className="header-actions">
+            {/* 테마 전환 버튼 */}
             <button
               className="theme-toggle"
               onClick={toggleTheme}
@@ -38,7 +68,10 @@ const Header = () => {
             >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
+            
+            {/* 인증 상태에 따른 버튼 표시 */}
             {isAuthenticated ? (
+              // 로그인된 사용자: 논쟁 작성, 마이페이지, 로그아웃 버튼
               <>
                 <Link to="/argu/create" className="btn btn-primary">
                   논쟁 작성
@@ -51,6 +84,7 @@ const Header = () => {
                 </button>
               </>
             ) : (
+              // 비로그인 사용자: 로그인, 회원가입 버튼
               <>
                 <Link to="/auth/login" className="btn btn-outline">
                   로그인

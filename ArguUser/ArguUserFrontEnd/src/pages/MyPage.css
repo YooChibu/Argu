@@ -1,13 +1,33 @@
+/**
+ * MyPage 스타일 (마이페이지)
+ * 
+ * 현재 로그인한 사용자의 마이페이지 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 사용자 프로필 정보 표시
+ * - 프로필 아바타
+ * - 사용자 통계 정보 (그리드 레이아웃)
+ */
+
+/* ============================================
+   페이지 컨테이너 (Page Container)
+   ============================================ */
+/* 마이페이지 기본 스타일 */
 .my-page {
   padding: 2rem 0;
 }
 
+/* 페이지 제목 */
 .my-page h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
 }
 
+/* ============================================
+   프로필 섹션 (Profile Section)
+   ============================================ */
+/* 프로필 정보를 담는 카드 컨테이너 */
 .profile-section {
   background-color: var(--bg-primary);
   border-radius: 0.75rem;
@@ -15,6 +35,14 @@
   box-shadow: var(--shadow);
 }
 
+/* ============================================
+   프로필 헤더 (Profile Header)
+   ============================================ */
+/* 
+ * 프로필 헤더 영역
+ * 아바타, 닉네임, 아이디, 자기소개를 포함
+ * 하단 테두리로 통계 섹션과 구분
+ */
 .profile-header {
   display: flex;
   gap: 1.5rem;
@@ -23,6 +51,7 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+/* 프로필 아바타 (원형) */
 .profile-avatar {
   width: 80px;
   height: 80px;
@@ -34,6 +63,7 @@
   font-size: 2.5rem;
 }
 
+/* 프로필 정보 영역 */
 .profile-info h2 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -45,17 +75,27 @@
   margin-bottom: 0.5rem;
 }
 
+/* 자기소개 (Bio) */
 .profile-bio {
   color: var(--text-primary);
   margin-top: 0.5rem;
 }
 
+/* ============================================
+   프로필 통계 (Profile Statistics)
+   ============================================ */
+/* 
+ * 사용자 통계 그리드
+ * 작성한 논쟁, 참여한 논쟁, 받은 좋아요 등을 표시
+ * auto-fit과 minmax를 사용하여 반응형 그리드 생성
+ */
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1.5rem;
 }
 
+/* 통계 카드 */
 .stat-card {
   text-align: center;
   padding: 1.5rem;
@@ -63,6 +103,7 @@
   border-radius: 0.5rem;
 }
 
+/* 통계 값 (숫자) */
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
@@ -70,6 +111,7 @@
   margin-bottom: 0.5rem;
 }
 
+/* 통계 라벨 (설명) */
 .stat-label {
   color: var(--text-secondary);
   font-size: 0.875rem;

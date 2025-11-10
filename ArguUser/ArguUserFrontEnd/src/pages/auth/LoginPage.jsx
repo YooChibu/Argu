@@ -1,27 +1,57 @@
+/**
+ * LoginPage 컴포넌트
+ * 
+ * 사용자 로그인 페이지입니다.
+ * 
+ * 주요 기능:
+ * - 이메일 또는 아이디로 로그인
+ * - 비밀번호 입력
+ * - 로그인 실패 시 에러 메시지 표시
+ * - 로그인 성공 시 메인 페이지로 이동
+ */
+
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import './Auth.css'
 
+/**
+ * LoginPage 컴포넌트
+ * 
+ * @returns {JSX.Element} 로그인 페이지 컴포넌트
+ */
 const LoginPage = () => {
-  const navigate = useNavigate()
-  const { login } = useAuth()
-  const [formData, setFormData] = useState({
-    emailOrUsername: '',
-    password: '',
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  // 훅 사용
+  const navigate = useNavigate() // 페이지 네비게이션
+  const { login } = useAuth() // 로그인 함수
 
+  // 상태 관리
+  const [formData, setFormData] = useState({
+    emailOrUsername: '', // 이메일 또는 아이디
+    password: '', // 비밀번호
+  })
+  const [error, setError] = useState('') // 에러 메시지
+  const [loading, setLoading] = useState(false) // 로딩 상태
+
+  /**
+   * 폼 제출 처리 함수
+   * 
+   * 로그인 요청을 보내고 성공 시 메인 페이지로 이동합니다.
+   * 
+   * @param {Event} e - 폼 제출 이벤트
+   */
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
+      // 로그인 요청
       await login(formData.emailOrUsername, formData.password)
+      // 로그인 성공 시 메인 페이지로 이동
       navigate('/')
     } catch (error) {
+      // 에러 메시지 표시
       setError(error.response?.data?.message || '로그인에 실패했습니다.')
     } finally {
       setLoading(false)

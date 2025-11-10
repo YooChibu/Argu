@@ -1,3 +1,24 @@
+/**
+ * Header 컴포넌트 스타일
+ * 
+ * 애플리케이션 상단 네비게이션 헤더의 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 고정 헤더 (스크롤 시 상단에 고정)
+ * - 로고 및 네비게이션 링크
+ * - 테마 전환 버튼
+ * - 사용자 액션 버튼
+ * - 반응형 디자인 (모바일 대응)
+ */
+
+/* ============================================
+   헤더 컨테이너 (Header Container)
+   ============================================ */
+/* 
+ * 헤더 기본 스타일
+ * position: sticky로 스크롤 시 상단에 고정
+ * z-index: 100으로 다른 요소 위에 표시
+ */
 .header {
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
@@ -8,6 +29,13 @@
   box-shadow: var(--shadow);
 }
 
+/* ============================================
+   헤더 레이아웃 (Header Layout)
+   ============================================ */
+/* 
+ * 헤더 내부 콘텐츠 레이아웃
+ * Flexbox를 사용하여 로고, 네비게이션, 액션 버튼을 배치
+ */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -15,22 +43,33 @@
   gap: 2rem;
 }
 
+/* ============================================
+   로고 (Logo)
+   ============================================ */
+/* 로고 컨테이너 */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
 }
 
-.logo-text {
-  color: var(--primary-color);
-  text-decoration: none;
+/* 로고 이미지 */
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
+/* ============================================
+   네비게이션 (Navigation)
+   ============================================ */
+/* 네비게이션 링크 컨테이너 */
 .nav {
   display: flex;
   gap: 1.5rem;
-  flex: 1;
+  flex: 1; /* 남은 공간을 모두 차지 */
 }
 
+/* 네비게이션 링크 스타일 */
 .nav-link {
   color: var(--text-primary);
   text-decoration: none;
@@ -38,16 +77,22 @@
   transition: color 0.3s;
 }
 
+/* 네비게이션 링크 호버 효과 */
 .nav-link:hover {
   color: var(--primary-color);
 }
 
+/* ============================================
+   헤더 액션 버튼 (Header Actions)
+   ============================================ */
+/* 테마 전환, 로그인/회원가입 버튼 컨테이너 */
 .header-actions {
   display: flex;
   gap: 0.75rem;
   align-items: center;
 }
 
+/* 테마 전환 버튼 */
 .theme-toggle {
   background: none;
   border: none;
@@ -58,21 +103,31 @@
   transition: background-color 0.3s;
 }
 
+/* 테마 전환 버튼 호버 효과 */
 .theme-toggle:hover {
   background-color: var(--bg-secondary);
 }
 
+/* ============================================
+   반응형 디자인 (Responsive Design)
+   ============================================ */
+/* 
+ * 모바일 화면 (768px 이하) 대응
+ * 헤더 요소들을 세로로 재배치
+ */
 @media (max-width: 768px) {
   .header-content {
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* 요소들이 줄바꿈되도록 */
   }
 
+  /* 네비게이션을 맨 아래로 이동 */
   .nav {
     order: 3;
     width: 100%;
     margin-top: 1rem;
   }
 
+  /* 액션 버튼들도 줄바꿈 가능하도록 */
   .header-actions {
     flex-wrap: wrap;
   }

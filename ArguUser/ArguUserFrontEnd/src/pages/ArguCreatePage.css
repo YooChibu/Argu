@@ -1,13 +1,38 @@
+/**
+ * ArguCreatePage 스타일 (논쟁 작성 페이지)
+ * 
+ * 새로운 논쟁을 작성하는 페이지의 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 논쟁 작성 폼 레이아웃
+ * - 폼 입력 필드 스타일
+ * - 날짜 선택 필드 (2열 그리드)
+ * - 에러 메시지 표시
+ * - 반응형 디자인
+ */
+
+/* ============================================
+   페이지 컨테이너 (Page Container)
+   ============================================ */
+/* 논쟁 작성 페이지 기본 스타일 */
 .argu-create-page {
   padding: 2rem 0;
 }
 
+/* 페이지 제목 */
 .argu-create-page h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
 }
 
+/* ============================================
+   논쟁 작성 폼 (Argu Form)
+   ============================================ */
+/* 
+ * 논쟁 작성 폼 컨테이너
+ * 중앙 정렬 및 최대 너비 제한
+ */
 .argu-form {
   background-color: var(--bg-primary);
   border-radius: 0.75rem;
@@ -17,6 +42,10 @@
   margin: 0 auto;
 }
 
+/* ============================================
+   폼 요소 (Form Elements)
+   ============================================ */
+/* 폼 그룹 (입력 필드와 라벨) */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -24,17 +53,26 @@
   margin-bottom: 1.5rem;
 }
 
+/* 폼 라벨 */
 .form-group label {
   font-weight: 600;
   color: var(--text-primary);
 }
 
+/* 
+ * 폼 행 (Form Row)
+ * 시작일시와 종료일시를 나란히 배치하기 위한 2열 그리드
+ */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
+/* ============================================
+   에러 메시지 (Error Message)
+   ============================================ */
+/* 폼 유효성 검사 에러 메시지 */
 .error-message {
   background-color: #fee2e2;
   color: var(--danger-color);
@@ -45,6 +83,13 @@
   font-weight: 600;
 }
 
+/* ============================================
+   폼 액션 버튼 (Form Actions)
+   ============================================ */
+/* 
+ * 폼 제출/취소 버튼 컨테이너
+ * 오른쪽 정렬
+ */
 .form-actions {
   display: flex;
   gap: 1rem;
@@ -52,6 +97,13 @@
   margin-top: 2rem;
 }
 
+/* ============================================
+   반응형 디자인 (Responsive Design)
+   ============================================ */
+/* 
+ * 모바일 화면 (768px 이하) 대응
+ * 폼 행을 1열로 변경
+ */
 @media (max-width: 768px) {
   .form-row {
     grid-template-columns: 1fr;

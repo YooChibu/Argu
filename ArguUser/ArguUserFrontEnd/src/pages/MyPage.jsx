@@ -1,19 +1,47 @@
+/**
+ * MyPage 컴포넌트
+ * 
+ * 현재 로그인한 사용자의 마이페이지입니다.
+ * 
+ * 주요 기능:
+ * - 사용자 프로필 정보 표시
+ * - 사용자 통계 정보 표시 (작성한 논쟁, 참여한 논쟁, 받은 좋아요)
+ * 
+ * 참고: ProtectedRoute로 보호되어 있어 로그인한 사용자만 접근 가능합니다.
+ */
+
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { userService } from '../services/userService'
 import './MyPage.css'
 
+/**
+ * MyPage 컴포넌트
+ * 
+ * @returns {JSX.Element} 마이페이지 컴포넌트
+ */
 const MyPage = () => {
-  const { user } = useAuth()
-  const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(true)
+  // 훅 사용
+  const { user } = useAuth() // 현재 로그인한 사용자 정보
 
+  // 상태 관리
+  const [profile, setProfile] = useState(null) // 사용자 프로필 정보
+  const [loading, setLoading] = useState(true) // 로딩 상태
+
+  /**
+   * 사용자 정보 변경 시 프로필 로딩
+   */
   useEffect(() => {
     if (user) {
       fetchProfile()
     }
   }, [user])
 
+  /**
+   * 프로필 정보 가져오기
+   * 
+   * 현재 로그인한 사용자의 상세 프로필 정보를 가져옵니다.
+   */
   const fetchProfile = async () => {
     try {
       const response = await userService.getUserById(user.id)
