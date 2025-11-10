@@ -24,7 +24,7 @@ spring:
     time-zone: Asia/Seoul
 
 server:
-  port: 8080
+  port: 9001
   servlet:
     encoding:
       charset: UTF-8
