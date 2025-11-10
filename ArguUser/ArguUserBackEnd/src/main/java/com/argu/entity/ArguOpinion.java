@@ -2,12 +2,17 @@ package com.argu.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 논쟁 의견 엔티티
+ * 사용자가 논쟁에 대해 선택한 입장과 의견을 저장하는 테이블
+ */
 @Entity
 @Table(name = "argu_opinion", indexes = {
     @Index(name = "idx_argu_id", columnList = "argu_id"),
@@ -16,6 +21,7 @@ import java.time.LocalDateTime;
 }, uniqueConstraints = {
     @UniqueConstraint(name = "uk_argu_user", columnNames = {"argu_id", "user_id"})
 })
+@Comment("논쟁 의견 테이블")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,35 +29,69 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class ArguOpinion {
+    /**
+     * 의견 ID (PK)
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Comment("의견 ID")
     private Long id;
 
+    /**
+     * 논쟁
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "argu_id", nullable = false, foreignKey = @ForeignKey(name = "fk_opinion_argu"))
+    @Comment("논쟁 ID")
     private Argu argu;
 
+    /**
+     * 사용자
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_opinion_user"))
+    @Comment("사용자 ID")
     private User user;
 
+    /**
+     * 입장 (FOR: 찬성, AGAINST: 반대, NEUTRAL: 중립, OTHER: 기타)
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
+    @Comment("입장 (FOR: 찬성, AGAINST: 반대, NEUTRAL: 중립, OTHER: 기타)")
     private OpinionSide side;
 
+    /**
+     * 의견 내용
+     */
     @Column(columnDefinition = "TEXT")
+    @Comment("의견 내용")
     private String content;
 
+    /**
+     * 생성 일시
+     */
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
+    @Comment("생성 일시")
     private LocalDateTime createdAt;
 
+    /**
+     * 수정 일시
+     */
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
+    @Comment("수정 일시")
     private LocalDateTime updatedAt;
 
+    /**
+     * 입장 열거형
+     */
     public enum OpinionSide {
-        FOR, AGAINST, NEUTRAL, OTHER
+        FOR,      // 찬성
+        AGAINST,  // 반대
+        NEUTRAL,  // 중립
+        OTHER     // 기타
     }
 }
 
