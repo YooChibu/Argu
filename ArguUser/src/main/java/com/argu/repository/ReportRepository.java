@@ -1,0 +1,23 @@
+package com.argu.repository;
+
+import com.argu.entity.Report;
+import com.argu.entity.Report.ReportStatus;
+import com.argu.entity.Report.TargetType;
+import com.argu.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface ReportRepository extends JpaRepository<Report, Long> {
+    Page<Report> findByStatus(ReportStatus status, Pageable pageable);
+    List<Report> findByTargetTypeAndTargetId(TargetType targetType, Long targetId);
+    Optional<Report> findByReporterAndTargetTypeAndTargetId(User reporter, TargetType targetType, Long targetId);
+    Page<Report> findByReporter(User reporter, Pageable pageable);
+}
+
+
