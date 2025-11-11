@@ -25,6 +25,15 @@ const RegisterPage = () => {
   const navigate = useNavigate() // 페이지 네비게이션
   const { register } = useAuth() // 회원가입 함수
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const emailRuleMessage = '올바른 이메일 형식(예: user@example.com)을 입력해주세요.'
+  const nicknamePattern = /^.{2,}$/
+  const nicknameRuleMessage = '닉네임은 2자 이상 입력해야 합니다.'
+  const passwordPattern =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}|:;'"<>,.?/]).{8,}$/
+  const passwordRuleMessage =
+    '비밀번호는 대문자, 소문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.'
+
   // 상태 관리
   const [formData, setFormData] = useState({
     email: '', // 이메일
@@ -35,6 +44,10 @@ const RegisterPage = () => {
   })
   const [error, setError] = useState('') // 에러 메시지
   const [loading, setLoading] = useState(false) // 로딩 상태
+  const [emailPatternError, setEmailPatternError] = useState('') // 이메일 패턴 에러
+  const [nicknamePatternError, setNicknamePatternError] = useState('') // 닉네임 패턴 에러
+  const [passwordPatternError, setPasswordPatternError] = useState('') // 비밀번호 패턴 에러
+  const [passwordConfirmError, setPasswordConfirmError] = useState('') // 비밀번호 확인 에러
 
   /**
    * 폼 제출 처리 함수
@@ -47,19 +60,28 @@ const RegisterPage = () => {
     e.preventDefault()
     setError('')
 
-    // 비밀번호 일치 검증
-    if (formData.password !== formData.passwordConfirm) {
-      setError('비밀번호가 일치하지 않습니다.')
+    if (!emailPattern.test(formData.email)) {
+      setError(emailRuleMessage)
+      setEmailPatternError(emailRuleMessage)
       return
     }
 
-    const passwordPattern =
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}\[\]|:;'"<>,.?/]).{8,}$/
+    if (!nicknamePattern.test(formData.nickname)) {
+      setError(nicknameRuleMessage)
+      setNicknamePatternError(nicknameRuleMessage)
+      return
+    }
+
+    // 비밀번호 일치 검증
+    if (formData.password !== formData.passwordConfirm) {
+      setError('비밀번호가 일치하지 않습니다.')
+      setPasswordConfirmError('비밀번호가 일치하지 않습니다.')
+      return
+    }
 
     if (!passwordPattern.test(formData.password)) {
-      setError(
-        '비밀번호는 대문자, 소문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.'
-      )
+      setError(passwordRuleMessage)
+      setPasswordPatternError(passwordRuleMessage)
       return
     }
 
@@ -95,12 +117,30 @@ const RegisterPage = () => {
               type="email"
               id="email"
               value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value
+                setFormData({ ...formData, email: value })
+                if (error) {
+                  setError('')
+                }
+
+                if (!value) {
+                  setEmailPatternError('')
+                  return
+                }
+
+                if (!emailPattern.test(value)) {
+                  setEmailPatternError(emailRuleMessage)
+                } else {
+                  setEmailPatternError('')
+                }
+              }}
               required
               className="form-input"
             />
+            {emailPatternError && (
+              <small className="field-error">{emailPatternError}</small>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="nickname">닉네임</label>
@@ -108,12 +148,30 @@ const RegisterPage = () => {
               type="text"
               id="nickname"
               value={formData.nickname}
-              onChange={(e) =>
-                setFormData({ ...formData, nickname: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value
+                setFormData({ ...formData, nickname: value })
+                if (error) {
+                  setError('')
+                }
+
+                if (!value) {
+                  setNicknamePatternError('')
+                  return
+                }
+
+                if (!nicknamePattern.test(value)) {
+                  setNicknamePatternError(nicknameRuleMessage)
+                } else {
+                  setNicknamePatternError('')
+                }
+              }}
               required
               className="form-input"
             />
+            {nicknamePatternError && (
+              <small className="field-error">{nicknamePatternError}</small>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="password">비밀번호</label>
@@ -121,15 +179,42 @@ const RegisterPage = () => {
               type="password"
               id="password"
               value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value
+                setFormData({ ...formData, password: value })
+                if (error) {
+                  setError('')
+                }
+
+                if (!value) {
+                  setPasswordPatternError('')
+                  setPasswordConfirmError(
+                    formData.passwordConfirm ? '비밀번호가 일치하지 않습니다.' : ''
+                  )
+                  return
+                }
+
+                if (!passwordPattern.test(value)) {
+                  setPasswordPatternError(passwordRuleMessage)
+                } else {
+                  setPasswordPatternError('')
+                }
+
+                if (formData.passwordConfirm) {
+                  if (value !== formData.passwordConfirm) {
+                    setPasswordConfirmError('비밀번호가 일치하지 않습니다.')
+                  } else {
+                    setPasswordConfirmError('')
+                  }
+                }
+              }}
               required
               className="form-input"
             />
-            <small className="helper-text">
-              비밀번호는 대문자, 소문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.
-            </small>
+            
+            {passwordPatternError && (
+              <small className="field-error">{passwordPatternError}</small>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="passwordConfirm">비밀번호 확인</label>
@@ -137,12 +222,30 @@ const RegisterPage = () => {
               type="password"
               id="passwordConfirm"
               value={formData.passwordConfirm}
-              onChange={(e) =>
-                setFormData({ ...formData, passwordConfirm: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value
+                setFormData({ ...formData, passwordConfirm: value })
+                if (error) {
+                  setError('')
+                }
+
+                if (!value) {
+                  setPasswordConfirmError('')
+                  return
+                }
+
+                if (value !== formData.password) {
+                  setPasswordConfirmError('비밀번호가 일치하지 않습니다.')
+                } else {
+                  setPasswordConfirmError('')
+                }
+              }}
               required
               className="form-input"
             />
+            {passwordConfirmError && (
+              <small className="field-error">{passwordConfirmError}</small>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="bio">
