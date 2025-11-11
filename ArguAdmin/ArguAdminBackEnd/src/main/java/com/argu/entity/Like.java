@@ -8,6 +8,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 논쟁에 대한 사용자 좋아요 관계를 저장하는 엔티티.
+ * <p>
+ * 한 사용자당 한 논쟁에 단 한 번만 좋아요를 누를 수 있도록 복합 유니크 제약(`uk_argu_user`)을 둔다.
+ * 생성 일시는 감사 리스너가 채운다.
+ */
 @Entity
 @Table(name = "likes", indexes = {
     @Index(name = "idx_argu_id", columnList = "argu_id"),

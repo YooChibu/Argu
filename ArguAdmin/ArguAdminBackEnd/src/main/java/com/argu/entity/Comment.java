@@ -8,6 +8,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 논쟁과 사용자 간의 댓글 데이터를 저장하는 엔티티.
+ * <p>
+ * `parent` 필드로 대댓글 트리를 표현하며, `isHidden`은 운영자가 숨김 처리한 여부를 나타낸다.
+ * 감사 필드는 {@link AuditingEntityListener}가 자동으로 기록한다.
+ */
 @Entity
 @Table(name = "comments", indexes = {
     @Index(name = "idx_user_id", columnList = "user_id"),

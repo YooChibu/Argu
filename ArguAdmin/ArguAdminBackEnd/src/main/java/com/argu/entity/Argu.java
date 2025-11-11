@@ -9,6 +9,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 논쟁(Argu) 엔티티.
+ * <p>
+ * 회원이 생성한 논쟁 주제/본문과 기간, 상태를 저장한다.
+ * 카테고리·작성자와 N:1 관계를 맺고 있으며, `viewCount` 및 `isHidden` 값은 관리자 운영에서 활용한다.
+ */
 @Entity
 @Table(name = "argu", indexes = {
     @Index(name = "idx_user_id", columnList = "user_id"),

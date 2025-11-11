@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 관리자 대시보드에 표시할 주요 통계를 담는 DTO.
+ */
 @Data
 @Builder
 @NoArgsConstructor

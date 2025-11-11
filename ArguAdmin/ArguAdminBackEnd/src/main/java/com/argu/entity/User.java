@@ -10,8 +10,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 /**
- * 사용자 엔티티
- * 논쟁 플랫폼의 사용자 정보를 저장하는 테이블
+ * 논쟁 플랫폼 서비스 이용자의 기본 정보를 저장하는 엔티티.
+ * <p>
+ * 이메일과 사용자명은 고유해야 하며, 상태/이메일 인증 여부/프로필 및 자기소개 등의 메타데이터를 함께 관리한다.
+ * {@link AuditingEntityListener}를 통해 생성·수정 일시가 자동 기록된다.
  */
 @Entity
 @Table(name = "users", indexes = {

@@ -9,6 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 논쟁 분류 카테고리를 저장하는 엔티티.
+ * <p>
+ * `orderNum`으로 관리자 페이지에서 노출 순서를 제어하며, {@link AuditingEntityListener}를 통해 생성/수정 시각을 추적한다.
+ */
 @Entity
 @Table(name = "categories", indexes = {
     @Index(name = "idx_order_num", columnList = "order_num")

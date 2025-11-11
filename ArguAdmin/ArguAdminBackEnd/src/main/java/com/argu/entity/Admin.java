@@ -10,8 +10,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 /**
- * 관리자 엔티티
- * 논쟁 플랫폼의 관리자 정보를 저장하는 테이블
+ * 관리자 계정 정보를 저장하는 엔티티.
+ * <p>
+ * Spring Security 인증/인가 시 {@link com.argu.repository.AdminRepository}와 {@link com.argu.security.CustomAdminDetailsService}
+ * 에 의해 로드되며, {@link AdminRole}·{@link AdminStatus}로 권한/상태를 구분한다.
+ * 감사 필드는 {@link AuditingEntityListener}가 자동으로 채운다.
  */
 @Entity
 @Table(name = "admins", indexes = {

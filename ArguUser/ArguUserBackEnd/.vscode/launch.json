@@ -6,6 +6,13 @@
       "name": "ArguUserApplication",
       "request": "launch",
       "mainClass": "com.argu.ArguUserApplication",
+      "projectName": "argu-user-ArguUserBackEnd"
+    },
+    {
+      "type": "java",
+      "name": "ArguUserApplication",
+      "request": "launch",
+      "mainClass": "com.argu.ArguUserApplication",
       "projectName": "ArguUserBackEnd"
     },
     {

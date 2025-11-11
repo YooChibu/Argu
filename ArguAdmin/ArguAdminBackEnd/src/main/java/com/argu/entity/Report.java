@@ -8,6 +8,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 신고 정보를 저장하는 엔티티.
+ * <p>
+ * 신고자는 {@link User}이며, {@link TargetType}으로 논쟁·댓글·사용자 중 어떤 대상을 신고했는지 구분한다.
+ * 처리 결과와 담당 관리자, 처리 일시가 함께 기록된다.
+ */
 @Entity
 @Table(name = "reports", indexes = {
     @Index(name = "idx_reporter_id", columnList = "reporter_id"),

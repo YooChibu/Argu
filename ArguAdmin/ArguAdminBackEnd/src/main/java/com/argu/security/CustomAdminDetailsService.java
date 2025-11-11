@@ -13,11 +13,27 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Spring Security에서 관리자 계정을 조회하기 위한 {@link UserDetailsService} 구현체.
+ * <p>
+ * 인증 필터가 JWT 토큰에서 추출한 관리자 아이디로 이 서비스를 호출하면,
+ * 활성화된 관리자 계정을 {@link org.springframework.security.core.userdetails.User} 형태로 반환한다.
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomAdminDetailsService implements UserDetailsService {
     private final AdminRepository adminRepository;
 
+    /**
+     * 관리자 아이디로 DB를 조회하여 Spring Security {@link UserDetails}를 생성한다.
+     * <p>
+     * - 계정이 존재하지 않으면 {@link UsernameNotFoundException} 발생<br>
+     * - 계정이 비활성화 상태(INACTIVE)면 인증을 거부한다<br>
+     * - 관리자 권한을 ROLE 어노테이션 형식으로 매핑하여 반환한다
+     *
+     * @param adminId 로그인 요청에서 전달된 관리자 아이디
+     * @return Spring Security가 이해할 수 있는 UserDetails
+     */
     @Override
     public UserDetails loadUserByUsername(String adminId) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByAdminId(adminId)

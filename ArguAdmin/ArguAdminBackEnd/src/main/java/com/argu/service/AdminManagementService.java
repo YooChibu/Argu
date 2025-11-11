@@ -12,21 +12,43 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 관리자 계정 CRUD와 비밀번호/역할 관리 로직을 담당하는 서비스.
+ */
 @Service
 @RequiredArgsConstructor
 public class AdminManagementService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * 모든 관리자 목록을 조회한다.
+     *
+     * @return 관리자 리스트
+     */
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
     }
 
+    /**
+     * ID로 관리자 정보를 조회한다.
+     *
+     * @param adminId 관리자 ID
+     * @return 관리자 엔티티
+     * @throws ResourceNotFoundException 없을 때
+     */
     public Admin getAdminById(Long adminId) {
         return adminRepository.findById(adminId)
                 .orElseThrow(() -> new ResourceNotFoundException("관리자를 찾을 수 없습니다"));
     }
 
+    /**
+     * 신규 관리자 계정을 생성한다.
+     *
+     * @param request 관리자 생성 요청 DTO
+     * @return 생성된 관리자
+     * @throws BadRequestException 아이디가 중복될 때
+     */
     @Transactional
     public Admin createAdmin(CreateAdminRequest request) {
         if (adminRepository.existsByAdminId(request.getAdminId())) {
@@ -44,6 +66,15 @@ public class AdminManagementService {
         return adminRepository.save(admin);
     }
 
+    /**
+     * 관리자 이름/역할/상태를 업데이트한다.
+     *
+     * @param adminId 관리자 ID
+     * @param name    변경할 이름
+     * @param role    변경할 역할
+     * @param status  변경할 상태
+     * @return 수정된 관리자
+     */
     @Transactional
     public Admin updateAdmin(Long adminId, String name, Admin.AdminRole role, Admin.AdminStatus status) {
         Admin admin = getAdminById(adminId);
@@ -53,6 +84,13 @@ public class AdminManagementService {
         return adminRepository.save(admin);
     }
 
+    /**
+     * 관리자 비밀번호를 변경한다.
+     *
+     * @param adminId     관리자 ID
+     * @param newPassword 새 비밀번호
+     * @return 비밀번호가 변경된 관리자
+     */
     @Transactional
     public Admin updateAdminPassword(Long adminId, String newPassword) {
         Admin admin = getAdminById(adminId);
@@ -60,6 +98,11 @@ public class AdminManagementService {
         return adminRepository.save(admin);
     }
 
+    /**
+     * 관리자 계정을 삭제한다.
+     *
+     * @param adminId 관리자 ID
+     */
     @Transactional
     public void deleteAdmin(Long adminId) {
         Admin admin = getAdminById(adminId);
