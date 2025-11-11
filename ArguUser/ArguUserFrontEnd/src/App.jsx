@@ -53,7 +53,7 @@ function App() {
               <Route path="/argu/:id" element={<ArguDetailPage />} /> {/* 논쟁 상세 페이지 */}
               <Route path="/auth/login" element={<LoginPage />} /> {/* 로그인 페이지 */}
               <Route path="/auth/register" element={<RegisterPage />} /> {/* 회원가입 페이지 */}
-              <Route path="/users/:username" element={<UserProfilePage />} /> {/* 사용자 프로필 페이지 */}
+              <Route path="/users/:userId" element={<UserProfilePage />} /> {/* 사용자 프로필 페이지 */}
               <Route path="/categories" element={<CategoryListPage />} /> {/* 카테고리 목록 페이지 */}
               <Route path="/categories/:id" element={<CategoryDetailPage />} /> {/* 카테고리별 논쟁 페이지 */}
               <Route path="/search" element={<SearchPage />} /> {/* 검색 페이지 */}

@@ -141,8 +141,8 @@ const HomePage = () => {
             {latestArgus.map((argu) => (
               <div key={argu.id} className="argu-item">
                 <div className="argu-item-header">
-                  {argu.category && (
-                    <span className="category-badge">{argu.category.name}</span>
+                  {argu.categoryName && (
+                    <span className="category-badge">{argu.categoryName}</span>
                   )}
                   <span className={`status-badge status-${argu.status?.toLowerCase()}`}>
                     {argu.status === 'ACTIVE' ? '진행중' : argu.status === 'SCHEDULED' ? '예정' : '종료'}
@@ -153,7 +153,10 @@ const HomePage = () => {
                 </h3>
                 <div className="argu-item-meta">
                   <span className="author">
-                    작성자: <Link to={`/users/${argu.user?.username}`}>{argu.user?.nickname || argu.user?.username}</Link>
+                  작성자:{' '}
+                  <Link to={`/users/${argu.userId}`}>
+                    {argu.nickname || '알 수 없음'}
+                  </Link>
                   </span>
                   <span className="stat">👍 {argu.likeCount || 0} | 💬 {argu.commentCount || 0}</span>
                 </div>

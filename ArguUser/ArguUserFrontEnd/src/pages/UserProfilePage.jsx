@@ -20,7 +20,7 @@ import './UserProfilePage.css'
  */
 const UserProfilePage = () => {
   // 훅 사용
-  const { username } = useParams() // URL 파라미터에서 사용자 아이디 가져오기
+  const { userId } = useParams() // URL 파라미터에서 사용자 ID 가져오기
 
   // 상태 관리
   const [profile, setProfile] = useState(null) // 사용자 프로필 정보
@@ -31,7 +31,7 @@ const UserProfilePage = () => {
    */
   useEffect(() => {
     fetchProfile()
-  }, [username])
+  }, [userId])
 
   /**
    * 프로필 정보 가져오기
@@ -40,7 +40,7 @@ const UserProfilePage = () => {
    */
   const fetchProfile = async () => {
     try {
-      const response = await userService.getUserByUsername(username)
+      const response = await userService.getUserById(userId)
       // ApiResponse 구조에서 data 추출
       const data = response.data || response
       setProfile(data)
@@ -66,8 +66,8 @@ const UserProfilePage = () => {
           <div className="profile-header">
             <div className="profile-avatar">👤</div>
             <div className="profile-info">
-              <h1>{profile.nickname || profile.username}</h1>
-              <p>@{profile.username}</p>
+              <h1>{profile.nickname || '이름 없음'}</h1>
+              <p>{profile.email}</p>
               {profile.bio && <p className="profile-bio">{profile.bio}</p>}
             </div>
           </div>

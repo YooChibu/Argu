@@ -34,16 +34,16 @@ public class JwtUtil {
      * JWT 토큰 생성
      * 
      * @param userId 사용자 ID
-     * @param username 사용자 아이디
+     * @param email 사용자 이메일
      * @return 생성된 JWT 토큰 문자열
      */
-    public String generateToken(Long userId, String username) {
+    public String generateToken(Long userId, String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtProperties.getExpiration());
 
         return Jwts.builder()
                 .subject(String.valueOf(userId))        // 토큰 주제 (사용자 ID)
-                .claim("username", username)            // 커스텀 클레임 (사용자 아이디)
+                .claim("email", email)                  // 커스텀 클레임 (사용자 이메일)
                 .issuedAt(now)                          // 발행 시간
                 .expiration(expiryDate)                 // 만료 시간
                 .signWith(getSigningKey())              // 서명 키
@@ -66,18 +66,18 @@ public class JwtUtil {
     }
 
     /**
-     * JWT 토큰에서 사용자 아이디 추출
+     * JWT 토큰에서 사용자 이메일 추출
      * 
      * @param token JWT 토큰 문자열
-     * @return 사용자 아이디
+     * @return 사용자 이메일
      */
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getSigningKey())            // 서명 키로 검증
                 .build()
                 .parseSignedClaims(token)               // 서명된 클레임 파싱
                 .getPayload();                          // 페이로드 추출
-        return claims.get("username", String.class);   // 사용자 아이디 클레임 반환
+        return claims.get("email", String.class);      // 사용자 이메일 클레임 반환
     }
 
     /**

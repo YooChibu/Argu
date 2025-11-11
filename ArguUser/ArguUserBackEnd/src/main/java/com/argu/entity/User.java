@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users", indexes = {
     @Index(name = "idx_email", columnList = "email"),
-    @Index(name = "idx_username", columnList = "username"),
     @Index(name = "idx_status", columnList = "status"),
     @Index(name = "idx_created_at", columnList = "created_at")
 })
@@ -49,13 +48,6 @@ public class User {
     @Column(nullable = false, length = 255)
     @Comment("비밀번호 (BCrypt 해시)")
     private String password;
-
-    /**
-     * 사용자명 (고유값)
-     */
-    @Column(nullable = false, unique = true, length = 50)
-    @Comment("사용자명 (고유값)")
-    private String username;
 
     /**
      * 닉네임

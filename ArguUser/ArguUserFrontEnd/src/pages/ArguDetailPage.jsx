@@ -186,7 +186,7 @@ const ArguDetailPage = () => {
     return <div className="container">논쟁을 찾을 수 없습니다.</div>
   }
 
-  const isOwner = user && user.id === argu.user?.id
+  const isOwner = user && argu && user.id === argu.userId
   const canEdit = isOwner && argu.status === 'SCHEDULED'
   const canVote = argu.status === 'ACTIVE' && isAuthenticated
 
@@ -203,8 +203,8 @@ const ArguDetailPage = () => {
         <article className="argu-detail">
           <div className="argu-detail-header">
             <div className="argu-meta-top">
-              {argu.category && (
-                <span className="category-badge">{argu.category.name}</span>
+              {argu.categoryName && (
+                <span className="category-badge">{argu.categoryName}</span>
               )}
               <span className={`status-badge status-${argu.status?.toLowerCase()}`}>
                 {argu.status === 'ACTIVE' ? '진행중' : argu.status === 'SCHEDULED' ? '예정' : '종료'}
@@ -218,8 +218,8 @@ const ArguDetailPage = () => {
             <div className="argu-author-info">
               <div className="author-avatar">👤</div>
               <div className="author-details">
-                <Link to={`/users/${argu.user?.username}`} className="author-name">
-                  {argu.user?.nickname || argu.user?.username}
+                <Link to={`/users/${argu.userId}`} className="author-name">
+                  {argu.nickname || '알 수 없음'}
                 </Link>
                 <span className="author-date">
                   {format(new Date(argu.createdAt), 'yyyy-MM-dd HH:mm')}
@@ -361,11 +361,8 @@ const ArguDetailPage = () => {
                   <div className="comment-author">
                     <div className="author-avatar-small">👤</div>
                     <div>
-                      <Link
-                        to={`/users/${comment.user?.username}`}
-                        className="comment-author-name"
-                      >
-                        {comment.user?.nickname || comment.user?.username}
+                      <Link to={`/users/${comment.userId}`} className="comment-author-name">
+                        {comment.nickname || '알 수 없음'}
                       </Link>
                       <span className="comment-date">
                         {format(new Date(comment.createdAt), 'yyyy-MM-dd HH:mm')}

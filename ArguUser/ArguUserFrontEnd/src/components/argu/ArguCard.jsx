@@ -23,8 +23,9 @@ import './ArguCard.css'
  * @param {string} props.argu.title - 논쟁 제목
  * @param {string} props.argu.content - 논쟁 내용
  * @param {string} props.argu.status - 논쟁 상태 (SCHEDULED, ACTIVE, ENDED)
- * @param {Object} props.argu.category - 카테고리 정보
- * @param {Object} props.argu.user - 작성자 정보
+ * @param {string} props.argu.categoryName - 카테고리 이름
+ * @param {number} props.argu.userId - 작성자 ID
+ * @param {string} props.argu.nickname - 작성자 닉네임
  * @param {number} props.argu.likeCount - 좋아요 수
  * @param {number} props.argu.commentCount - 댓글 수
  * @param {number} props.argu.viewCount - 조회수
@@ -55,8 +56,8 @@ const ArguCard = ({ argu }) => {
       {/* 카드 헤더: 카테고리 및 상태 배지 */}
       <div className="argu-card-header">
         {/* 카테고리 배지 (카테고리가 있는 경우만 표시) */}
-        {argu.category && (
-          <span className="category-badge">{argu.category.name}</span>
+        {argu.categoryName && (
+          <span className="category-badge">{argu.categoryName}</span>
         )}
         {/* 상태 배지 */}
         <span className={`status-badge ${status.class}`}>{status.text}</span>
@@ -76,7 +77,10 @@ const ArguCard = ({ argu }) => {
       {/* 메타 정보: 작성자 및 작성일 */}
       <div className="argu-meta">
         <span className="author">
-          작성자: <Link to={`/users/${argu.user?.username}`}>{argu.user?.nickname || argu.user?.username}</Link>
+          작성자:{' '}
+          <Link to={`/users/${argu.userId}`}>
+            {argu.nickname || '알 수 없음'}
+          </Link>
         </span>
         <span className="date">
           {format(new Date(argu.createdAt), 'yyyy-MM-dd')}

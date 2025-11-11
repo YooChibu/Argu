@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class UserResponse {
     private Long id;
     private String email;
-    private String username;
     private String nickname;
     private String profileImage;
     private String bio;
@@ -28,7 +27,6 @@ public class UserResponse {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .username(user.getUsername())
                 .nickname(user.getNickname())
                 .profileImage(user.getProfileImage())
                 .bio(user.getBio())

@@ -4,7 +4,7 @@
  * 사용자 관련 API 호출을 담당하는 서비스입니다.
  * 
  * 주요 기능:
- * - 사용자 정보 조회 (ID 또는 아이디로)
+ * - 사용자 정보 조회 (ID로)
  * - 프로필 수정
  */
 
@@ -22,20 +22,6 @@ export const userService = {
    */
   async getUserById(id) {
     const response = await api.get(`/users/${id}`)
-    return response.data
-  },
-
-  /**
-   * 사용자 정보 조회 (아이디로)
-   * 
-   * 사용자 아이디로 사용자 정보를 가져옵니다.
-   * 
-   * @param {string} username - 사용자 아이디
-   * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
-   * @returns {Object} response.data - UserResponse (사용자 정보)
-   */
-  async getUserByUsername(username) {
-    const response = await api.get(`/users/username/${username}`)
     return response.data
   },
 

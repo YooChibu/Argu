@@ -68,8 +68,8 @@ const MyPage = () => {
             <div className="profile-header">
               <div className="profile-avatar">👤</div>
               <div className="profile-info">
-                <h2>{profile.nickname || profile.username}</h2>
-                <p>@{profile.username}</p>
+                <h2>{profile.nickname || '이름 없음'}</h2>
+                <p>{profile.email}</p>
                 {profile.bio && <p className="profile-bio">{profile.bio}</p>}
               </div>
             </div>

@@ -19,12 +19,6 @@ public class UserService {
         return UserResponse.from(user);
     }
 
-    public UserResponse getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다"));
-        return UserResponse.from(user);
-    }
-
     @Transactional
     public UserResponse updateProfile(Long userId, String nickname, String bio, String profileImage) {
         User user = userRepository.findById(userId)

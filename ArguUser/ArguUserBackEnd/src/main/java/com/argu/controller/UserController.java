@@ -21,12 +21,6 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<ApiResponse<UserResponse>> getUserByUsername(@PathVariable String username) {
-        UserResponse response = userService.getUserByUsername(username);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponse>> getCurrentUser() {
         Long userId = securityUtil.getCurrentUserId();

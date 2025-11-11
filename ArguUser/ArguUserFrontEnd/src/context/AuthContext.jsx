@@ -105,13 +105,13 @@ export const AuthProvider = ({ children }) => {
    * 
    * 이메일 또는 아이디와 비밀번호로 로그인합니다.
    * 
-   * @param {string} emailOrUsername - 이메일 또는 아이디
+   * @param {string} email - 이메일
    * @param {string} password - 비밀번호
    * @returns {Promise<Object>} 인증 응답 데이터 (token, user 포함)
    * @throws {Error} 로그인 실패 시 에러 발생
    */
-  const login = async (emailOrUsername, password) => {
-    const response = await authService.login(emailOrUsername, password)
+  const login = async (email, password) => {
+    const response = await authService.login(email, password)
     /**
      * ApiResponse 구조: { success: boolean, message: string, data: AuthResponse }
      * AuthResponse: { token: string, type: string, user: UserResponse }
@@ -139,7 +139,7 @@ export const AuthProvider = ({ children }) => {
    * 
    * 새로운 사용자를 등록하고 자동으로 로그인합니다.
    * 
-   * @param {Object} registerData - 회원가입 데이터 (email, username, password, nickname 등)
+   * @param {Object} registerData - 회원가입 데이터 (email, password, nickname 등)
    * @returns {Promise<Object>} 인증 응답 데이터 (token, user 포함)
    * @throws {Error} 회원가입 실패 시 에러 발생
    */

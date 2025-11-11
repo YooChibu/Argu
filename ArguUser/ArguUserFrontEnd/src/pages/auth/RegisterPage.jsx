@@ -4,7 +4,7 @@
  * 사용자 회원가입 페이지입니다.
  * 
  * 주요 기능:
- * - 이메일, 아이디, 닉네임, 비밀번호 입력
+ * - 이메일, 닉네임, 비밀번호 입력
  * - 비밀번호 확인
  * - 비밀번호 일치 검증
  * - 회원가입 성공 시 자동 로그인 및 메인 페이지로 이동
@@ -28,10 +28,10 @@ const RegisterPage = () => {
   // 상태 관리
   const [formData, setFormData] = useState({
     email: '', // 이메일
-    username: '', // 아이디
     password: '', // 비밀번호
     passwordConfirm: '', // 비밀번호 확인
     nickname: '', // 닉네임
+    bio: '', // 자기소개 (선택)
   })
   const [error, setError] = useState('') // 에러 메시지
   const [loading, setLoading] = useState(false) // 로딩 상태
@@ -53,15 +53,25 @@ const RegisterPage = () => {
       return
     }
 
+    const passwordPattern =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}\[\]|:;'"<>,.?/]).{8,}$/
+
+    if (!passwordPattern.test(formData.password)) {
+      setError(
+        '비밀번호는 대문자, 소문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.'
+      )
+      return
+    }
+
     setLoading(true)
 
     try {
       // 회원가입 요청 (성공 시 자동으로 로그인됨)
       await register({
         email: formData.email,
-        username: formData.username,
         password: formData.password,
         nickname: formData.nickname,
+        bio: formData.bio || undefined,
       })
       // 회원가입 성공 시 메인 페이지로 이동
       navigate('/')
@@ -93,19 +103,6 @@ const RegisterPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="username">아이디</label>
-            <input
-              type="text"
-              id="username"
-              value={formData.username}
-              onChange={(e) =>
-                setFormData({ ...formData, username: e.target.value })
-              }
-              required
-              className="form-input"
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="nickname">닉네임</label>
             <input
               type="text"
@@ -130,6 +127,9 @@ const RegisterPage = () => {
               required
               className="form-input"
             />
+            <small className="helper-text">
+              비밀번호는 대문자, 소문자, 숫자, 특수문자를 각각 1개 이상 포함해야 합니다.
+            </small>
           </div>
           <div className="form-group">
             <label htmlFor="passwordConfirm">비밀번호 확인</label>
@@ -143,6 +143,20 @@ const RegisterPage = () => {
               required
               className="form-input"
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="bio">
+              자기소개 <span className="optional-label">(선택)</span>
+            </label>
+            <textarea
+              id="bio"
+              value={formData.bio}
+              onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+              className="form-textarea"
+              maxLength={500}
+              placeholder="자기소개를 입력하세요 (최대 500자)"
+            />
+            <small className="helper-text">최대 500자까지 입력할 수 있습니다.</small>
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
             {loading ? '가입 중...' : '회원가입'}

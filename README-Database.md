@@ -25,9 +25,8 @@
 │ id (PK)     │         │ id (PK)     │
 │ email       │         │ admin_id    │
 │ password    │         │ password    │
-│ username    │         │ role        │
-│ nickname    │         │ created_at  │
-│ profile_img │         │ updated_at  │
+│ nickname    │         │ role        │
+│ profile_img │         │ created_at  │
 │ status      │         │ status      │
 │ created_at  │         └─────────────┘
 │ updated_at  │                │
@@ -116,7 +115,6 @@ CREATE TABLE users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '회원 고유 ID',
     email VARCHAR(255) NOT NULL UNIQUE COMMENT '이메일 주소',
     password VARCHAR(255) NOT NULL COMMENT '암호화된 비밀번호',
-    username VARCHAR(50) NOT NULL UNIQUE COMMENT '사용자 아이디',
     nickname VARCHAR(50) NOT NULL COMMENT '닉네임',
     profile_image VARCHAR(500) COMMENT '프로필 이미지 URL',
     bio TEXT COMMENT '자기소개',
@@ -126,7 +124,6 @@ CREATE TABLE users (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
     
     INDEX idx_email (email) COMMENT '이메일 검색 인덱스',
-    INDEX idx_username (username) COMMENT '사용자 아이디 검색 인덱스',
     INDEX idx_status (status) COMMENT '회원 상태 인덱스',
     INDEX idx_created_at (created_at) COMMENT '가입일시 정렬 인덱스'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원 테이블';
@@ -136,7 +133,6 @@ CREATE TABLE users (
 - `id`: 회원 고유 ID (Primary Key)
 - `email`: 이메일 주소 (Unique)
 - `password`: 암호화된 비밀번호
-- `username`: 사용자 아이디 (Unique)
 - `nickname`: 닉네임
 - `profile_image`: 프로필 이미지 URL
 - `bio`: 자기소개
@@ -437,7 +433,7 @@ CREATE TABLE chat_messages (
 
 1. **Foreign Key 인덱스**: 모든 외래키에 인덱스 생성
 2. **검색 필드 인덱스**: 
-   - `users.email`, `users.username` (로그인, 검색)
+   - `users.email` (로그인, 검색)
    - `argu.title`, `argu.content` (FULLTEXT 인덱스)
 3. **정렬 필드 인덱스**:
    - `argu.created_at` (최신순)

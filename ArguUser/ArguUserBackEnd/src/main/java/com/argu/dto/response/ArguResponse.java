@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class ArguResponse {
     private Long id;
     private Long userId;
-    private String username;
     private String nickname;
     private Long categoryId;
     private String categoryName;
@@ -35,7 +34,6 @@ public class ArguResponse {
         return ArguResponse.builder()
                 .id(argu.getId())
                 .userId(argu.getUser().getId())
-                .username(argu.getUser().getUsername())
                 .nickname(argu.getUser().getNickname())
                 .categoryId(argu.getCategory().getId())
                 .categoryName(argu.getCategory().getName())

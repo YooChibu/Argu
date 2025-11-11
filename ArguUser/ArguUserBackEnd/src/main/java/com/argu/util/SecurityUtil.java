@@ -20,10 +20,8 @@ public class SecurityUtil {
         }
 
         Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            // username이 실제로는 username이므로 UserRepository에서 조회
-            User user = userRepository.findByUsername(userDetails.getUsername())
+        if (principal instanceof UserDetails userDetails) {
+            User user = userRepository.findByEmail(userDetails.getUsername())
                     .orElse(null);
             return user != null ? user.getId() : null;
         }

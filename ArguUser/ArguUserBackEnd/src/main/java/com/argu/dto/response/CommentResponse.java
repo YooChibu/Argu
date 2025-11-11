@@ -16,7 +16,6 @@ import java.util.List;
 public class CommentResponse {
     private Long id;
     private Long userId;
-    private String username;
     private String nickname;
     private Long arguId;
     private Long parentId;
@@ -30,7 +29,6 @@ public class CommentResponse {
         return CommentResponse.builder()
                 .id(comment.getId())
                 .userId(comment.getUser().getId())
-                .username(comment.getUser().getUsername())
                 .nickname(comment.getUser().getNickname())
                 .arguId(comment.getArgu().getId())
                 .parentId(comment.getParent() != null ? comment.getParent().getId() : null)

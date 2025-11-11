@@ -4,7 +4,7 @@
  * 사용자 로그인 페이지입니다.
  * 
  * 주요 기능:
- * - 이메일 또는 아이디로 로그인
+ * - 이메일로 로그인
  * - 비밀번호 입력
  * - 로그인 실패 시 에러 메시지 표시
  * - 로그인 성공 시 메인 페이지로 이동
@@ -27,7 +27,7 @@ const LoginPage = () => {
 
   // 상태 관리
   const [formData, setFormData] = useState({
-    emailOrUsername: '', // 이메일 또는 아이디
+    email: '', // 이메일
     password: '', // 비밀번호
   })
   const [error, setError] = useState('') // 에러 메시지
@@ -47,7 +47,7 @@ const LoginPage = () => {
 
     try {
       // 로그인 요청
-      await login(formData.emailOrUsername, formData.password)
+      await login(formData.email, formData.password)
       // 로그인 성공 시 메인 페이지로 이동
       navigate('/')
     } catch (error) {
@@ -72,13 +72,13 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="error-message">{error}</div>}
           <div className="form-group">
-            <label htmlFor="emailOrUsername">이메일 또는 아이디</label>
+            <label htmlFor="email">이메일</label>
             <input
-              type="text"
-              id="emailOrUsername"
-              value={formData.emailOrUsername}
+              type="email"
+              id="email"
+              value={formData.email}
               onChange={(e) =>
-                setFormData({ ...formData, emailOrUsername: e.target.value })
+                setFormData({ ...formData, email: e.target.value })
               }
               required
               className="form-input"

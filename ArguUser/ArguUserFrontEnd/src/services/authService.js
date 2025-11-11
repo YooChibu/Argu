@@ -15,18 +15,18 @@ export const authService = {
   /**
    * 로그인
    * 
-   * 이메일 또는 아이디와 비밀번호로 로그인합니다.
+   * 이메일과 비밀번호로 로그인합니다.
    * 
-   * @param {string} emailOrUsername - 이메일 또는 아이디
+   * @param {string} email - 이메일
    * @param {string} password - 비밀번호
    * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
    * @returns {Object} response - ApiResponse { success: boolean, message: string, data: AuthResponse }
    * @returns {Object} response.data - AuthResponse { token: string, type: string, user: UserResponse }
    */
-  async login(emailOrUsername, password) {
+  async login(email, password) {
     // 인터셉터가 이미 ApiResponse 구조를 반환하므로 그대로 사용
     const response = await api.post('/auth/login', {
-      emailOrUsername,
+      email,
       password,
     })
     // ApiResponse 구조: { success: boolean, message: string, data: AuthResponse }
@@ -41,7 +41,6 @@ export const authService = {
    * 
    * @param {Object} registerData - 회원가입 데이터
    * @param {string} registerData.email - 이메일
-   * @param {string} registerData.username - 아이디
    * @param {string} registerData.password - 비밀번호
    * @param {string} registerData.nickname - 닉네임
    * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
