@@ -42,7 +42,7 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   # 로그 파일 설정은 logback-spring.xml에서 관리
-  # 경로: ../logs/ArguAdminBackEnd/YYYYMMDD/argu-admin-YYYY-MM-DD HH-0.log
+  # 출력 경로 예시: ../logs/ArguAdminBackEnd/20250101/argu-admin-2025-01-01 09-0.log
 
 # SpringDoc OpenAPI (Swagger) 설정
 springdoc:

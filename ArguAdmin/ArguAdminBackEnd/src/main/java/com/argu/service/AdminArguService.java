@@ -4,6 +4,7 @@ import com.argu.entity.Argu;
 import com.argu.exception.ResourceNotFoundException;
 import com.argu.repository.ArguRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
  * <p>
  * 검색, 상세 조회, 정보 수정, 상태 변경, 숨김 토글, 삭제 등의 CRUD 액션을 제공한다.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminArguService {
@@ -31,6 +33,8 @@ public class AdminArguService {
      * @return 논쟁 페이지 결과
      */
     public Page<Argu> searchArgus(String keyword, Argu.ArguStatus status, Boolean isHidden, Pageable pageable) {
+        log.debug("[ADMIN-ARGU] 논쟁 검색 - keyword={}, status={}, isHidden={} page={} size={}",
+                keyword, status, isHidden, pageable.getPageNumber(), pageable.getPageSize());
         return arguRepository.searchArgus(keyword, status, isHidden, pageable);
     }
 
@@ -43,7 +47,10 @@ public class AdminArguService {
      */
     public Argu getArguById(Long arguId) {
         return arguRepository.findById(arguId)
-                .orElseThrow(() -> new ResourceNotFoundException("논쟁을 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-ARGU] 논쟁 조회 실패 - 존재하지 않음 arguId={}", arguId);
+                    return new ResourceNotFoundException("논쟁을 찾을 수 없습니다");
+                });
     }
 
     /**
@@ -63,7 +70,9 @@ public class AdminArguService {
         if (content != null) argu.setContent(content);
         if (startDate != null) argu.setStartDate(startDate);
         if (endDate != null) argu.setEndDate(endDate);
-        return arguRepository.save(argu);
+        Argu updated = arguRepository.save(argu);
+        log.info("[ADMIN-ARGU] 논쟁 수정 - arguId={}, title={}", updated.getId(), updated.getTitle());
+        return updated;
     }
 
     /**
@@ -77,7 +86,9 @@ public class AdminArguService {
     public Argu updateArguStatus(Long arguId, Argu.ArguStatus status) {
         Argu argu = getArguById(arguId);
         argu.setStatus(status);
-        return arguRepository.save(argu);
+        Argu updated = arguRepository.save(argu);
+        log.info("[ADMIN-ARGU] 논쟁 상태 변경 - arguId={}, status={}", updated.getId(), updated.getStatus());
+        return updated;
     }
 
     /**
@@ -90,7 +101,9 @@ public class AdminArguService {
     public Argu toggleArguHidden(Long arguId) {
         Argu argu = getArguById(arguId);
         argu.setIsHidden(!argu.getIsHidden());
-        return arguRepository.save(argu);
+        Argu updated = arguRepository.save(argu);
+        log.info("[ADMIN-ARGU] 논쟁 숨김 토글 - arguId={}, hidden={}", updated.getId(), updated.getIsHidden());
+        return updated;
     }
 
     /**
@@ -102,6 +115,7 @@ public class AdminArguService {
     public void deleteArgu(Long arguId) {
         Argu argu = getArguById(arguId);
         arguRepository.delete(argu);
+        log.info("[ADMIN-ARGU] 논쟁 삭제 - arguId={}", arguId);
     }
 }
 

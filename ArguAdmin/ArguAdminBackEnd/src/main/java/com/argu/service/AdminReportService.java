@@ -5,6 +5,7 @@ import com.argu.exception.ResourceNotFoundException;
 import com.argu.repository.ReportRepository;
 import com.argu.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 /**
  * 신고 내역 조회 및 처리 로직을 담당하는 서비스.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminReportService {
@@ -30,8 +32,10 @@ public class AdminReportService {
      */
     public Page<Report> getReports(Report.ReportStatus status, Pageable pageable) {
         if (status != null) {
+            log.debug("[ADMIN-REPORT] 신고 목록 조회 - status={}", status);
             return reportRepository.findByStatus(status, pageable);
         }
+        log.debug("[ADMIN-REPORT] 신고 목록 조회 - 전체");
         return reportRepository.findAll(pageable);
     }
 
@@ -44,7 +48,10 @@ public class AdminReportService {
      */
     public Report getReportById(Long reportId) {
         return reportRepository.findById(reportId)
-                .orElseThrow(() -> new ResourceNotFoundException("신고를 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-REPORT] 신고 조회 실패 - 존재하지 않음 reportId={}", reportId);
+                    return new ResourceNotFoundException("신고를 찾을 수 없습니다");
+                });
     }
 
     /**
@@ -60,7 +67,9 @@ public class AdminReportService {
         report.setStatus(status);
         report.setProcessedBy(securityUtil.getCurrentAdminId());
         report.setProcessedAt(LocalDateTime.now());
-        return reportRepository.save(report);
+        Report processed = reportRepository.save(report);
+        log.info("[ADMIN-REPORT] 신고 처리 - reportId={}, status={}, processedBy={}", processed.getId(), processed.getStatus(), processed.getProcessedBy());
+        return processed;
     }
 }
 

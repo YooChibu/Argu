@@ -6,6 +6,7 @@ import com.argu.exception.BadRequestException;
 import com.argu.exception.ResourceNotFoundException;
 import com.argu.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * 관리자 계정 CRUD와 비밀번호/역할 관리 로직을 담당하는 서비스.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminManagementService {
@@ -27,6 +29,7 @@ public class AdminManagementService {
      * @return 관리자 리스트
      */
     public List<Admin> getAllAdmins() {
+        log.debug("[ADMIN-MGMT] 전체 관리자 목록 조회");
         return adminRepository.findAll();
     }
 
@@ -39,7 +42,10 @@ public class AdminManagementService {
      */
     public Admin getAdminById(Long adminId) {
         return adminRepository.findById(adminId)
-                .orElseThrow(() -> new ResourceNotFoundException("관리자를 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-MGMT] 관리자 조회 실패 - 존재하지 않음 adminId={}", adminId);
+                    return new ResourceNotFoundException("관리자를 찾을 수 없습니다");
+                });
     }
 
     /**
@@ -52,6 +58,7 @@ public class AdminManagementService {
     @Transactional
     public Admin createAdmin(CreateAdminRequest request) {
         if (adminRepository.existsByAdminId(request.getAdminId())) {
+            log.warn("[ADMIN-MGMT] 관리자 생성 실패 - 중복 adminId={}", request.getAdminId());
             throw new BadRequestException("이미 존재하는 관리자 아이디입니다");
         }
 
@@ -63,7 +70,9 @@ public class AdminManagementService {
                 .status(Admin.AdminStatus.ACTIVE)
                 .build();
 
-        return adminRepository.save(admin);
+        Admin saved = adminRepository.save(admin);
+        log.info("[ADMIN-MGMT] 관리자 생성 성공 - adminId={}, role={} ", saved.getAdminId(), saved.getRole());
+        return saved;
     }
 
     /**
@@ -81,7 +90,9 @@ public class AdminManagementService {
         if (name != null) admin.setName(name);
         if (role != null) admin.setRole(role);
         if (status != null) admin.setStatus(status);
-        return adminRepository.save(admin);
+        Admin updated = adminRepository.save(admin);
+        log.info("[ADMIN-MGMT] 관리자 정보 수정 - adminId={}, role={}, status={}", updated.getAdminId(), updated.getRole(), updated.getStatus());
+        return updated;
     }
 
     /**
@@ -95,7 +106,9 @@ public class AdminManagementService {
     public Admin updateAdminPassword(Long adminId, String newPassword) {
         Admin admin = getAdminById(adminId);
         admin.setPassword(passwordEncoder.encode(newPassword));
-        return adminRepository.save(admin);
+        Admin updated = adminRepository.save(admin);
+        log.info("[ADMIN-MGMT] 관리자 비밀번호 변경 - adminId={}", updated.getAdminId());
+        return updated;
     }
 
     /**
@@ -107,6 +120,7 @@ public class AdminManagementService {
     public void deleteAdmin(Long adminId) {
         Admin admin = getAdminById(adminId);
         adminRepository.delete(admin);
+        log.info("[ADMIN-MGMT] 관리자 삭제 - adminId={}", admin.getAdminId());
     }
 }
 

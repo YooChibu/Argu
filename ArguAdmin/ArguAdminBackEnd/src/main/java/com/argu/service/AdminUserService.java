@@ -7,6 +7,7 @@ import com.argu.repository.ArguRepository;
 import com.argu.repository.CommentRepository;
 import com.argu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 관리자 회원 운영 로직을 담당하는 서비스.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminUserService {
@@ -31,6 +33,8 @@ public class AdminUserService {
      * @return 회원 페이지 결과
      */
     public Page<User> searchUsers(String keyword, User.UserStatus status, Pageable pageable) {
+        log.debug("[ADMIN-USER] 회원 검색 - keyword={}, status={}, page={}, size={}",
+                keyword, status, pageable.getPageNumber(), pageable.getPageSize());
         return userRepository.searchUsers(keyword, status, pageable);
     }
 
@@ -43,10 +47,16 @@ public class AdminUserService {
      */
     public UserDetailResponse getUserDetail(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-USER] 회원 상세 조회 실패 - 존재하지 않음 userId={}", userId);
+                    return new ResourceNotFoundException("사용자를 찾을 수 없습니다");
+                });
 
         long arguCount = arguRepository.findByUserAndIsHiddenFalse(user, Pageable.unpaged()).getTotalElements();
         long commentCount = commentRepository.findByUser(user).size();
+
+        log.debug("[ADMIN-USER] 회원 상세 조회 - userId={}, arguCount={}, commentCount={}",
+                userId, arguCount, commentCount);
 
         return UserDetailResponse.from(user, arguCount, commentCount);
     }
@@ -61,9 +71,14 @@ public class AdminUserService {
     @Transactional
     public User updateUserStatus(Long userId, User.UserStatus status) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-USER] 회원 상태 변경 실패 - 존재하지 않음 userId={}", userId);
+                    return new ResourceNotFoundException("사용자를 찾을 수 없습니다");
+                });
         user.setStatus(status);
-        return userRepository.save(user);
+        User updated = userRepository.save(user);
+        log.info("[ADMIN-USER] 회원 상태 변경 - userId={}, status={}", updated.getId(), updated.getStatus());
+        return updated;
     }
 
     /**
@@ -74,9 +89,13 @@ public class AdminUserService {
     @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다"));
+                .orElseThrow(() -> {
+                    log.warn("[ADMIN-USER] 회원 삭제 실패 - 존재하지 않음 userId={}", userId);
+                    return new ResourceNotFoundException("사용자를 찾을 수 없습니다");
+                });
         user.setStatus(User.UserStatus.DELETED);
         userRepository.save(user);
+        log.info("[ADMIN-USER] 회원 삭제 처리 - userId={}", userId);
     }
 }
 
