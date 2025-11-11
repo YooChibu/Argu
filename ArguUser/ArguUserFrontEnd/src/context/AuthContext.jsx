@@ -81,9 +81,15 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.getCurrentUser()
       /**
        * ApiResponse 구조: { success: boolean, message: string, data: UserResponse }
-       * UserResponse에서 사용자 정보 추출
+       * success가 false인 경우 에러 처리
+       * success가 true인 경우 data에서 사용자 정보 추출
        */
-      const userData = response.data || response
+      if (!response.success) {
+        throw new Error(response.message || '사용자 정보를 가져올 수 없습니다.')
+      }
+      
+      // ApiResponse.data에서 UserResponse 추출
+      const userData = response.data
       setUser(userData)
     } catch (error) {
       console.error('사용자 정보 가져오기 실패:', error)
@@ -102,6 +108,7 @@ export const AuthProvider = ({ children }) => {
    * @param {string} emailOrUsername - 이메일 또는 아이디
    * @param {string} password - 비밀번호
    * @returns {Promise<Object>} 인증 응답 데이터 (token, user 포함)
+   * @throws {Error} 로그인 실패 시 에러 발생
    */
   const login = async (emailOrUsername, password) => {
     const response = await authService.login(emailOrUsername, password)
@@ -109,9 +116,19 @@ export const AuthProvider = ({ children }) => {
      * ApiResponse 구조: { success: boolean, message: string, data: AuthResponse }
      * AuthResponse: { token: string, type: string, user: UserResponse }
      * 
-     * 토큰과 사용자 정보를 추출하여 상태에 저장
+     * success가 false인 경우 에러 발생
+     * success가 true인 경우 data에서 토큰과 사용자 정보 추출
      */
-    const authData = response.data || response
+    if (!response.success) {
+      throw new Error(response.message || '로그인에 실패했습니다.')
+    }
+    
+    // ApiResponse.data에서 AuthResponse 추출
+    const authData = response.data
+    if (!authData || !authData.token) {
+      throw new Error('로그인 응답에 토큰이 없습니다.')
+    }
+    
     setToken(authData.token)
     setUser(authData.user)
     return authData
@@ -124,6 +141,7 @@ export const AuthProvider = ({ children }) => {
    * 
    * @param {Object} registerData - 회원가입 데이터 (email, username, password, nickname 등)
    * @returns {Promise<Object>} 인증 응답 데이터 (token, user 포함)
+   * @throws {Error} 회원가입 실패 시 에러 발생
    */
   const register = async (registerData) => {
     const response = await authService.register(registerData)
@@ -131,9 +149,19 @@ export const AuthProvider = ({ children }) => {
      * ApiResponse 구조: { success: boolean, message: string, data: AuthResponse }
      * AuthResponse: { token: string, type: string, user: UserResponse }
      * 
-     * 토큰과 사용자 정보를 추출하여 상태에 저장
+     * success가 false인 경우 에러 발생
+     * success가 true인 경우 data에서 토큰과 사용자 정보 추출
      */
-    const authData = response.data || response
+    if (!response.success) {
+      throw new Error(response.message || '회원가입에 실패했습니다.')
+    }
+    
+    // ApiResponse.data에서 AuthResponse 추출
+    const authData = response.data
+    if (!authData || !authData.token) {
+      throw new Error('회원가입 응답에 토큰이 없습니다.')
+    }
+    
     setToken(authData.token)
     setUser(authData.user)
     return authData

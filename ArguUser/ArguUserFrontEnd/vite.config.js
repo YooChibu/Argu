@@ -34,8 +34,30 @@ export default defineConfig({
       '/api': {
         // 백엔드 서버 주소 (Spring Boot)
         target: 'http://localhost:9001',
-        // Origin 헤더를 타겟 서버의 호스트로 변경
+        // Origin 헤더를 타겟 서버의 호스트로 변경 (CORS 우회)
         changeOrigin: true,
+        // 경로 재작성 설정
+        // 백엔드가 /api/auth/login을 기대하면 rewrite를 주석 처리
+        // 백엔드가 /auth/login을 기대하면 rewrite를 활성화
+        // 예: /api/auth/login -> http://localhost:9001/api/auth/login (rewrite 없음)
+        // 예: /api/auth/login -> http://localhost:9001/auth/login (rewrite 있음)
+        // rewrite: (path) => path.replace(/^\/api/, ''),
+        // SSL 인증서 검증 비활성화 (개발 환경용)
+        secure: false,
+        // WebSocket 프록시 설정
+        ws: true,
+        // 프록시 요청/응답 로깅 (디버깅용)
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.log('프록시 에러:', err)
+          })
+          proxy.on('proxyReq', (proxyReq, req, _res) => {
+            console.log('프록시 요청:', req.method, req.url, '->', proxyReq.path)
+          })
+          proxy.on('proxyRes', (proxyRes, req, _res) => {
+            console.log('프록시 응답:', proxyRes.statusCode, req.url)
+          })
+        },
       }
     }
   }

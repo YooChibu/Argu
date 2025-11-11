@@ -52,7 +52,14 @@ const LoginPage = () => {
       navigate('/')
     } catch (error) {
       // 에러 메시지 표시
-      setError(error.response?.data?.message || '로그인에 실패했습니다.')
+      // ApiResponse 구조의 에러: error.response.data.message
+      // 일반 에러: error.message
+      const errorMessage = 
+        error.response?.data?.message || 
+        error.message || 
+        '로그인에 실패했습니다.'
+      setError(errorMessage)
+      console.error('로그인 에러:', error)
     } finally {
       setLoading(false)
     }

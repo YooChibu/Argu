@@ -67,22 +67,50 @@ api.interceptors.response.use(
      * axios는 response.data에 ApiResponse를 담아서 반환
      * 
      * ApiResponse 구조가 있으면 그대로 반환, 없으면 response.data 반환
+     * 
+     * 주의: axios의 response 객체가 아니라 response.data를 반환해야
+     * 서비스 레이어에서 직접 ApiResponse를 사용할 수 있습니다.
      */
     const apiResponse = response.data
-    if (apiResponse && apiResponse.data !== undefined) {
+    if (apiResponse && typeof apiResponse === 'object' && 'data' in apiResponse) {
+      // ApiResponse 구조가 있는 경우: { success, message, data }
       return apiResponse
     }
+    // ApiResponse 구조가 없는 경우 (직접 데이터 반환)
     return response.data
   },
   (error) => {
-    // 401 Unauthorized 에러 처리 (인증 실패)
-    if (error.response?.status === 401) {
-      // 토큰 제거
-      localStorage.removeItem('token')
-      // 로그인 페이지로 리다이렉트
-      window.location.href = '/auth/login'
+    /**
+     * 에러 응답 처리
+     * 
+     * 백엔드 에러 응답 구조: { success: false, message: string, data: null }
+     * axios는 에러 응답을 error.response.data에 담아서 반환
+     */
+    if (error.response) {
+      // 서버에서 응답을 받았지만 에러 상태 코드인 경우
+      const errorResponse = error.response.data
+      
+      // 401 Unauthorized 에러 처리 (인증 실패)
+      if (error.response.status === 401) {
+        // 토큰 제거
+        localStorage.removeItem('token')
+        // 로그인 페이지로 리다이렉트
+        window.location.href = '/auth/login'
+      }
+      
+      // ApiResponse 구조의 에러 응답인 경우 그대로 전달
+      if (errorResponse && typeof errorResponse === 'object' && 'message' in errorResponse) {
+        return Promise.reject({
+          ...error,
+          response: {
+            ...error.response,
+            data: errorResponse
+          }
+        })
+      }
     }
-    // 에러를 그대로 전달하여 각 컴포넌트에서 처리할 수 있도록 함
+    
+    // 네트워크 에러 등 기타 에러
     return Promise.reject(error)
   }
 )
