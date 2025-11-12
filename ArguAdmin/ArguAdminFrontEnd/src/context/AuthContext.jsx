@@ -43,37 +43,37 @@ export const useAuth = () => {
  */
 export const AuthProvider = ({ children }) => {
   // 상태 관리
-  const [admin, setAdmin] = useState(null) // 현재 로그인한 관리자 정보
+  // localStorage에서 관리자 정보 복원
+  const getStoredAdmin = () => {
+    try {
+      const stored = localStorage.getItem('adminInfo')
+      return stored ? JSON.parse(stored) : null
+    } catch {
+      return null
+    }
+  }
+
+  const [admin, setAdmin] = useState(getStoredAdmin()) // 현재 로그인한 관리자 정보
   const [token, setToken] = useState(localStorage.getItem('adminToken')) // JWT 토큰
   const [loading, setLoading] = useState(true) // 로딩 상태
 
   /**
-   * 토큰 변경 시 실행되는 useEffect
+   * 컴포넌트 마운트 시 토큰이 있으면 관리자 정보 복원
    */
   useEffect(() => {
     if (token) {
-      localStorage.setItem('adminToken', token)
-      // 토큰이 있으면 관리자 정보 가져오기
-      fetchCurrentAdmin()
+      // 토큰이 있으면 저장된 관리자 정보 복원
+      const storedAdmin = getStoredAdmin()
+      if (storedAdmin) {
+        setAdmin(storedAdmin)
+      }
+      setLoading(false)
     } else {
       localStorage.removeItem('adminToken')
+      localStorage.removeItem('adminInfo')
       setLoading(false)
     }
-  }, [token])
-
-  /**
-   * 현재 로그인한 관리자 정보 가져오기
-   */
-  const fetchCurrentAdmin = async () => {
-    try {
-      // 토큰에서 관리자 정보 추출 (또는 별도 API 호출)
-      // 현재는 토큰만으로 관리하므로, 필요시 별도 API 추가 가능
-      setLoading(false)
-    } catch (error) {
-      console.error('관리자 정보 가져오기 실패:', error)
-      logout()
-    }
-  }
+  }, [])
 
   /**
    * 로그인 함수
@@ -85,8 +85,19 @@ export const AuthProvider = ({ children }) => {
   const login = async (adminId, password) => {
     const response = await adminAuthService.login(adminId, password)
     const authData = response.data || response
-    setToken(authData.token)
-    setAdmin(authData.admin)
+    const adminInfo = authData.admin || authData.data?.admin
+    
+    setToken(authData.token || authData.data?.token)
+    setAdmin(adminInfo)
+    
+    // localStorage에 관리자 정보 저장
+    if (adminInfo) {
+      localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
+    }
+    if (authData.token || authData.data?.token) {
+      localStorage.setItem('adminToken', authData.token || authData.data?.token)
+    }
+    
     return authData
   }
 
@@ -97,6 +108,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null)
     setAdmin(null)
     localStorage.removeItem('adminToken')
+    localStorage.removeItem('adminInfo')
   }
 
   // Context에 제공할 값
@@ -111,4 +123,5 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
+
 
