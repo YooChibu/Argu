@@ -22,6 +22,8 @@ import ArguCreatePage from './pages/ArguCreatePage'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import MyPage from './pages/MyPage'
+import MyPageEdit from './pages/MyPageEdit'
+import MyPageSettings from './pages/MyPageSettings'
 import UserProfilePage from './pages/UserProfilePage'
 import CategoryListPage from './pages/CategoryListPage'
 import CategoryDetailPage from './pages/CategoryDetailPage'
@@ -61,6 +63,8 @@ function App() {
               {/* 보호된 라우트: 로그인 필요 */}
               <Route path="/argu/create" element={<ProtectedRoute><ArguCreatePage /></ProtectedRoute>} /> {/* 논쟁 작성 페이지 */}
               <Route path="/my" element={<ProtectedRoute><MyPage /></ProtectedRoute>} /> {/* 마이페이지 */}
+              <Route path="/my/edit" element={<ProtectedRoute><MyPageEdit /></ProtectedRoute>} /> {/* 프로필 수정 페이지 */}
+              <Route path="/my/settings" element={<ProtectedRoute><MyPageSettings /></ProtectedRoute>} /> {/* 계정 설정 페이지 */}
             </Routes>
           </Layout>
         </Router>
