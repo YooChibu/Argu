@@ -48,6 +48,11 @@ const LoginPage = () => {
           </button>
         </div>
         <div className="login-logo">
+          <img 
+            src="/images/ARGU.png" 
+            alt="Argu Logo" 
+            className="login-logo-image"
+          />
           <span className="logo-text">Argu Admin</span>
         </div>
         <h2>관리자 로그인</h2>

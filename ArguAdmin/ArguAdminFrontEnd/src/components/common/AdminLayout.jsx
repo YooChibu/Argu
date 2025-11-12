@@ -56,9 +56,24 @@ const AdminLayout = ({ children }) => {
       {/* 사이드바 */}
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="admin-logo">
-          <Link to="/">
+          <Link to="/" className="logo-link">
+            <img 
+              src="/images/ARGU.png" 
+              alt="Argu Logo" 
+              className="logo-image"
+            />
             <span className="logo-text">Argu Admin</span>
           </Link>
+          {/* 사이드바가 열려있을 때만 사이드바 안에 토글 버튼 표시 */}
+          {sidebarOpen && (
+            <button
+              className="hamburger-btn"
+              onClick={toggleSidebar}
+              aria-label="메뉴 닫기"
+            >
+              <span className="hamburger-icon">✕</span>
+            </button>
+          )}
         </div>
         <nav className="admin-nav">
           {menuItems.map((item) => (
@@ -92,18 +107,27 @@ const AdminLayout = ({ children }) => {
       <main className={`admin-main ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         <header className="admin-header">
           <div className="header-left">
-            <button
-              className="hamburger-btn"
-              onClick={toggleSidebar}
-              aria-label="메뉴 토글"
-            >
-              <span className="hamburger-icon">
-                {sidebarOpen ? '✕' : '☰'}
-              </span>
-            </button>
-            <h2>
-              {menuItems.find(item => isActive(item.path))?.label || '대시보드'}
-            </h2>
+            {/* 사이드바가 닫혀있을 때만 헤더에 토글 버튼 표시 */}
+            {!sidebarOpen && (
+              <button
+                className="hamburger-btn"
+                onClick={toggleSidebar}
+                aria-label="메뉴 열기"
+              >
+                <span className="hamburger-icon">☰</span>
+              </button>
+            )}
+            {/* 사이드바가 닫혀있을 때만 헤더에 로고와 텍스트 표시 */}
+            {!sidebarOpen && (
+              <Link to="/" className="header-logo-link">
+                <img 
+                  src="/images/ARGU.png" 
+                  alt="Argu Logo" 
+                  className="header-logo-image"
+                />
+                <span className="header-logo-text">Argu Admin</span>
+              </Link>
+            )}
           </div>
           <div className="admin-header-actions">
             <button
