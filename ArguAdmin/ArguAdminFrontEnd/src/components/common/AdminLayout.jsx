@@ -5,6 +5,7 @@
  * 사이드바와 헤더를 포함합니다.
  */
 
+import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -15,6 +16,7 @@ const AdminLayout = ({ children }) => {
   const navigate = useNavigate()
   const { admin, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const handleLogout = () => {
     logout()
@@ -37,10 +39,22 @@ const AdminLayout = ({ children }) => {
     { path: '/admins', label: '관리자 관리', icon: '👤' }
   ]
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
+
   return (
     <div className="admin-layout">
+      {/* 모바일 오버레이 */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={toggleSidebar}
+          aria-hidden="true"
+        />
+      )}
       {/* 사이드바 */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="admin-logo">
           <Link to="/">
             <span className="logo-text">Argu Admin</span>
@@ -75,11 +89,22 @@ const AdminLayout = ({ children }) => {
       </aside>
 
       {/* 메인 컨텐츠 */}
-      <main className="admin-main">
+      <main className={`admin-main ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         <header className="admin-header">
-          <h2>
-            {menuItems.find(item => isActive(item.path))?.label || '대시보드'}
-          </h2>
+          <div className="header-left">
+            <button
+              className="hamburger-btn"
+              onClick={toggleSidebar}
+              aria-label="메뉴 토글"
+            >
+              <span className="hamburger-icon">
+                {sidebarOpen ? '✕' : '☰'}
+              </span>
+            </button>
+            <h2>
+              {menuItems.find(item => isActive(item.path))?.label || '대시보드'}
+            </h2>
+          </div>
           <div className="admin-header-actions">
             <button
               onClick={toggleTheme}
