@@ -87,20 +87,6 @@ const AdminLayout = ({ children }) => {
             </Link>
           ))}
         </nav>
-        <div className="admin-footer">
-          <div className="admin-user">
-            <div className="admin-avatar">👤</div>
-            <div className="admin-info">
-              <div className="admin-name">{admin?.name || '관리자'}</div>
-              <div className="admin-role">
-                {admin?.role === 'SUPER_ADMIN' ? '슈퍼 관리자' : '일반 관리자'}
-              </div>
-            </div>
-          </div>
-          <button onClick={handleLogout} className="logout-btn">
-            로그아웃
-          </button>
-        </div>
       </aside>
 
       {/* 메인 컨텐츠 */}
@@ -130,12 +116,25 @@ const AdminLayout = ({ children }) => {
             )}
           </div>
           <div className="admin-header-actions">
-            <button
+          <button
               onClick={toggleTheme}
               className="theme-toggle"
               aria-label="테마 전환"
             >
               {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+            <div className="header-admin-info">
+              <div className="admin-avatar">👤</div>
+              <div className="admin-info">
+                <div className="admin-name">{admin?.name || '관리자'}</div>
+                <div className="admin-role">
+                  {admin?.role === 'SUPER_ADMIN' ? '슈퍼 관리자' : '일반 관리자'}
+                </div>
+              </div>
+            </div>
+            
+            <button onClick={handleLogout} className="header-logout-btn">
+              로그아웃
             </button>
             <span className="current-time">
               {new Date().toLocaleString('ko-KR')}
