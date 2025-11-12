@@ -1,0 +1,105 @@
+/* 논쟁 관리 페이지 스타일 */
+
+.argu-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.title-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hidden-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background-color: var(--warning-color);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hidden-row {
+  opacity: 0.7;
+}
+
+.status-scheduled {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+[data-theme='dark'] .status-scheduled {
+  background-color: #1e3a8a;
+  color: #93c5fd;
+}
+
+.status-active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+[data-theme='dark'] .status-active {
+  background-color: #064e3b;
+  color: #6ee7b7;
+}
+
+.status-ended {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+[data-theme='dark'] .status-ended {
+  background-color: #374151;
+  color: #d1d5db;
+}
+
+.modal-large {
+  max-width: 800px;
+}
+
+.content-display {
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0.75rem;
+  background-color: var(--bg-secondary);
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  resize: vertical;
+  font-family: inherit;
+}
+
