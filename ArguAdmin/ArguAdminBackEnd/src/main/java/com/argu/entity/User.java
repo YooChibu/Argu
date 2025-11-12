@@ -1,5 +1,7 @@
 package com.argu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -29,6 +31,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +44,7 @@ public class User {
 
     @Column(nullable = false, length = 255)
     @Comment("비밀번호 (BCrypt 해시)")
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false, unique = true, length = 50)

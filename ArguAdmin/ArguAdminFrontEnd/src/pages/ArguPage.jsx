@@ -43,8 +43,9 @@ const ArguPage = () => {
         size: 20
       })
 
-      const data = response.data?.data || response.data || response
-      if (data.content) {
+      // API 인터셉터가 ApiResponse를 반환하므로 response.data가 실제 데이터
+      const data = response.data || response
+      if (data && data.content) {
         setArgus(data.content)
         setTotalPages(data.totalPages || 0)
         setTotalElements(data.totalElements || 0)
@@ -52,6 +53,9 @@ const ArguPage = () => {
         setArgus(data)
         setTotalPages(1)
         setTotalElements(data.length)
+      } else {
+        console.error('예상하지 못한 응답 형식:', data)
+        alert('논쟁 목록을 불러오는데 실패했습니다.')
       }
     } catch (error) {
       console.error('논쟁 목록 로딩 실패:', error)
