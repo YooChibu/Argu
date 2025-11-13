@@ -1,6 +1,7 @@
 package com.argu.controller;
 
 import com.argu.dto.request.CreateArguRequest;
+import com.argu.dto.request.UpdateArguRequest;
 import com.argu.dto.response.ApiResponse;
 import com.argu.dto.response.ArguResponse;
 import com.argu.service.ArguService;
@@ -103,6 +104,31 @@ public class ArguController {
             @PageableDefault(size = 20) Pageable pageable) {
         Page<ArguResponse> response = arguService.searchArgus(keyword, pageable);
         return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    /**
+     * 논쟁 수정
+     * 작성자만 수정 가능하며, 논쟁이 시작되기 전(SCHEDULED 상태)에만 수정 가능
+     * 
+     * @param id 논쟁 ID
+     * @param request 논쟁 수정 요청 데이터
+     * @return 수정된 논쟁 정보
+     */
+    @Operation(summary = "논쟁 수정", description = "논쟁을 수정합니다. 작성자만 수정 가능하며, 논쟁이 시작되기 전에만 수정 가능합니다.")
+    @SecurityRequirement(name = "JWT")
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ArguResponse>> updateArgu(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateArguRequest request) {
+        // 현재 로그인한 사용자 ID 조회
+        Long userId = securityUtil.getCurrentUserId();
+        if (userId == null) {
+            return ResponseEntity.status(401).body(ApiResponse.error("인증이 필요합니다"));
+        }
+        
+        // 논쟁 수정 (권한 및 상태 검증 포함)
+        ArguResponse response = arguService.updateArgu(id, request, userId);
+        return ResponseEntity.ok(ApiResponse.success("논쟁이 수정되었습니다", response));
     }
 
     /**

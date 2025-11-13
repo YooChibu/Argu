@@ -1,6 +1,7 @@
 package com.argu.service;
 
 import com.argu.dto.request.CreateArguRequest;
+import com.argu.dto.request.UpdateArguRequest;
 import com.argu.dto.response.ArguResponse;
 import com.argu.entity.Argu;
 import com.argu.entity.Category;
@@ -191,6 +192,90 @@ public class ArguService {
                 Argu.ArguStatus.ACTIVE, now);
         activeArgus.forEach(argu -> argu.setStatus(Argu.ArguStatus.ENDED));
         arguRepository.saveAll(activeArgus);
+    }
+
+    /**
+     * 논쟁 수정
+     * 작성자만 수정 가능하며, 논쟁이 시작되기 전(SCHEDULED 상태)에만 수정 가능합니다.
+     * 
+     * @param id 논쟁 ID
+     * @param request 수정 요청 데이터
+     * @param userId 현재 사용자 ID
+     * @return 수정된 논쟁 응답 DTO
+     * @throws ResourceNotFoundException 논쟁을 찾을 수 없는 경우
+     * @throws UnauthorizedException 작성자가 아닌 경우
+     * @throws BadRequestException 논쟁이 이미 시작되었거나 날짜 검증 실패 시
+     */
+    @Transactional
+    public ArguResponse updateArgu(Long id, UpdateArguRequest request, Long userId) {
+        // 논쟁 조회
+        Argu argu = arguRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("논쟁을 찾을 수 없습니다"));
+
+        // 숨김 처리된 논쟁인지 확인
+        if (argu.getIsHidden()) {
+            throw new ResourceNotFoundException("논쟁을 찾을 수 없습니다");
+        }
+
+        // 작성자 권한 확인
+        if (!argu.getUser().getId().equals(userId)) {
+            throw new UnauthorizedException("논쟁을 수정할 권한이 없습니다");
+        }
+
+        // 논쟁 상태 확인 (시작 전에만 수정 가능)
+        if (argu.getStatus() != Argu.ArguStatus.SCHEDULED) {
+            throw new BadRequestException("논쟁이 시작된 후에는 수정할 수 없습니다");
+        }
+
+        // 제목 수정
+        if (request.getTitle() != null && !request.getTitle().trim().isEmpty()) {
+            argu.setTitle(request.getTitle().trim());
+        }
+
+        // 내용 수정
+        if (request.getContent() != null) {
+            argu.setContent(request.getContent());
+        }
+
+        // 카테고리 수정
+        if (request.getCategoryId() != null) {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("카테고리를 찾을 수 없습니다"));
+            argu.setCategory(category);
+        }
+
+        // 날짜 수정 및 검증
+        LocalDateTime newStartDate = request.getStartDate() != null ? request.getStartDate() : argu.getStartDate();
+        LocalDateTime newEndDate = request.getEndDate() != null ? request.getEndDate() : argu.getEndDate();
+
+        // 날짜 검증: 시작일시는 종료일시보다 이전이어야 함
+        if (newStartDate.isAfter(newEndDate)) {
+            throw new BadRequestException("시작일시는 종료일시보다 이전이어야 합니다");
+        }
+
+        // 날짜 검증: 시작일시는 현재 시간보다 이후여야 함
+        if (newStartDate.isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("시작일시는 현재 시간보다 이후여야 합니다");
+        }
+
+        if (request.getStartDate() != null) {
+            argu.setStartDate(request.getStartDate());
+        }
+        if (request.getEndDate() != null) {
+            argu.setEndDate(request.getEndDate());
+        }
+
+        // 논쟁 저장
+        argu = arguRepository.save(argu);
+
+        // 좋아요 수 조회
+        Long likeCount = likeRepository.countByArgu(argu);
+        
+        // 댓글 수 조회 (숨김 처리되지 않은 댓글만)
+        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+
+        // 응답 DTO 생성
+        return ArguResponse.from(argu, likeCount, commentCount);
     }
 
     /**

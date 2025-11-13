@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -71,7 +72,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()        // 인증 관련 API는 모두 허용
                         .requestMatchers("/api/categories/**").permitAll()  // 카테고리 API는 모두 허용
-                        .requestMatchers("/api/argu/**").permitAll()       // 논쟁 조회 API는 모두 허용
+                        .requestMatchers(HttpMethod.GET, "/api/argu/**").permitAll()       // 논쟁 조회 API는 모두 허용 (GET)
+                        .requestMatchers(HttpMethod.POST, "/api/argu").authenticated()     // 논쟁 생성은 인증 필요 (POST)
+                        .requestMatchers(HttpMethod.PUT, "/api/argu/**").authenticated()  // 논쟁 수정은 인증 필요 (PUT)
+                        .requestMatchers(HttpMethod.DELETE, "/api/argu/**").authenticated() // 논쟁 삭제는 인증 필요 (DELETE)
                         .requestMatchers("/files/**").permitAll()         // 업로드된 파일 접근 허용
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger UI 허용
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()     // API 문서 허용

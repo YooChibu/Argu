@@ -113,6 +113,27 @@ export const arguService = {
     })
     return response.data
   },
+
+  /**
+   * 논쟁 수정
+   * 
+   * 논쟁을 수정합니다. 작성자만 수정 가능하며, 논쟁이 시작되기 전에만 수정 가능합니다.
+   * 인증이 필요합니다.
+   * 
+   * @param {number} id - 논쟁 ID
+   * @param {Object} arguData - 논쟁 수정 데이터
+   * @param {string} [arguData.title] - 논쟁 제목 (선택적)
+   * @param {string} [arguData.content] - 논쟁 내용 (선택적)
+   * @param {number} [arguData.categoryId] - 카테고리 ID (선택적)
+   * @param {string} [arguData.startDate] - 시작일시 (ISO 8601 형식, 선택적)
+   * @param {string} [arguData.endDate] - 종료일시 (ISO 8601 형식, 선택적)
+   * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
+   * @returns {Object} response.data - ArguResponse (수정된 논쟁 정보)
+   */
+  async updateArgu(id, arguData) {
+    const response = await api.put(`/argu/${id}`, arguData)
+    return response.data
+  },
 }
 
 
