@@ -34,6 +34,19 @@ import './ArguCard.css'
  */
 const ArguCard = ({ argu }) => {
   /**
+   * HTML 태그를 제거하고 순수 텍스트만 추출하는 함수
+   * 
+   * @param {string} html - HTML 문자열
+   * @returns {string} 순수 텍스트
+   */
+  const stripHtml = (html) => {
+    if (!html) return ''
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  /**
    * 논쟁 상태에 따른 배지 정보 반환
    * 
    * @param {string} status - 논쟁 상태 (SCHEDULED, ACTIVE, ENDED)
@@ -50,6 +63,9 @@ const ArguCard = ({ argu }) => {
 
   // 논쟁 상태 배지 정보 가져오기
   const status = getStatusBadge(argu.status)
+  
+  // HTML 태그 제거 후 텍스트만 추출
+  const plainText = stripHtml(argu.content || '')
 
   return (
     <div className="argu-card">
@@ -68,10 +84,10 @@ const ArguCard = ({ argu }) => {
         <Link to={`/argu/${argu.id}`}>{argu.title}</Link>
       </h3>
       
-      {/* 논쟁 내용 미리보기 (150자까지만 표시) */}
+      {/* 논쟁 내용 미리보기 (150자까지만 표시, HTML 태그 제거) */}
       <p className="argu-excerpt">
-        {argu.content?.substring(0, 150)}
-        {argu.content?.length > 150 && '...'}
+        {plainText.substring(0, 150)}
+        {plainText.length > 150 && '...'}
       </p>
       
       {/* 메타 정보: 작성자 및 작성일 */}
