@@ -13,13 +13,21 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import ImageResize from 'quill-image-resize-module-react'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import { fileUploadService } from '../services/fileUploadService'
 import ImageUploadModal from '../components/common/ImageUploadModal'
 import './ArguCreatePage.css'
+
+// 이미지 리사이즈 모듈 등록
+try {
+  Quill.register('modules/imageResize', ImageResize)
+} catch (error) {
+  console.warn('이미지 리사이즈 모듈 등록 실패:', error)
+}
 
 /**
  * ArguCreatePage 컴포넌트
@@ -90,6 +98,7 @@ const ArguCreatePage = () => {
         [{ 'header': [1, 2, 3, false] }],
         ['bold', 'italic', 'underline', 'strike'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'align': [] }], // 텍스트 정렬 (좌측, 중앙, 우측, 양쪽 정렬)
         [{ 'color': [] }, { 'background': [] }],
         ['link', 'image', 'blockquote', 'code-block'],
         ['clean']
@@ -127,6 +136,26 @@ const ArguCreatePage = () => {
           }
         }
       }
+    },
+    // 이미지 리사이즈 모듈 설정
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize', 'Toolbar'],
+      handleStyles: {
+        backgroundColor: 'black',
+        border: 'none',
+        color: 'white'
+      },
+      displayStyles: {
+        backgroundColor: 'black',
+        border: 'none',
+        color: 'white'
+      },
+      toolbarStyles: {
+        backgroundColor: 'black',
+        border: 'none',
+        color: 'white'
+      }
     }
   }), [])
 
@@ -138,6 +167,7 @@ const ArguCreatePage = () => {
     'header',
     'bold', 'italic', 'underline', 'strike',
     'list', 'bullet',
+    'align', // 텍스트 정렬
     'color', 'background',
     'link', 'image', 'blockquote', 'code-block'
   ], [])
@@ -203,10 +233,10 @@ const ArguCreatePage = () => {
       return
     }
 
-    // 내용 검증: HTML 태그 제거 후 최소 100자 이상
+    // 내용 검증: 내용이 비어있지 않은지 확인
     const plainText = stripHtml(formData.content).trim()
-    if (plainText.length < 100) {
-      setError('내용은 최소 100자 이상 작성해주세요.')
+    if (plainText.length === 0) {
+      setError('내용을 입력해주세요.')
       return
     }
 
@@ -292,7 +322,7 @@ const ArguCreatePage = () => {
               formats={quillFormats}
             />
             <p className="form-hint">
-              최소 100자 이상 작성해주세요. 건설적인 논쟁을 위해 배경 지식과 함께 작성해주시면 좋습니다.
+              건설적인 논쟁을 위해 배경 지식과 함께 작성해주시면 좋습니다.
             </p>
           </div>
           <div className="form-row">

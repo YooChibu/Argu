@@ -138,6 +138,54 @@
   margin-bottom: 1rem;
 }
 
+/* 텍스트 정렬 스타일 */
+.argu-detail-content .ql-align-left {
+  text-align: left;
+}
+
+.argu-detail-content .ql-align-center {
+  text-align: center;
+}
+
+.argu-detail-content .ql-align-right {
+  text-align: right;
+}
+
+.argu-detail-content .ql-align-justify {
+  text-align: justify;
+}
+
+/* 테이블 스타일 */
+.argu-detail-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+  display: block;
+}
+
+.argu-detail-content table td,
+.argu-detail-content table th {
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  min-width: 1em;
+}
+
+.argu-detail-content table th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+  text-align: left;
+}
+
+.argu-detail-content table tbody tr:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+.argu-detail-content table tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
 /* React Quill로 작성된 HTML 콘텐츠 스타일 */
 .argu-detail-content h1,
 .argu-detail-content h2,

@@ -105,6 +105,52 @@
   margin-right: auto;
 }
 
+/* 이미지 리사이즈 핸들 스타일 */
+.form-group .ql-editor img.ql-image-resizing {
+  cursor: nwse-resize;
+}
+
+/* 텍스트 정렬 스타일 (에디터 내부) */
+.form-group .ql-editor .ql-align-left {
+  text-align: left;
+}
+
+.form-group .ql-editor .ql-align-center {
+  text-align: center;
+}
+
+.form-group .ql-editor .ql-align-right {
+  text-align: right;
+}
+
+.form-group .ql-editor .ql-align-justify {
+  text-align: justify;
+}
+
+/* 테이블 스타일 */
+.form-group .ql-editor table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.form-group .ql-editor table td,
+.form-group .ql-editor table th {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  min-width: 1em;
+}
+
+.form-group .ql-editor table th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+}
+
+.form-group .ql-editor table .ql-table-better-cell {
+  position: relative;
+}
+
 /* 링크 스타일 */
 .form-group .ql-editor a {
   color: var(--primary-color);
