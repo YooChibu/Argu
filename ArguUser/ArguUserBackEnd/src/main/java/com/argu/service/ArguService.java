@@ -15,12 +15,16 @@ import com.argu.repository.CommentRepository;
 import com.argu.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 논쟁(Argu) 관련 비즈니스 로직을 처리하는 서비스 클래스
@@ -119,16 +123,78 @@ public class ArguService {
      * 숨김 처리되지 않은 논쟁만 조회합니다.
      * 
      * @param pageable 페이징 정보
+     * @param sort 정렬 기준 (latest, popular, comments, views)
      * @return 논쟁 목록 (좋아요 수, 댓글 수 포함)
      */
-    public Page<ArguResponse> getAllArgus(Pageable pageable) {
-        return arguRepository.findByIsHiddenFalse(pageable)
-                .map(argu -> {
-                    // 각 논쟁의 좋아요 수와 댓글 수를 조회하여 응답 DTO 생성
-                    Long likeCount = likeRepository.countByArgu(argu);
-                    Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
-                    return ArguResponse.from(argu, likeCount, commentCount);
-                });
+    public Page<ArguResponse> getAllArgus(Pageable pageable, String sort) {
+        // 정렬 기준에 따라 Pageable 수정
+        Pageable sortedPageable = getSortedPageable(pageable, sort);
+        
+        // 정렬 기준이 popular 또는 comments인 경우, 모든 데이터를 가져와서 정렬 후 페이징
+        if ("popular".equals(sort) || "comments".equals(sort)) {
+            // 모든 데이터 가져오기 (페이징 없이)
+            List<ArguResponse> allArgus = arguRepository.findByIsHiddenFalse(Sort.by(Sort.Direction.DESC, "createdAt"))
+                    .stream()
+                    .map(argu -> {
+                        Long likeCount = likeRepository.countByArgu(argu);
+                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                        return ArguResponse.from(argu, likeCount, commentCount);
+                    })
+                    .collect(Collectors.toList());
+            
+            // 정렬 기준에 따라 정렬
+            if ("popular".equals(sort)) {
+                allArgus.sort(Comparator.comparing(ArguResponse::getLikeCount).reversed()
+                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+            } else if ("comments".equals(sort)) {
+                allArgus.sort(Comparator.comparing(ArguResponse::getCommentCount).reversed()
+                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+            }
+            
+            // 페이징 적용
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), allArgus.size());
+            List<ArguResponse> pagedArgus = allArgus.subList(start, end);
+            
+            return new PageImpl<>(pagedArgus, pageable, allArgus.size());
+        } else {
+            // latest, views는 DB에서 정렬 가능
+            return arguRepository.findByIsHiddenFalse(sortedPageable)
+                    .map(argu -> {
+                        Long likeCount = likeRepository.countByArgu(argu);
+                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                        return ArguResponse.from(argu, likeCount, commentCount);
+                    });
+        }
+    }
+    
+    /**
+     * 정렬 기준에 따라 Pageable 생성
+     * 
+     * @param pageable 원본 Pageable
+     * @param sort 정렬 기준
+     * @return 정렬된 Pageable
+     */
+    private Pageable getSortedPageable(Pageable pageable, String sort) {
+        Sort.Direction direction = Sort.Direction.DESC;
+        String property;
+        
+        switch (sort) {
+            case "latest":
+                property = "createdAt";
+                break;
+            case "views":
+                property = "viewCount";
+                break;
+            default:
+                property = "createdAt";
+        }
+        
+        return org.springframework.data.domain.PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, property)
+        );
     }
 
     /**
@@ -136,21 +202,54 @@ public class ArguService {
      * 
      * @param categoryId 카테고리 ID
      * @param pageable 페이징 정보
+     * @param sort 정렬 기준 (latest, popular, comments, views)
      * @return 해당 카테고리의 논쟁 목록 (좋아요 수, 댓글 수 포함)
      * @throws ResourceNotFoundException 카테고리를 찾을 수 없는 경우
      */
-    public Page<ArguResponse> getArgusByCategory(Long categoryId, Pageable pageable) {
+    public Page<ArguResponse> getArgusByCategory(Long categoryId, Pageable pageable, String sort) {
         // 카테고리 조회 및 검증
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("카테고리를 찾을 수 없습니다"));
 
-        return arguRepository.findByCategoryAndIsHiddenFalse(category, pageable)
-                .map(argu -> {
-                    // 각 논쟁의 좋아요 수와 댓글 수를 조회하여 응답 DTO 생성
-                    Long likeCount = likeRepository.countByArgu(argu);
-                    Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
-                    return ArguResponse.from(argu, likeCount, commentCount);
-                });
+        // 정렬 기준에 따라 Pageable 수정
+        Pageable sortedPageable = getSortedPageable(pageable, sort);
+        
+        // 정렬 기준이 popular 또는 comments인 경우, 모든 데이터를 가져와서 정렬 후 페이징
+        if ("popular".equals(sort) || "comments".equals(sort)) {
+            // 모든 데이터 가져오기 (페이징 없이)
+            List<ArguResponse> allArgus = arguRepository.findByCategoryAndIsHiddenFalse(category, Sort.by(Sort.Direction.DESC, "createdAt"))
+                    .stream()
+                    .map(argu -> {
+                        Long likeCount = likeRepository.countByArgu(argu);
+                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                        return ArguResponse.from(argu, likeCount, commentCount);
+                    })
+                    .collect(Collectors.toList());
+            
+            // 정렬 기준에 따라 정렬
+            if ("popular".equals(sort)) {
+                allArgus.sort(Comparator.comparing(ArguResponse::getLikeCount).reversed()
+                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+            } else if ("comments".equals(sort)) {
+                allArgus.sort(Comparator.comparing(ArguResponse::getCommentCount).reversed()
+                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+            }
+            
+            // 페이징 적용
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), allArgus.size());
+            List<ArguResponse> pagedArgus = allArgus.subList(start, end);
+            
+            return new PageImpl<>(pagedArgus, pageable, allArgus.size());
+        } else {
+            // latest, views는 DB에서 정렬 가능
+            return arguRepository.findByCategoryAndIsHiddenFalse(category, sortedPageable)
+                    .map(argu -> {
+                        Long likeCount = likeRepository.countByArgu(argu);
+                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                        return ArguResponse.from(argu, likeCount, commentCount);
+                    });
+        }
     }
 
     /**

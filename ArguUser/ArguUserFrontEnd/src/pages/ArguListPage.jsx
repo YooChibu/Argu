@@ -60,10 +60,10 @@ const ArguListPage = () => {
       
       // 카테고리 필터가 있으면 카테고리별 논쟁 가져오기
       if (categoryId) {
-        response = await arguService.getArgusByCategory(categoryId, page, 20)
+        response = await arguService.getArgusByCategory(categoryId, page, 20, sort)
       } else {
         // 전체 논쟁 목록 가져오기
-        response = await arguService.getAllArgus(page, 20)
+        response = await arguService.getAllArgus(page, 20, sort)
       }
       
       // ApiResponse 구조에서 data 추출

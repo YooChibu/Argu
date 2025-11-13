@@ -66,13 +66,15 @@ public class ArguController {
     /**
      * 전체 논쟁 목록 조회 (페이징)
      * 
+     * @param sort 정렬 기준 (latest, popular, comments, views)
      * @param pageable 페이징 정보 (기본값: 페이지당 20개)
      * @return 논쟁 목록 (페이징된 결과)
      */
     @GetMapping
     public ResponseEntity<ApiResponse<Page<ArguResponse>>> getAllArgus(
+            @RequestParam(required = false, defaultValue = "latest") String sort,
             @PageableDefault(size = 20) Pageable pageable) {
-        Page<ArguResponse> response = arguService.getAllArgus(pageable);
+        Page<ArguResponse> response = arguService.getAllArgus(pageable, sort);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -80,14 +82,16 @@ public class ArguController {
      * 카테고리별 논쟁 목록 조회 (페이징)
      * 
      * @param categoryId 카테고리 ID
+     * @param sort 정렬 기준 (latest, popular, comments, views)
      * @param pageable 페이징 정보 (기본값: 페이지당 20개)
      * @return 해당 카테고리의 논쟁 목록 (페이징된 결과)
      */
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ApiResponse<Page<ArguResponse>>> getArgusByCategory(
             @PathVariable Long categoryId,
+            @RequestParam(required = false, defaultValue = "latest") String sort,
             @PageableDefault(size = 20) Pageable pageable) {
-        Page<ArguResponse> response = arguService.getArgusByCategory(categoryId, pageable);
+        Page<ArguResponse> response = arguService.getArgusByCategory(categoryId, pageable, sort);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

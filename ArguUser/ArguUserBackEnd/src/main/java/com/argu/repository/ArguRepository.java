@@ -6,6 +6,7 @@ import com.argu.entity.Category;
 import com.argu.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,9 @@ import java.util.List;
 @Repository
 public interface ArguRepository extends JpaRepository<Argu, Long> {
     Page<Argu> findByIsHiddenFalse(Pageable pageable);
+    List<Argu> findByIsHiddenFalse(Sort sort);
     Page<Argu> findByCategoryAndIsHiddenFalse(Category category, Pageable pageable);
+    List<Argu> findByCategoryAndIsHiddenFalse(Category category, Sort sort);
     Page<Argu> findByUserAndIsHiddenFalse(User user, Pageable pageable);
     Page<Argu> findByStatusAndIsHiddenFalse(ArguStatus status, Pageable pageable);
     

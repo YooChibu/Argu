@@ -22,12 +22,13 @@ export const arguService = {
    * 
    * @param {number} page - 페이지 번호 (0부터 시작)
    * @param {number} size - 페이지당 항목 수
+   * @param {string} sort - 정렬 기준 (latest, popular, comments, views)
    * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
    * @returns {Object} response.data - Page<ArguResponse> (페이징된 논쟁 목록)
    */
-  async getAllArgus(page = 0, size = 20) {
+  async getAllArgus(page = 0, size = 20, sort = 'latest') {
     const response = await api.get('/argu', {
-      params: { page, size },
+      params: { page, size, sort },
     })
     return response.data
   },
@@ -86,12 +87,13 @@ export const arguService = {
    * @param {number} categoryId - 카테고리 ID
    * @param {number} page - 페이지 번호 (0부터 시작)
    * @param {number} size - 페이지당 항목 수
+   * @param {string} sort - 정렬 기준 (latest, popular, comments, views)
    * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
    * @returns {Object} response.data - Page<ArguResponse> (페이징된 논쟁 목록)
    */
-  async getArgusByCategory(categoryId, page = 0, size = 20) {
+  async getArgusByCategory(categoryId, page = 0, size = 20, sort = 'latest') {
     const response = await api.get(`/argu/category/${categoryId}`, {
-      params: { page, size },
+      params: { page, size, sort },
     })
     return response.data
   },
