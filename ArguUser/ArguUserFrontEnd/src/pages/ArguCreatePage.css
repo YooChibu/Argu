@@ -31,15 +31,13 @@
    ============================================ */
 /* 
  * 논쟁 작성 폼 컨테이너
- * 중앙 정렬 및 최대 너비 제한
+ * 다른 페이지들과 동일한 넓이 사용 (.container의 max-width: 1200px)
  */
 .argu-form {
   background-color: var(--bg-primary);
   border-radius: 0.75rem;
   padding: 2rem;
   box-shadow: var(--shadow);
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 /* ============================================
