@@ -25,8 +25,13 @@ public interface ArguRepository extends JpaRepository<Argu, Long> {
     Page<Argu> findByStatusAndIsHiddenFalse(ArguStatus status, Pageable pageable);
     
     @Query("SELECT a FROM Argu a WHERE a.isHidden = false AND " +
-           "(a.title LIKE %:keyword% OR a.content LIKE %:keyword%)")
-    Page<Argu> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
+           "(:keyword IS NULL OR :keyword = '' OR a.title LIKE %:keyword% OR a.content LIKE %:keyword%) AND " +
+           "(:category IS NULL OR a.category = :category) AND " +
+           "(:status IS NULL OR a.status = :status)")
+    Page<Argu> searchByKeyword(@Param("keyword") String keyword,
+                                @Param("category") Category category,
+                                @Param("status") ArguStatus status,
+                                Pageable pageable);
     
     List<Argu> findByStatusAndStartDateLessThanEqual(ArguStatus status, LocalDateTime now);
     List<Argu> findByStatusAndEndDateLessThanEqual(ArguStatus status, LocalDateTime now);

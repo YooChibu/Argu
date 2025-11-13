@@ -102,17 +102,24 @@ export const arguService = {
    * 논쟁 검색
    * 
    * 키워드로 논쟁을 검색합니다. 제목과 내용에서 검색됩니다.
+   * 카테고리, 상태, 정렬 필터를 지원합니다.
    * 
    * @param {string} keyword - 검색 키워드
+   * @param {number} [categoryId] - 카테고리 ID (선택적)
+   * @param {string} [status] - 논쟁 상태 (선택적: SCHEDULED, ACTIVE, ENDED)
+   * @param {string} [sort] - 정렬 기준 (선택적: latest, popular, comments, views)
    * @param {number} page - 페이지 번호 (0부터 시작)
    * @param {number} size - 페이지당 항목 수
    * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
    * @returns {Object} response.data - Page<ArguResponse> (검색된 논쟁 목록)
    */
-  async searchArgus(keyword, page = 0, size = 20) {
-    const response = await api.get('/argu/search', {
-      params: { keyword, page, size },
-    })
+  async searchArgus(keyword, categoryId, status, sort, page = 0, size = 20) {
+    const params = { keyword, page, size }
+    if (categoryId) params.categoryId = categoryId
+    if (status) params.status = status
+    if (sort) params.sort = sort
+    
+    const response = await api.get('/argu/search', { params })
     return response.data
   },
 

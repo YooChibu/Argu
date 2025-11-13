@@ -4,6 +4,7 @@ import com.argu.dto.request.CreateArguRequest;
 import com.argu.dto.request.UpdateArguRequest;
 import com.argu.dto.response.ApiResponse;
 import com.argu.dto.response.ArguResponse;
+import com.argu.entity.Argu;
 import com.argu.service.ArguService;
 import com.argu.util.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -97,16 +98,23 @@ public class ArguController {
 
     /**
      * 키워드로 논쟁 검색 (페이징)
+     * 카테고리, 상태, 정렬 필터를 지원합니다.
      * 
      * @param keyword 검색 키워드
+     * @param categoryId 카테고리 ID (선택적)
+     * @param status 논쟁 상태 (선택적)
+     * @param sort 정렬 기준 (latest, popular, comments, views)
      * @param pageable 페이징 정보 (기본값: 페이지당 20개)
      * @return 검색된 논쟁 목록 (페이징된 결과)
      */
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<Page<ArguResponse>>> searchArgus(
-            @RequestParam String keyword,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Argu.ArguStatus status,
+            @RequestParam(required = false, defaultValue = "latest") String sort,
             @PageableDefault(size = 20) Pageable pageable) {
-        Page<ArguResponse> response = arguService.searchArgus(keyword, pageable);
+        Page<ArguResponse> response = arguService.searchArgus(keyword, categoryId, status, pageable, sort);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
