@@ -11,12 +11,14 @@
  * - 논쟁 생성 후 상세 페이지로 이동
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
+import { fileUploadService } from '../services/fileUploadService'
+import ImageUploadModal from '../components/common/ImageUploadModal'
 import './ArguCreatePage.css'
 
 /**
@@ -27,6 +29,7 @@ import './ArguCreatePage.css'
 const ArguCreatePage = () => {
   // 훅 사용
   const navigate = useNavigate() // 페이지 네비게이션
+  const quillRef = useRef(null) // React Quill ref
 
   // 상태 관리
   const [categories, setCategories] = useState([]) // 카테고리 목록
@@ -39,6 +42,7 @@ const ArguCreatePage = () => {
   })
   const [error, setError] = useState('') // 에러 메시지
   const [loading, setLoading] = useState(false) // 로딩 상태
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false) // 이미지 업로드 모달 상태
 
   /**
    * 컴포넌트 마운트 시 카테고리 목록 로딩
@@ -73,6 +77,113 @@ const ArguCreatePage = () => {
     const tmp = document.createElement('DIV')
     tmp.innerHTML = html
     return tmp.textContent || tmp.innerText || ''
+  }
+
+  /**
+   * React Quill 에디터 모듈 설정
+   * 이미지 업로드 핸들러 포함
+   * useMemo로 메모이제이션하여 불필요한 재렌더링 방지
+   */
+  const quillModules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'color': [] }, { 'background': [] }],
+        ['link', 'image', 'blockquote', 'code-block'],
+        ['clean']
+      ],
+      handlers: {
+        /**
+         * 이미지 업로드 핸들러
+         * 모달을 열어 이미지 URL 입력 또는 파일 업로드 지원
+         */
+        image: function() {
+          // 모달 열기
+          setIsImageModalOpen(true)
+        },
+        /**
+         * 링크 핸들러 개선
+         * 링크 추가/수정 시 URL 입력
+         */
+        link: function(value) {
+          const quill = quillRef.current?.getEditor() || this.quill
+          if (value) {
+            const href = prompt('링크 URL을 입력하세요:')
+            if (href) {
+              // URL 형식 검증
+              let url = href
+              if (!href.startsWith('http://') && !href.startsWith('https://')) {
+                url = 'https://' + href
+              }
+              const range = quill.getSelection(true)
+              if (range) {
+                quill.formatText(range.index, range.length, 'link', url, 'user')
+              }
+            }
+          } else {
+            quill.format('link', false)
+          }
+        }
+      }
+    }
+  }), [])
+
+  /**
+   * React Quill 에디터 포맷 설정
+   * useMemo로 메모이제이션하여 불필요한 재렌더링 방지
+   */
+  const quillFormats = useMemo(() => [
+    'header',
+    'bold', 'italic', 'underline', 'strike',
+    'list', 'bullet',
+    'color', 'background',
+    'link', 'image', 'blockquote', 'code-block'
+  ], [])
+
+  /**
+   * 이미지 URL 제출 처리
+   * 모달에서 URL을 입력받아 에디터에 삽입
+   */
+  const handleImageUrlSubmit = (url) => {
+    const quill = quillRef.current?.getEditor()
+    if (quill) {
+      const range = quill.getSelection(true)
+      quill.insertEmbed(range.index, 'image', url, 'user')
+    }
+  }
+
+  /**
+   * 이미지 파일 선택 처리
+   * 모달에서 파일을 선택받아 업로드 후 에디터에 삽입
+   */
+  const handleImageFileSelect = async (file) => {
+    try {
+      // 백엔드에 이미지 업로드
+      const imageUrl = await fileUploadService.uploadImage(file)
+      
+      // 이미지 URL이 상대 경로인 경우 절대 경로로 변환
+      // React Quill은 에디터 내부에서 이미지를 로드할 때 현재 origin을 사용하므로
+      // 상대 경로가 작동하지 않을 수 있습니다.
+      let finalImageUrl = imageUrl
+      if (imageUrl && !imageUrl.startsWith('http://') && !imageUrl.startsWith('https://') && !imageUrl.startsWith('data:')) {
+        // 상대 경로인 경우 현재 origin과 결합
+        finalImageUrl = `${window.location.origin}${imageUrl}`
+      }
+      
+      console.log('이미지 URL:', finalImageUrl) // 디버깅용
+      
+      // 업로드된 이미지 URL을 에디터에 삽입
+      const quill = quillRef.current?.getEditor()
+      if (quill) {
+        const range = quill.getSelection(true)
+        quill.insertEmbed(range.index, 'image', finalImageUrl, 'user')
+      }
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error)
+      alert(error.response?.data?.message || '이미지 업로드에 실패했습니다.')
+    }
   }
 
   /**
@@ -170,29 +281,15 @@ const ArguCreatePage = () => {
           <div className="form-group">
             <label htmlFor="content">내용</label>
             <ReactQuill
+              ref={quillRef}
               theme="snow"
               value={formData.content}
               onChange={(value) =>
                 setFormData({ ...formData, content: value })
               }
               placeholder="논쟁 내용을 입력하세요"
-              modules={{
-                toolbar: [
-                  [{ 'header': [1, 2, 3, false] }],
-                  ['bold', 'italic', 'underline', 'strike'],
-                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                  [{ 'color': [] }, { 'background': [] }],
-                  ['link', 'blockquote', 'code-block'],
-                  ['clean']
-                ],
-              }}
-              formats={[
-                'header',
-                'bold', 'italic', 'underline', 'strike',
-                'list', 'bullet',
-                'color', 'background',
-                'link', 'blockquote', 'code-block'
-              ]}
+              modules={quillModules}
+              formats={quillFormats}
             />
             <p className="form-hint">
               최소 100자 이상 작성해주세요. 건설적인 논쟁을 위해 배경 지식과 함께 작성해주시면 좋습니다.
@@ -240,6 +337,14 @@ const ArguCreatePage = () => {
           </div>
         </form>
       </div>
+
+      {/* 이미지 업로드 모달 */}
+      <ImageUploadModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        onUrlSubmit={handleImageUrlSubmit}
+        onFileSelect={handleImageFileSelect}
+      />
     </div>
   )
 }

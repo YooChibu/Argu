@@ -72,6 +72,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()        // 인증 관련 API는 모두 허용
                         .requestMatchers("/api/categories/**").permitAll()  // 카테고리 API는 모두 허용
                         .requestMatchers("/api/argu/**").permitAll()       // 논쟁 조회 API는 모두 허용
+                        .requestMatchers("/files/**").permitAll()         // 업로드된 파일 접근 허용
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger UI 허용
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()     // API 문서 허용
                         // Actuator 엔드포인트: 개발 환경에서는 허용, 프로덕션에서는 인증 필요하도록 설정 가능

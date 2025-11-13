@@ -58,6 +58,12 @@ export default defineConfig({
             console.log('프록시 응답:', proxyRes.statusCode, req.url)
           })
         },
+      },
+      // 업로드된 파일 접근을 위한 프록시 설정
+      '/files': {
+        target: 'http://localhost:9001',
+        changeOrigin: true,
+        secure: false,
       }
     }
   }

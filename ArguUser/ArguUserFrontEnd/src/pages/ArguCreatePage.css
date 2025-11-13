@@ -94,6 +94,27 @@
   font-style: normal;
 }
 
+/* 이미지 스타일 */
+.form-group .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 링크 스타일 */
+.form-group .ql-editor a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.form-group .ql-editor a:hover {
+  color: var(--primary-dark);
+}
+
 /* 다크모드 대응 */
 [data-theme="dark"] .form-group .ql-toolbar {
   background-color: var(--bg-tertiary);

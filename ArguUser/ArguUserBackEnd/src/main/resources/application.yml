@@ -22,6 +22,11 @@ spring:
     serialization:
       write-dates-as-timestamps: false
     time-zone: Asia/Seoul
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB  # 최대 파일 크기
+      max-request-size: 10MB  # 최대 요청 크기
 
 server:
   port: 9001
@@ -30,6 +35,11 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+# 파일 업로드 설정
+file:
+  upload-dir: ../../Files/editor/images  # 파일 저장 디렉토리 (프로젝트 루트 기준: Argu/Files/editor/images)
+  upload-url-prefix: /files/editor/images  # 파일 접근 URL prefix
 
 jwt:
   secret: argu-secret-key-for-jwt-token-generation-please-change-in-production

@@ -45,6 +45,13 @@ api.interceptors.request.use(
       // Authorization 헤더에 Bearer 토큰 추가
       config.headers.Authorization = `Bearer ${token}`
     }
+    
+    // FormData를 사용하는 경우 Content-Type을 제거
+    // (브라우저가 자동으로 multipart/form-data와 boundary를 설정)
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type']
+    }
+    
     return config
   },
   (error) => {

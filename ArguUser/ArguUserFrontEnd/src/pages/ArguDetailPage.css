@@ -207,6 +207,18 @@
   color: var(--primary-dark);
 }
 
+/* 이미지 스타일 */
+.argu-detail-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--shadow-md);
+}
+
 /* ============================================
    통계 정보 (Statistics)
    ============================================ */
