@@ -1,6 +1,6 @@
 # 논쟁 사이트 (Argu) 데이터베이스 설계
 
-논쟁(argu) 플랫폼 데이터베이스 설계 문서입니다.
+논쟁(argu) 플랫폼 데이터베이스 설계 문서입니다...
 
 ## 📋 목차
 
@@ -122,7 +122,7 @@ CREATE TABLE users (
     email_verified BOOLEAN DEFAULT FALSE COMMENT '이메일 인증 여부',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '가입일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     INDEX idx_email (email) COMMENT '이메일 검색 인덱스',
     INDEX idx_status (status) COMMENT '회원 상태 인덱스',
     INDEX idx_created_at (created_at) COMMENT '가입일시 정렬 인덱스'
@@ -130,6 +130,7 @@ CREATE TABLE users (
 ```
 
 **컬럼 설명:**
+
 - `id`: 회원 고유 ID (Primary Key)
 - `email`: 이메일 주소 (Unique)
 - `password`: 암호화된 비밀번호
@@ -153,7 +154,7 @@ CREATE TABLE admins (
     status ENUM('ACTIVE', 'INACTIVE') DEFAULT 'ACTIVE' COMMENT '관리자 상태 (ACTIVE: 활성, INACTIVE: 비활성)',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     INDEX idx_admin_id (admin_id) COMMENT '관리자 아이디 검색 인덱스',
     INDEX idx_role (role) COMMENT '권한별 조회 인덱스',
     INDEX idx_status (status) COMMENT '상태별 조회 인덱스'
@@ -161,6 +162,7 @@ CREATE TABLE admins (
 ```
 
 **컬럼 설명:**
+
 - `id`: 관리자 고유 ID (Primary Key)
 - `admin_id`: 관리자 아이디 (Unique)
 - `password`: 암호화된 비밀번호
@@ -180,12 +182,13 @@ CREATE TABLE categories (
     order_num INT DEFAULT 0 COMMENT '표시 순서',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     INDEX idx_order_num (order_num) COMMENT '순서 정렬 인덱스'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='카테고리 테이블';
 ```
 
 **컬럼 설명:**
+
 - `id`: 카테고리 고유 ID (Primary Key)
 - `name`: 카테고리 이름 (Unique)
 - `description`: 카테고리 설명
@@ -209,10 +212,10 @@ CREATE TABLE argu (
     view_count INT DEFAULT 0 COMMENT '조회수',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '작성자 외래키',
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT COMMENT '카테고리 외래키',
-    
+
     INDEX idx_user_id (user_id) COMMENT '작성자별 조회 인덱스',
     INDEX idx_category_id (category_id) COMMENT '카테고리별 조회 인덱스',
     INDEX idx_status (status) COMMENT '상태별 조회 인덱스',
@@ -224,6 +227,7 @@ CREATE TABLE argu (
 ```
 
 **컬럼 설명:**
+
 - `id`: 논쟁 고유 ID (Primary Key)
 - `user_id`: 작성자 ID (Foreign Key → users.id)
 - `category_id`: 카테고리 ID (Foreign Key → categories.id)
@@ -248,10 +252,10 @@ CREATE TABLE argu_opinion (
     content TEXT COMMENT '의견 내용 (선택사항, 작성하지 않아도 됨)',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     FOREIGN KEY (argu_id) REFERENCES argu(id) ON DELETE CASCADE COMMENT '논쟁 외래키',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '작성자 외래키',
-    
+
     UNIQUE KEY uk_argu_user (argu_id, user_id) COMMENT '한 사용자는 하나의 논쟁에 대해 하나의 입장만 선택 가능',
     INDEX idx_argu_id (argu_id) COMMENT '논쟁별 조회 인덱스',
     INDEX idx_user_id (user_id) COMMENT '작성자별 조회 인덱스',
@@ -260,6 +264,7 @@ CREATE TABLE argu_opinion (
 ```
 
 **컬럼 설명:**
+
 - `id`: 의견 고유 ID (Primary Key)
 - `argu_id`: 논쟁 ID (Foreign Key → argu.id)
 - `user_id`: 작성자 ID (Foreign Key → users.id)
@@ -269,6 +274,7 @@ CREATE TABLE argu_opinion (
 - `updated_at`: 수정일시
 
 **제약조건:**
+
 - 한 사용자는 하나의 논쟁에 대해 하나의 입장만 선택 가능 (UNIQUE: argu_id, user_id)
 - 찬성, 반대, 중립, 기타 중 하나만 선택 가능
 - 의견 내용(content)은 선택사항으로 작성하지 않아도 됨
@@ -285,11 +291,11 @@ CREATE TABLE comments (
     is_hidden BOOLEAN DEFAULT FALSE COMMENT '숨김 처리 여부',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일시',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
-    
+
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '작성자 외래키',
     FOREIGN KEY (argu_id) REFERENCES argu(id) ON DELETE CASCADE COMMENT '논쟁 외래키',
     FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE COMMENT '부모 댓글 외래키 (자기 참조)',
-    
+
     INDEX idx_user_id (user_id) COMMENT '작성자별 조회 인덱스',
     INDEX idx_argu_id (argu_id) COMMENT '논쟁별 조회 인덱스',
     INDEX idx_parent_id (parent_id) COMMENT '부모 댓글별 조회 인덱스',
@@ -298,6 +304,7 @@ CREATE TABLE comments (
 ```
 
 **컬럼 설명:**
+
 - `id`: 댓글 고유 ID (Primary Key)
 - `user_id`: 작성자 ID (Foreign Key → users.id)
 - `argu_id`: 논쟁 ID (Foreign Key → argu.id)
@@ -308,6 +315,7 @@ CREATE TABLE comments (
 - `updated_at`: 수정일시
 
 **특징:**
+
 - `parent_id`가 NULL이면 일반 댓글, 값이 있으면 대댓글
 
 ### 7. likes (좋아요 테이블)
@@ -318,10 +326,10 @@ CREATE TABLE likes (
     argu_id BIGINT NOT NULL COMMENT '논쟁 ID',
     user_id BIGINT NOT NULL COMMENT '좋아요한 사용자 ID',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '좋아요 일시',
-    
+
     FOREIGN KEY (argu_id) REFERENCES argu(id) ON DELETE CASCADE COMMENT '논쟁 외래키',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '사용자 외래키',
-    
+
     UNIQUE KEY uk_argu_user (argu_id, user_id) COMMENT '한 사용자는 하나의 논쟁에 대해 하나의 좋아요만 가능',
     INDEX idx_argu_id (argu_id) COMMENT '논쟁별 조회 인덱스',
     INDEX idx_user_id (user_id) COMMENT '사용자별 조회 인덱스'
@@ -329,12 +337,14 @@ CREATE TABLE likes (
 ```
 
 **컬럼 설명:**
+
 - `id`: 좋아요 고유 ID (Primary Key)
 - `argu_id`: 논쟁 ID (Foreign Key → argu.id)
 - `user_id`: 좋아요한 사용자 ID (Foreign Key → users.id)
 - `created_at`: 좋아요 일시
 
 **제약조건:**
+
 - 한 사용자는 하나의 논쟁에 대해 하나의 좋아요만 가능 (UNIQUE)
 
 ### 8. bookmarks (북마크 테이블)
@@ -345,10 +355,10 @@ CREATE TABLE bookmarks (
     argu_id BIGINT NOT NULL COMMENT '논쟁 ID',
     user_id BIGINT NOT NULL COMMENT '북마크한 사용자 ID',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '북마크 일시',
-    
+
     FOREIGN KEY (argu_id) REFERENCES argu(id) ON DELETE CASCADE COMMENT '논쟁 외래키',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '사용자 외래키',
-    
+
     UNIQUE KEY uk_argu_user (argu_id, user_id) COMMENT '한 사용자는 하나의 논쟁에 대해 하나의 북마크만 가능',
     INDEX idx_argu_id (argu_id) COMMENT '논쟁별 조회 인덱스',
     INDEX idx_user_id (user_id) COMMENT '사용자별 조회 인덱스'
@@ -356,12 +366,14 @@ CREATE TABLE bookmarks (
 ```
 
 **컬럼 설명:**
+
 - `id`: 북마크 고유 ID (Primary Key)
 - `argu_id`: 논쟁 ID (Foreign Key → argu.id)
 - `user_id`: 북마크한 사용자 ID (Foreign Key → users.id)
 - `created_at`: 북마크 일시
 
 **제약조건:**
+
 - 한 사용자는 하나의 논쟁에 대해 하나의 북마크만 가능 (UNIQUE)
 
 ### 9. reports (신고 테이블)
@@ -378,10 +390,10 @@ CREATE TABLE reports (
     processed_by BIGINT NULL COMMENT '처리한 관리자 ID',
     processed_at DATETIME NULL COMMENT '처리일시',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '신고일시',
-    
+
     FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '신고자 외래키',
     FOREIGN KEY (processed_by) REFERENCES admins(id) ON DELETE SET NULL COMMENT '처리 관리자 외래키',
-    
+
     INDEX idx_reporter_id (reporter_id) COMMENT '신고자별 조회 인덱스',
     INDEX idx_target (target_type, target_id) COMMENT '신고 대상별 조회 인덱스',
     INDEX idx_status (status) COMMENT '처리 상태별 조회 인덱스',
@@ -390,6 +402,7 @@ CREATE TABLE reports (
 ```
 
 **컬럼 설명:**
+
 - `id`: 신고 고유 ID (Primary Key)
 - `reporter_id`: 신고자 ID (Foreign Key → users.id)
 - `target_type`: 신고 대상 타입 (ARGU: 논쟁, COMMENT: 댓글, USER: 사용자)
@@ -410,10 +423,10 @@ CREATE TABLE chat_messages (
     user_id BIGINT NOT NULL COMMENT '작성자 ID',
     message TEXT NOT NULL COMMENT '메시지 내용',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일시',
-    
+
     FOREIGN KEY (argu_id) REFERENCES argu(id) ON DELETE CASCADE COMMENT '논쟁 외래키',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE COMMENT '작성자 외래키',
-    
+
     INDEX idx_argu_id (argu_id) COMMENT '논쟁별 조회 인덱스',
     INDEX idx_user_id (user_id) COMMENT '작성자별 조회 인덱스',
     INDEX idx_created_at (created_at) COMMENT '작성일시 정렬 인덱스'
@@ -421,6 +434,7 @@ CREATE TABLE chat_messages (
 ```
 
 **컬럼 설명:**
+
 - `id`: 메시지 고유 ID (Primary Key)
 - `argu_id`: 논쟁 ID (Foreign Key → argu.id)
 - `user_id`: 작성자 ID (Foreign Key → users.id)
@@ -432,7 +446,7 @@ CREATE TABLE chat_messages (
 ### 주요 인덱스 전략
 
 1. **Foreign Key 인덱스**: 모든 외래키에 인덱스 생성
-2. **검색 필드 인덱스**: 
+2. **검색 필드 인덱스**:
    - `users.email` (로그인, 검색)
    - `argu.title`, `argu.content` (FULLTEXT 인덱스)
 3. **정렬 필드 인덱스**:
@@ -459,12 +473,14 @@ CREATE TABLE chat_messages (
 
 ### CASCADE 정책
 
-- **ON DELETE CASCADE**: 
+- **ON DELETE CASCADE**:
+
   - `argu` 삭제 시 관련 `comments`, `argu_opinion`, `likes`, `bookmarks`, `chat_messages` 자동 삭제
   - `users` 삭제 시 작성한 `argu`, `comments`, `argu_opinion` 등 자동 삭제
   - `comments` 삭제 시 대댓글 자동 삭제
 
 - **ON DELETE RESTRICT**:
+
   - `categories` 삭제 시 해당 카테고리를 사용하는 논쟁이 있으면 삭제 불가
 
 - **ON DELETE SET NULL**:
@@ -473,15 +489,18 @@ CREATE TABLE chat_messages (
 ## 추가 고려사항
 
 ### 파티셔닝 (선택사항)
+
 - 대용량 데이터의 경우 `chat_messages` 테이블을 날짜별로 파티셔닝 고려
 - `argu` 테이블의 경우 카테고리별 파티셔닝 고려 가능
 
 ### 백업 전략
+
 - 정기적인 전체 백업
 - 트랜잭션 로그 백업
 - 중요 테이블별 증분 백업
 
 ### 성능 최적화
+
 - 읽기 전용 쿼리의 경우 Replication을 통한 읽기 분산 고려
 - 자주 조회되는 통계는 캐싱 또는 별도 테이블로 관리
 
