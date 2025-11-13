@@ -13,6 +13,8 @@
 
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import './ArguCreatePage.css'
@@ -62,6 +64,18 @@ const ArguCreatePage = () => {
   }
 
   /**
+   * HTML 태그를 제거하고 순수 텍스트만 추출하는 함수
+   * 
+   * @param {string} html - HTML 문자열
+   * @returns {string} 순수 텍스트
+   */
+  const stripHtml = (html) => {
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  /**
    * 폼 제출 처리 함수
    * 
    * 논쟁 생성 요청을 보내고 성공 시 논쟁 상세 페이지로 이동합니다.
@@ -75,6 +89,13 @@ const ArguCreatePage = () => {
     // 카테고리 선택 검증
     if (!formData.categoryId) {
       setError('카테고리를 선택해주세요.')
+      return
+    }
+
+    // 내용 검증: HTML 태그 제거 후 최소 100자 이상
+    const plainText = stripHtml(formData.content).trim()
+    if (plainText.length < 100) {
+      setError('내용은 최소 100자 이상 작성해주세요.')
       return
     }
 
@@ -148,17 +169,34 @@ const ArguCreatePage = () => {
           </div>
           <div className="form-group">
             <label htmlFor="content">내용</label>
-            <textarea
-              id="content"
+            <ReactQuill
+              theme="snow"
               value={formData.content}
-              onChange={(e) =>
-                setFormData({ ...formData, content: e.target.value })
+              onChange={(value) =>
+                setFormData({ ...formData, content: value })
               }
-              required
-              className="form-textarea"
               placeholder="논쟁 내용을 입력하세요"
-              rows={10}
+              modules={{
+                toolbar: [
+                  [{ 'header': [1, 2, 3, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                  [{ 'color': [] }, { 'background': [] }],
+                  ['link', 'blockquote', 'code-block'],
+                  ['clean']
+                ],
+              }}
+              formats={[
+                'header',
+                'bold', 'italic', 'underline', 'strike',
+                'list', 'bullet',
+                'color', 'background',
+                'link', 'blockquote', 'code-block'
+              ]}
             />
+            <p className="form-hint">
+              최소 100자 이상 작성해주세요. 건설적인 논쟁을 위해 배경 지식과 함께 작성해주시면 좋습니다.
+            </p>
           </div>
           <div className="form-row">
             <div className="form-group">

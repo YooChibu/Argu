@@ -242,9 +242,10 @@ const ArguDetailPage = () => {
             </div>
           </div>
 
-          <div className="argu-detail-content">
-            <p>{argu.content}</p>
-          </div>
+          <div 
+            className="argu-detail-content"
+            dangerouslySetInnerHTML={{ __html: argu.content }}
+          />
 
           <div className="argu-stats-detail">
             <div className="stat-item">

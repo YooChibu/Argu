@@ -57,6 +57,60 @@
   color: var(--text-primary);
 }
 
+/* 폼 힌트 텍스트 */
+.form-hint {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* React Quill 에디터 스타일 */
+.form-group .quill {
+  background-color: var(--bg-primary);
+}
+
+.form-group .ql-container {
+  font-size: 1rem;
+  min-height: 300px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-color: var(--border-color);
+}
+
+.form-group .ql-toolbar {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-color: var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.form-group .ql-editor {
+  min-height: 300px;
+  color: var(--text-primary);
+}
+
+.form-group .ql-editor.ql-blank::before {
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
+/* 다크모드 대응 */
+[data-theme="dark"] .form-group .ql-toolbar {
+  background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .form-group .ql-stroke {
+  stroke: var(--text-primary);
+}
+
+[data-theme="dark"] .form-group .ql-fill {
+  fill: var(--text-primary);
+}
+
+[data-theme="dark"] .form-group .ql-picker-label {
+  color: var(--text-primary);
+}
+
 /* 
  * 폼 행 (Form Row)
  * 시작일시와 종료일시를 나란히 배치하기 위한 2열 그리드

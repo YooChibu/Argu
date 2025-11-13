@@ -138,6 +138,75 @@
   margin-bottom: 1rem;
 }
 
+/* React Quill로 작성된 HTML 콘텐츠 스타일 */
+.argu-detail-content h1,
+.argu-detail-content h2,
+.argu-detail-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.argu-detail-content h1 {
+  font-size: 2rem;
+}
+
+.argu-detail-content h2 {
+  font-size: 1.5rem;
+}
+
+.argu-detail-content h3 {
+  font-size: 1.25rem;
+}
+
+.argu-detail-content ul,
+.argu-detail-content ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.argu-detail-content li {
+  margin-bottom: 0.5rem;
+}
+
+.argu-detail-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.argu-detail-content code {
+  background-color: var(--bg-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.argu-detail-content pre {
+  background-color: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.argu-detail-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.argu-detail-content a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.argu-detail-content a:hover {
+  color: var(--primary-dark);
+}
+
 /* ============================================
    통계 정보 (Statistics)
    ============================================ */
