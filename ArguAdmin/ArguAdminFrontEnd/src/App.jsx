@@ -24,7 +24,12 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
+        <Router
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true
+          }}
+        >
           <Routes>
             {/* 로그인 페이지 (인증 불필요) */}
             <Route path="/login" element={<LoginPage />} />

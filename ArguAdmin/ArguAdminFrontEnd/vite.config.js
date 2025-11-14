@@ -36,6 +36,12 @@ export default defineConfig({
         target: 'http://localhost:9101',
         // Origin 헤더를 타겟 서버의 호스트로 변경
         changeOrigin: true,
+      },
+      '/files': {
+        // 업로드된 파일 정적 리소스 제공 경로
+        // 관리자 프론트엔드에서 /files/** 요청을 백엔드로 프록시
+        target: 'http://localhost:9101',
+        changeOrigin: true,
       }
     }
   }

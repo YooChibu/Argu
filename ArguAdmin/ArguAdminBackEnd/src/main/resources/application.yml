@@ -67,6 +67,11 @@ info:
   spring:
     version: ${spring.version}         # Spring 버전
 
+# 파일 업로드 설정
+file:
+  upload-dir: ../../Files/editor/images  # 파일 저장 디렉토리 (프로젝트 루트 기준: Argu/Files/editor/images)
+  upload-url-prefix: /files/editor/images  # 파일 접근 URL prefix
+
 # Spring Boot Actuator 설정
 # 기본 설정: 프로덕션 환경을 고려한 안전한 설정
 management:

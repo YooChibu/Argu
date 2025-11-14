@@ -84,6 +84,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/auth/**").permitAll()
                         .requestMatchers("/api/admin/admins").permitAll()  // 초기 관리자 생성용 (POST만 허용 권장, 프로덕션에서는 제거)
+                        .requestMatchers("/api/upload/**").authenticated()  // 이미지 업로드 API는 인증 필요
+                        .requestMatchers("/files/**").permitAll()  // 업로드된 파일 접근 허용
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/health", "/actuator/info", "/actuator/loggers/**").permitAll()

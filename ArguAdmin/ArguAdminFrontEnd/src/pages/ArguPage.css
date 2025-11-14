@@ -6,6 +6,69 @@
   gap: 1.5rem;
 }
 
+/* React Quill 에디터 스타일 */
+.form-group .quill {
+  background-color: var(--bg-primary);
+}
+
+.form-group .ql-container {
+  font-size: 1rem;
+  min-height: 300px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-color: var(--border-color);
+}
+
+.form-group .ql-toolbar {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-color: var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.form-group .ql-editor {
+  min-height: 300px;
+  color: var(--text-primary);
+}
+
+.form-group .ql-editor.ql-blank::before {
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
+/* 이미지 스타일 */
+.form-group .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 이미지 리사이즈 핸들 스타일 */
+.form-group .ql-editor img.ql-image-resizing {
+  cursor: nwse-resize;
+}
+
+/* 텍스트 정렬 스타일 (에디터 내부) */
+.form-group .ql-editor .ql-align-left {
+  text-align: left;
+}
+
+.form-group .ql-editor .ql-align-center {
+  text-align: center;
+}
+
+.form-group .ql-editor .ql-align-right {
+  text-align: right;
+}
+
+.form-group .ql-editor .ql-align-justify {
+  text-align: justify;
+}
+
 .title-cell {
   display: flex;
   align-items: center;
