@@ -126,7 +126,11 @@ const HomePage = () => {
           </div>
           <div className="argu-grid">
             {popularArgus.slice(0, 3).map((argu) => (
-              <ArguCard key={argu.id} argu={argu} />
+              <ArguCard 
+                key={argu.id} 
+                argu={argu}
+                filterState={{}} // 홈페이지에서는 필터 조건 없음
+              />
             ))}
           </div>
         </section>
@@ -141,7 +145,12 @@ const HomePage = () => {
           </div>
           <div className="argu-list">
             {latestArgus.map((argu) => (
-              <Link key={argu.id} to={`/argu/${argu.id}`} className="argu-item-link">
+              <Link 
+                key={argu.id} 
+                to={`/argu/${argu.id}`} 
+                className="argu-item-link"
+                state={{}} // 홈페이지에서는 필터 조건 없음
+              >
                 <div className="argu-item">
                   <div className="argu-item-header">
                     {argu.categoryName && (

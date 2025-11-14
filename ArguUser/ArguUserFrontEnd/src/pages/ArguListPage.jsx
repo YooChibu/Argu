@@ -12,7 +12,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import ArguCard from '../components/argu/ArguCard'
@@ -24,6 +24,8 @@ import './ArguListPage.css'
  * @returns {JSX.Element} 논쟁 목록 페이지 컴포넌트
  */
 const ArguListPage = () => {
+  const location = useLocation() // 현재 위치 정보 (필터 조건 복원용)
+  
   // 상태 관리 (URL 변경 없이 React 상태로만 관리)
   const [argus, setArgus] = useState([]) // 논쟁 목록
   const [categories, setCategories] = useState([]) // 카테고리 목록
@@ -35,11 +37,12 @@ const ArguListPage = () => {
   const [currentLoadedPage, setCurrentLoadedPage] = useState(0) // 현재 로드된 페이지 추적 (더보기용)
   
   // 필터 상태 (URL 변경 없이)
-  const [categoryId, setCategoryId] = useState('') // 카테고리 필터
-  const [status, setStatus] = useState('') // 상태 필터
-  const [sort, setSort] = useState('latest') // 정렬 필터
-  const [keyword, setKeyword] = useState('') // 검색어
-  const [searchInput, setSearchInput] = useState('') // 검색 입력 필드
+  // location.state에서 필터 조건 복원 (상세 페이지에서 돌아올 때)
+  const [categoryId, setCategoryId] = useState(location.state?.categoryId || '') // 카테고리 필터
+  const [status, setStatus] = useState(location.state?.status || '') // 상태 필터
+  const [sort, setSort] = useState(location.state?.sort || 'latest') // 정렬 필터
+  const [keyword, setKeyword] = useState(location.state?.keyword || '') // 검색어
+  const [searchInput, setSearchInput] = useState(location.state?.keyword || '') // 검색 입력 필드
 
   /**
    * 모바일 사이즈 감지
@@ -54,6 +57,29 @@ const ArguListPage = () => {
     
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  /**
+   * location.state에서 필터 조건 복원 (상세 페이지에서 돌아올 때)
+   */
+  useEffect(() => {
+    if (location.state) {
+      const { categoryId: stateCategoryId, status: stateStatus, sort: stateSort, keyword: stateKeyword } = location.state
+      
+      // 필터 조건이 있으면 복원
+      if (stateCategoryId !== undefined) setCategoryId(stateCategoryId)
+      if (stateStatus !== undefined) setStatus(stateStatus)
+      if (stateSort !== undefined) setSort(stateSort)
+      if (stateKeyword !== undefined) {
+        setKeyword(stateKeyword)
+        setSearchInput(stateKeyword)
+      }
+      
+      // 페이지 초기화
+      setPage(0)
+      setCurrentLoadedPage(0)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state])
 
 
   /**
@@ -338,7 +364,18 @@ const ArguListPage = () => {
               <p>논쟁이 없습니다.</p>
             </div>
           ) : (
-            argus.map((argu) => <ArguCard key={argu.id} argu={argu} />)
+            argus.map((argu) => (
+              <ArguCard 
+                key={argu.id} 
+                argu={argu}
+                filterState={{
+                  categoryId,
+                  status,
+                  sort,
+                  keyword
+                }}
+              />
+            ))
           )}
         </div>
 

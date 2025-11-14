@@ -12,7 +12,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { arguService } from '../services/arguService'
 import { commentService } from '../services/commentService'
@@ -30,6 +30,7 @@ const ArguDetailPage = () => {
   // 훅 사용
   const { id } = useParams() // URL 파라미터에서 논쟁 ID 가져오기
   const navigate = useNavigate() // 페이지 네비게이션
+  const location = useLocation() // 현재 위치 정보 (필터 조건 전달용)
   const { user, isAuthenticated } = useAuth() // 인증 정보
 
   // 상태 관리
@@ -196,6 +197,25 @@ const ArguDetailPage = () => {
   const forPercent = totalCount > 0 ? Math.round((forCount / totalCount) * 100) : 0
   const againstPercent = totalCount > 0 ? Math.round((againstCount / totalCount) * 100) : 0
 
+  /**
+   * 목록으로 돌아가기
+   * 이전 목록의 필터 조건을 유지하여 목록 페이지로 이동합니다.
+   */
+  const handleBackToList = () => {
+    // location.state에서 필터 조건 가져오기
+    const filterState = location.state || {}
+    
+    // 필터 조건을 state로 전달하여 목록 페이지로 이동
+    navigate('/argu', { 
+      state: {
+        categoryId: filterState.categoryId || '',
+        status: filterState.status || '',
+        sort: filterState.sort || 'latest',
+        keyword: filterState.keyword || ''
+      }
+    })
+  }
+
   return (
     <div className="argu-detail-page">
       <div className="container">
@@ -268,6 +288,12 @@ const ArguDetailPage = () => {
               className={`btn ${isLiked ? 'btn-primary' : 'btn-outline'}`}
             >
               👍 좋아요 ({argu.likeCount || 0})
+            </button>
+            <button
+              onClick={handleBackToList}
+              className="btn btn-outline back-to-list-btn"
+            >
+              ← 목록으로
             </button>
           </div>
         </article>

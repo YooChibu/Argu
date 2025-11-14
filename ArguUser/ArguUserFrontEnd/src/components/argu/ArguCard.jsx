@@ -10,7 +10,7 @@
  * - 통계 정보 표시 (좋아요, 댓글, 조회수)
  */
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { format } from 'date-fns'
 import './ArguCard.css'
 
@@ -30,9 +30,14 @@ import './ArguCard.css'
  * @param {number} props.argu.commentCount - 댓글 수
  * @param {number} props.argu.viewCount - 조회수
  * @param {string} props.argu.createdAt - 생성일시
+ * @param {Object} props.filterState - 필터 상태 (목록으로 돌아갈 때 복원용)
+ * @param {string} props.filterState.categoryId - 카테고리 필터
+ * @param {string} props.filterState.status - 상태 필터
+ * @param {string} props.filterState.sort - 정렬 필터
+ * @param {string} props.filterState.keyword - 검색어
  * @returns {JSX.Element} 논쟁 카드 컴포넌트
  */
-const ArguCard = ({ argu }) => {
+const ArguCard = ({ argu, filterState = {} }) => {
   const navigate = useNavigate()
 
   /**
@@ -80,7 +85,11 @@ const ArguCard = ({ argu }) => {
   const plainText = stripHtml(argu.content || '')
 
   return (
-    <Link to={`/argu/${argu.id}`} className="argu-card-link">
+    <Link 
+      to={`/argu/${argu.id}`} 
+      className="argu-card-link"
+      state={filterState}
+    >
       <div className="argu-card">
         {/* 카드 헤더: 카테고리 및 상태 배지 */}
         <div className="argu-card-header">
