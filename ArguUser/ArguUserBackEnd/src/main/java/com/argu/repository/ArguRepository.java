@@ -19,8 +19,12 @@ import java.util.List;
 public interface ArguRepository extends JpaRepository<Argu, Long> {
     Page<Argu> findByIsHiddenFalse(Pageable pageable);
     List<Argu> findByIsHiddenFalse(Sort sort);
+    Page<Argu> findByIsHiddenFalseAndStatus(ArguStatus status, Pageable pageable);
+    List<Argu> findByIsHiddenFalseAndStatus(ArguStatus status, Sort sort);
     Page<Argu> findByCategoryAndIsHiddenFalse(Category category, Pageable pageable);
     List<Argu> findByCategoryAndIsHiddenFalse(Category category, Sort sort);
+    Page<Argu> findByCategoryAndIsHiddenFalseAndStatus(Category category, ArguStatus status, Pageable pageable);
+    List<Argu> findByCategoryAndIsHiddenFalseAndStatus(Category category, ArguStatus status, Sort sort);
     Page<Argu> findByUserAndIsHiddenFalse(User user, Pageable pageable);
     List<Argu> findByUserAndIsHiddenFalse(User user, Sort sort);
     Page<Argu> findByStatusAndIsHiddenFalse(ArguStatus status, Pageable pageable);
@@ -33,6 +37,15 @@ public interface ArguRepository extends JpaRepository<Argu, Long> {
                                 @Param("category") Category category,
                                 @Param("status") ArguStatus status,
                                 Pageable pageable);
+    
+    @Query("SELECT a FROM Argu a WHERE a.isHidden = false AND " +
+           "(:keyword IS NULL OR :keyword = '' OR a.title LIKE %:keyword% OR a.content LIKE %:keyword%) AND " +
+           "(:category IS NULL OR a.category = :category) AND " +
+           "(:status IS NULL OR a.status = :status)")
+    List<Argu> searchByKeywordWithoutPaging(@Param("keyword") String keyword,
+                                             @Param("category") Category category,
+                                             @Param("status") ArguStatus status,
+                                             Sort sort);
     
     List<Argu> findByStatusAndStartDateLessThanEqual(ArguStatus status, LocalDateTime now);
     List<Argu> findByStatusAndEndDateLessThanEqual(ArguStatus status, LocalDateTime now);
