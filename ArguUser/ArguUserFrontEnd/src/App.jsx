@@ -45,7 +45,12 @@ function App() {
       {/* 인증 컨텍스트: 사용자 로그인 상태 및 인증 관련 기능 제공 */}
       <AuthProvider>
         {/* React Router: 클라이언트 사이드 라우팅 설정 */}
-        <Router>
+        <Router
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           {/* 공통 레이아웃: Header, Footer 포함 */}
           <Layout>
             {/* 라우트 정의 */}
