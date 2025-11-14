@@ -185,9 +185,11 @@
 }
 
 .page-header h1 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   margin: 0;
+  white-space: nowrap; /* 줄바꿈 방지 */
+  word-break: keep-all; /* 한글 단어 단위로 줄바꿈 */
 }
 
 /* 통계 그리드 */
