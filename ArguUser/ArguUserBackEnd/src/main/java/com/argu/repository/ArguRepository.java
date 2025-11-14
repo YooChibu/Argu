@@ -22,6 +22,7 @@ public interface ArguRepository extends JpaRepository<Argu, Long> {
     Page<Argu> findByCategoryAndIsHiddenFalse(Category category, Pageable pageable);
     List<Argu> findByCategoryAndIsHiddenFalse(Category category, Sort sort);
     Page<Argu> findByUserAndIsHiddenFalse(User user, Pageable pageable);
+    List<Argu> findByUserAndIsHiddenFalse(User user, Sort sort);
     Page<Argu> findByStatusAndIsHiddenFalse(ArguStatus status, Pageable pageable);
     
     @Query("SELECT a FROM Argu a WHERE a.isHidden = false AND " +

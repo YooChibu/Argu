@@ -11,7 +11,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import ArguCard from '../components/argu/ArguCard'
@@ -23,6 +23,8 @@ import './HomePage.css'
  * @returns {JSX.Element} 홈페이지 컴포넌트
  */
 const HomePage = () => {
+  const navigate = useNavigate()
+  
   // 상태 관리
   const [popularArgus, setPopularArgus] = useState([]) // 인기 논쟁 목록
   const [latestArgus, setLatestArgus] = useState([]) // 최신 논쟁 목록
@@ -139,52 +141,72 @@ const HomePage = () => {
           </div>
           <div className="argu-list">
             {latestArgus.map((argu) => (
-              <div key={argu.id} className="argu-item">
-                <div className="argu-item-header">
-                  {argu.categoryName && (
-                    <span className="category-badge">{argu.categoryName}</span>
-                  )}
-                  <span className={`status-badge status-${argu.status?.toLowerCase()}`}>
-                    {argu.status === 'ACTIVE' ? '진행중' : argu.status === 'SCHEDULED' ? '예정' : '종료'}
-                  </span>
+              <Link key={argu.id} to={`/argu/${argu.id}`} className="argu-item-link">
+                <div className="argu-item">
+                  <div className="argu-item-header">
+                    {argu.categoryName && (
+                      <span className="category-badge">{argu.categoryName}</span>
+                    )}
+                    <span className={`status-badge status-${argu.status?.toLowerCase()}`}>
+                      {argu.status === 'ACTIVE' ? '진행중' : argu.status === 'SCHEDULED' ? '예정' : '종료'}
+                    </span>
+                  </div>
+                  <h3 className="argu-item-title">
+                    {argu.title}
+                  </h3>
+                  <div className="argu-item-meta" onClick={(e) => e.stopPropagation()}>
+                    <span className="author">
+                    작성자:{' '}
+                    <span 
+                      className="author-link" 
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        navigate(`/users/${argu.userId}`)
+                      }}
+                    >
+                      {argu.nickname || '알 수 없음'}
+                    </span>
+                    </span>
+                    <span className="stat">👍 {argu.likeCount || 0} | 💬 {argu.commentCount || 0}</span>
+                  </div>
                 </div>
-                <h3 className="argu-item-title">
-                  <Link to={`/argu/${argu.id}`}>{argu.title}</Link>
-                </h3>
-                <div className="argu-item-meta">
-                  <span className="author">
-                  작성자:{' '}
-                  <Link to={`/users/${argu.userId}`}>
-                    {argu.nickname || '알 수 없음'}
-                  </Link>
-                  </span>
-                  <span className="stat">👍 {argu.likeCount || 0} | 💬 {argu.commentCount || 0}</span>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
 
         {/* 카테고리별 미리보기 */}
-        <section className="section">
-          <div className="section-header">
-            <h2>📂 카테고리별 논쟁</h2>
-            <Link to="/categories" className="more-link">
-              전체 보기 →
-            </Link>
-          </div>
-          <div className="category-preview">
-            {categories.slice(0, 4).map((category) => (
-              <div key={category.id} className="category-card">
-                <h3 className="category-name">{category.name}</h3>
-                <p className="category-count">{category.arguCount || 0}개 논쟁</p>
-                <Link to={`/categories/${category.id}`} className="category-link">
-                  보기 →
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
+        {categories.length > 0 && (
+          <section className="section">
+            <div className="section-header">
+              <h2>📂 카테고리별 논쟁</h2>
+              <Link to="/categories" className="more-link">
+                전체 보기 →
+              </Link>
+            </div>
+            <div className="category-preview">
+              {categories
+                .filter(category => category && category.id && category.name)
+                .slice(0, 4)
+                .map((category) => (
+                  <Link 
+                    key={category.id} 
+                    to={`/categories/${category.id}`} 
+                    className="category-card-link"
+                  >
+                    <div className="category-card">
+                      <h3 className="category-name">{category.name}</h3>
+                      <p className="category-count">{category.arguCount || 0}개 논쟁</p>
+                      <span className="category-link">
+                        보기 →
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

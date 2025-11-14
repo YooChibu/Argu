@@ -146,6 +146,13 @@
 /* ============================================
    논쟁 아이템 (Argu Item)
    ============================================ */
+/* 논쟁 아이템 링크 */
+.argu-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 /* 논쟁 아이템 카드 */
 .argu-item {
   background-color: var(--bg-primary);
@@ -153,10 +160,11 @@
   border-radius: 0.75rem;
   box-shadow: var(--shadow);
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 /* 논쟁 아이템 호버 효과 */
-.argu-item:hover {
+.argu-item-link:hover .argu-item {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -173,17 +181,12 @@
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-}
-
-/* 논쟁 아이템 제목 링크 */
-.argu-item-title a {
   color: var(--text-primary);
-  text-decoration: none;
   transition: color 0.3s;
 }
 
-/* 논쟁 아이템 제목 링크 호버 효과 */
-.argu-item-title a:hover {
+/* 논쟁 아이템 호버 시 제목 색상 변경 */
+.argu-item-link:hover .argu-item-title {
   color: var(--primary-color);
 }
 
@@ -197,9 +200,16 @@
 }
 
 /* 논쟁 아이템 메타 정보 링크 */
-.argu-item-meta a {
+.argu-item-meta .author-link {
   color: var(--primary-color);
   text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.3s;
+}
+
+/* 논쟁 아이템 메타 정보 링크 호버 효과 */
+.argu-item-meta .author-link:hover {
+  text-decoration: underline;
 }
 
 /* ============================================
@@ -212,8 +222,15 @@
  */
 .category-preview {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
+}
+
+/* 카테고리 카드 링크 */
+.category-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* 카테고리 카드 */
@@ -224,10 +241,11 @@
   box-shadow: var(--shadow);
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 /* 카테고리 카드 호버 효과 */
-.category-card:hover {
+.category-card-link:hover .category-card {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -246,16 +264,17 @@
   margin-bottom: 1rem;
 }
 
-/* 카테고리 링크 */
+/* 카테고리 링크 (보기 버튼) */
 .category-link {
   color: var(--primary-color);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
+  display: inline-block;
 }
 
-/* 카테고리 링크 호버 효과 */
-.category-link:hover {
+/* 카테고리 카드 호버 시 링크 색상 변경 */
+.category-card-link:hover .category-link {
   color: var(--primary-dark);
 }
 

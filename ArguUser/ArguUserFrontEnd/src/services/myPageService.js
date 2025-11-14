@@ -61,5 +61,23 @@ export const myPageService = {
     const response = await api.get('/my/opinions')
     return response.data
   },
+
+  /**
+   * 받은 좋아요 목록 조회
+   * 
+   * 현재 로그인한 사용자가 작성한 논쟁 중 좋아요를 받은 논쟁 목록을 좋아요 수가 많은 순으로 가져옵니다.
+   * 인증이 필요합니다.
+   * 
+   * @param {number} page - 페이지 번호 (0부터 시작)
+   * @param {number} size - 페이지당 항목 수
+   * @returns {Promise<Object>} ApiResponse 구조의 응답 데이터
+   * @returns {Object} response.data - Page<ArguResponse> (페이징된 논쟁 목록)
+   */
+  async getMyLikedArgus(page = 0, size = 20) {
+    const response = await api.get('/my/likes', {
+      params: { page, size },
+    })
+    return response.data
+  },
 }
 

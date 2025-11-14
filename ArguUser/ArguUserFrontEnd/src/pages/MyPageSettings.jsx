@@ -153,21 +153,21 @@ const MyPageSettings = () => {
               <p className="page-description">계정 정보 및 보안 설정을 관리할 수 있습니다.</p>
             </div>
 
-            <form className="settings-form">
-              {/* 이메일 변경 */}
+            <div className="settings-form">
+              {/* 이메일 주소 */}
               <div className="form-section">
                 <h3>이메일 주소</h3>
                 <div className="form-group">
-                  <label htmlFor="current-email" className="form-label">현재 이메일</label>
+                  <label htmlFor="current-email" className="form-label">이메일</label>
                   <input
                     type="email"
                     id="current-email"
                     className="form-input"
                     value={profile?.email || ''}
                     readOnly
+                    disabled
                   />
                 </div>
-                <p className="form-help">이메일 변경 기능은 준비 중입니다.</p>
               </div>
 
               {/* 비밀번호 변경 */}
@@ -257,7 +257,7 @@ const MyPageSettings = () => {
                   취소
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

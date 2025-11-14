@@ -16,20 +16,12 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ReactQuill, { Quill } from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import ImageResize from 'quill-image-resize-module-react'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import { fileUploadService } from '../services/fileUploadService'
 import ImageUploadModal from '../components/common/ImageUploadModal'
 import { format } from 'date-fns'
 import './ArguCreatePage.css'
-
-// 이미지 리사이즈 모듈 등록
-try {
-  Quill.register('modules/imageResize', ImageResize)
-} catch (error) {
-  console.warn('이미지 리사이즈 모듈 등록 실패:', error)
-}
 
 /**
  * ArguEditPage 컴포넌트
