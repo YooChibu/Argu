@@ -90,5 +90,26 @@ public class MyPageController {
         List<ArguOpinion> opinions = myPageService.getMyOpinions(userId);
         return ResponseEntity.ok(ApiResponse.success(opinions));
     }
+
+    /**
+     * 받은 좋아요 목록 조회 (페이징)
+     * 현재 로그인한 사용자가 작성한 논쟁 중 좋아요를 받은 논쟁 목록을 좋아요 수가 많은 순으로 조회합니다.
+     * 
+     * @param pageable 페이징 정보 (기본값: 페이지당 20개)
+     * @return 받은 좋아요 목록 (페이징된 결과)
+     */
+    @Operation(summary = "받은 좋아요 목록 조회", description = "현재 로그인한 사용자가 작성한 논쟁 중 좋아요를 받은 논쟁 목록을 좋아요 수가 많은 순으로 조회합니다.")
+    @SecurityRequirement(name = "JWT")
+    @GetMapping("/likes")
+    public ResponseEntity<ApiResponse<Page<ArguResponse>>> getMyLikedArgus(
+            @PageableDefault(size = 20) Pageable pageable) {
+        Long userId = securityUtil.getCurrentUserId();
+        if (userId == null) {
+            return ResponseEntity.status(401).body(ApiResponse.error("인증이 필요합니다"));
+        }
+        
+        Page<ArguResponse> response = myPageService.getMyLikedArgus(userId, pageable);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
 }
 

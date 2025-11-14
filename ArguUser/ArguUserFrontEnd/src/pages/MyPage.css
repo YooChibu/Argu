@@ -97,17 +97,39 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: default;
+  transition: background-color 0.3s, transform 0.3s;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-stats .stat-item-clickable {
+  cursor: pointer;
+}
+
+.profile-stats .stat-item-clickable:hover {
+  background-color: var(--bg-secondary);
+  transform: translateY(-2px);
 }
 
 .profile-stats .stat-value {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-color);
+  white-space: nowrap;
 }
 
 .profile-stats .stat-label {
   font-size: 0.75rem;
   color: var(--text-secondary);
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .profile-actions {
@@ -180,6 +202,19 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  border: none;
+  text-align: left;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.stats-grid .stat-card-clickable {
+  cursor: pointer;
+}
+
+.stats-grid .stat-card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--bg-primary);
 }
 
 .stat-icon {
@@ -220,11 +255,24 @@
   gap: 1rem;
 }
 
+.my-argu-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .my-argu-item {
   padding: 1.5rem;
   background-color: var(--bg-secondary);
   border-radius: 0.5rem;
   border-left: 4px solid var(--primary-color);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.my-argu-item-link:hover .my-argu-item {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
 }
 
 .argu-item-header {
@@ -278,14 +326,11 @@
 .my-argu-item h3 {
   margin: 0.75rem 0;
   font-size: 1.125rem;
-}
-
-.my-argu-item h3 a {
   color: var(--text-primary);
-  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.my-argu-item h3 a:hover {
+.my-argu-item-link:hover .my-argu-item h3 {
   color: var(--primary-color);
 }
 
@@ -313,12 +358,25 @@
   gap: 1rem;
 }
 
+.activity-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .activity-item {
   display: flex;
   gap: 1rem;
   padding: 1rem;
   background-color: var(--bg-secondary);
   border-radius: 0.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.activity-item-link:hover .activity-item {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
 }
 
 .activity-icon {
@@ -332,15 +390,11 @@
 .activity-content p {
   margin: 0 0 0.25rem 0;
   color: var(--text-primary);
+  transition: color 0.3s;
 }
 
-.activity-content a {
+.activity-item-link:hover .activity-content p {
   color: var(--primary-color);
-  text-decoration: none;
-}
-
-.activity-content a:hover {
-  text-decoration: underline;
 }
 
 .activity-time {
