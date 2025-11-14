@@ -12,7 +12,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { useSearchParams, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { arguService } from '../services/arguService'
 import { categoryService } from '../services/categoryService'
 import ArguCard from '../components/argu/ArguCard'
@@ -24,31 +24,20 @@ import './ArguListPage.css'
  * @returns {JSX.Element} 논쟁 목록 페이지 컴포넌트
  */
 const ArguListPage = () => {
-  // 훅 사용
-  const [searchParams, setSearchParams] = useSearchParams() // URL 쿼리 파라미터 관리
-
-  // 상태 관리
+  // 상태 관리 (URL 변경 없이 React 상태로만 관리)
   const [argus, setArgus] = useState([]) // 논쟁 목록
   const [categories, setCategories] = useState([]) // 카테고리 목록
   const [loading, setLoading] = useState(true) // 로딩 상태
   const [page, setPage] = useState(0) // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0) // 전체 페이지 수
-
-  // URL 쿼리 파라미터에서 필터 값 가져오기
-  const categoryId = searchParams.get('category')
-  const status = searchParams.get('status')
-  const sort = searchParams.get('sort') || 'latest'
-  const keyword = searchParams.get('keyword') || ''
   
-  // 검색어 입력 상태
-  const [searchInput, setSearchInput] = useState(keyword)
+  // 필터 상태 (URL 변경 없이)
+  const [categoryId, setCategoryId] = useState('') // 카테고리 필터
+  const [status, setStatus] = useState('') // 상태 필터
+  const [sort, setSort] = useState('latest') // 정렬 필터
+  const [keyword, setKeyword] = useState('') // 검색어
+  const [searchInput, setSearchInput] = useState('') // 검색 입력 필드
 
-  /**
-   * URL의 검색어 변경 시 입력 필드 동기화
-   */
-  useEffect(() => {
-    setSearchInput(keyword)
-  }, [keyword])
 
   /**
    * 필터 또는 페이지 변경 시 데이터 로딩
@@ -81,7 +70,7 @@ const ArguListPage = () => {
         )
       } else if (categoryId) {
         // 카테고리 필터가 있으면 카테고리별 논쟁 가져오기
-        response = await arguService.getArgusByCategory(categoryId, page, 20, sort)
+        response = await arguService.getArgusByCategory(parseInt(categoryId), page, 20, sort)
       } else {
         // 전체 논쟁 목록 가져오기
         response = await arguService.getAllArgus(page, 20, sort)
@@ -117,45 +106,45 @@ const ArguListPage = () => {
   /**
    * 필터 변경 처리
    * 
-   * 필터 값이 변경되면 URL 쿼리 파라미터를 업데이트하고 페이지를 초기화합니다.
+   * 필터 값이 변경되면 상태를 업데이트하고 페이지를 초기화합니다.
+   * URL 변경 없이 React 상태만으로 처리합니다.
    * 
    * @param {string} key - 필터 키 (category, status, sort)
    * @param {string} value - 필터 값
    */
   const handleFilterChange = (key, value) => {
-    const newParams = new URLSearchParams(searchParams)
-    if (value) {
-      newParams.set(key, value)
-    } else {
-      newParams.delete(key)
-    }
     // 필터 변경 시 페이지를 첫 페이지로 초기화
-    newParams.delete('page')
-    setSearchParams(newParams)
     setPage(0)
+    
+    // 필터 키에 따라 해당 상태 업데이트
+    switch (key) {
+      case 'category':
+        setCategoryId(value || '')
+        break
+      case 'status':
+        setStatus(value || '')
+        break
+      case 'sort':
+        setSort(value || 'latest')
+        break
+      default:
+        break
+    }
   }
 
   /**
    * 검색 처리
    * 
-   * 검색어를 URL 쿼리 파라미터로 설정하고 페이지를 초기화합니다.
+   * 검색어를 상태로 설정하고 페이지를 초기화합니다.
+   * URL 변경 없이 React 상태만으로 처리합니다.
    * 
    * @param {Event} e - 폼 제출 이벤트
    */
   const handleSearch = (e) => {
     e.preventDefault()
-    const newParams = new URLSearchParams(searchParams)
-    
-    if (searchInput.trim()) {
-      newParams.set('keyword', searchInput.trim())
-    } else {
-      newParams.delete('keyword')
-    }
-    
-    // 검색 시 페이지를 첫 페이지로 초기화
-    newParams.delete('page')
-    setSearchParams(newParams)
-    setPage(0)
+    const trimmedKeyword = searchInput.trim()
+    setKeyword(trimmedKeyword)
+    setPage(0) // 검색 시 페이지를 첫 페이지로 초기화
   }
 
   /**
@@ -163,10 +152,7 @@ const ArguListPage = () => {
    */
   const handleClearSearch = () => {
     setSearchInput('')
-    const newParams = new URLSearchParams(searchParams)
-    newParams.delete('keyword')
-    newParams.delete('page')
-    setSearchParams(newParams)
+    setKeyword('')
     setPage(0)
   }
 
@@ -189,7 +175,7 @@ const ArguListPage = () => {
           <div className="filters">
             <select
               className="form-select"
-              value={categoryId || ''}
+              value={categoryId}
               onChange={(e) => handleFilterChange('category', e.target.value)}
             >
               <option value="">전체 카테고리</option>
@@ -201,7 +187,7 @@ const ArguListPage = () => {
             </select>
             <select
               className="form-select"
-              value={status || ''}
+              value={status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
             >
               <option value="">전체 상태</option>
