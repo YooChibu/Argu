@@ -613,7 +613,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 70px; /* 하단 탭 메뉴 위까지만 오버레이 표시 */
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   animation: fadeIn 0.3s ease;
@@ -622,15 +622,15 @@
 .profile-modal {
   display: none; /* 데스크톱에서 숨김 */
   position: fixed;
-  bottom: 0;
+  bottom: 70px; /* 하단 탭 메뉴 위에 표시 */
   left: 0;
   right: 0;
-  max-height: 85vh;
+  max-height: calc(85vh - 70px); /* 하단 탭 메뉴 높이만큼 빼기 */
   background-color: var(--bg-primary);
   border-radius: 1.5rem 1.5rem 0 0;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  animation: slideUp 0.3s ease-out;
+  animation: slideUpFromBottom 0.3s ease-out;
   overflow: hidden;
   flex-direction: column;
 }
@@ -647,6 +647,15 @@
 @keyframes slideUp {
   from {
     transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFromBottom {
+  from {
+    transform: translateY(calc(100% + 70px)); /* 하단 탭 메뉴 높이만큼 더 내려가서 시작 */
   }
   to {
     transform: translateY(0);
@@ -848,7 +857,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 70px; /* 하단 탭 메뉴 위까지만 오버레이 표시 */
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   animation: fadeIn 0.3s ease;
@@ -857,15 +866,15 @@
 .more-menu-modal {
   display: none; /* 데스크톱에서 숨김 */
   position: fixed;
-  bottom: 0;
+  bottom: 70px; /* 하단 탭 메뉴 위에 표시 */
   left: 0;
   right: 0;
-  max-height: 50vh;
+  max-height: calc(50vh - 70px); /* 하단 탭 메뉴 높이만큼 빼기 */
   background-color: var(--bg-primary);
   border-radius: 1.5rem 1.5rem 0 0;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  animation: slideUp 0.3s ease-out;
+  animation: slideUpFromBottom 0.3s ease-out;
   overflow: hidden;
   flex-direction: column;
 }

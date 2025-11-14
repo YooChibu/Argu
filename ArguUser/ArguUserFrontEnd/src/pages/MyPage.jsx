@@ -656,49 +656,75 @@ const MyPage = () => {
         {/* 모바일 하단 탭 네비게이션 */}
         <nav className="mobile-bottom-nav">
           <button 
-            onClick={() => setIsProfileModalOpen(true)} 
+            onClick={() => {
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              setIsProfileModalOpen(true)
+            }} 
             className="mobile-nav-item mobile-nav-item-profile"
           >
             <span className="mobile-nav-icon">👤</span>
             <span className="mobile-nav-label">프로필</span>
           </button>
           <button 
-            onClick={() => handleTabChange('dashboard')} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              handleTabChange('dashboard')
+            }} 
             className={`mobile-nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">📊</span>
             <span className="mobile-nav-label">대시보드</span>
           </button>
           <button 
-            onClick={() => handleTabChange('my-argu')} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              handleTabChange('my-argu')
+            }} 
             className={`mobile-nav-item ${activeTab === 'my-argu' ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">📝</span>
             <span className="mobile-nav-label">내 논쟁</span>
           </button>
           <button 
-            onClick={() => handleTabChange('participated')} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              handleTabChange('participated')
+            }} 
             className={`mobile-nav-item ${activeTab === 'participated' ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">🏆</span>
             <span className="mobile-nav-label">참여한 논쟁</span>
           </button>
           <button 
-            onClick={() => handleTabChange('comments')} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              handleTabChange('comments')
+            }} 
             className={`mobile-nav-item ${activeTab === 'comments' ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">💬</span>
             <span className="mobile-nav-label">내 댓글</span>
           </button>
           <button 
-            onClick={() => handleTabChange('likes')} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(false) // 더보기 모달 닫기
+              handleTabChange('likes')
+            }} 
             className={`mobile-nav-item ${activeTab === 'likes' ? 'active' : ''}`}
           >
             <span className="mobile-nav-icon">👍</span>
             <span className="mobile-nav-label">받은 좋아요</span>
           </button>
           <button 
-            onClick={() => setIsMoreMenuModalOpen(true)} 
+            onClick={() => {
+              setIsProfileModalOpen(false) // 프로필 모달 닫기
+              setIsMoreMenuModalOpen(true)
+            }} 
             className="mobile-nav-item mobile-nav-item-more"
           >
             <span className="mobile-nav-icon">⋯</span>
