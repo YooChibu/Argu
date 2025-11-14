@@ -306,7 +306,16 @@
 /* 좋아요 버튼 등 상호작용 요소 컨테이너 */
 .argu-interactions {
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.back-to-list-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* ============================================

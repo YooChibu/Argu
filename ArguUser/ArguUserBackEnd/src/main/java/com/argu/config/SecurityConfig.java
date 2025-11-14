@@ -76,6 +76,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/argu").authenticated()     // 논쟁 생성은 인증 필요 (POST)
                         .requestMatchers(HttpMethod.PUT, "/api/argu/**").authenticated()  // 논쟁 수정은 인증 필요 (PUT)
                         .requestMatchers(HttpMethod.DELETE, "/api/argu/**").authenticated() // 논쟁 삭제는 인증 필요 (DELETE)
+                        .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()   // 댓글 조회 API는 모두 허용 (GET)
+                        .requestMatchers(HttpMethod.POST, "/api/comments").authenticated() // 댓글 작성은 인증 필요 (POST)
+                        .requestMatchers(HttpMethod.DELETE, "/api/comments/**").authenticated() // 댓글 삭제는 인증 필요 (DELETE)
+                        .requestMatchers(HttpMethod.GET, "/api/opinions/**").permitAll()  // 의견 조회 API는 모두 허용 (GET)
+                        .requestMatchers(HttpMethod.POST, "/api/opinions").authenticated() // 의견 작성은 인증 필요 (POST)
                         .requestMatchers("/files/**").permitAll()         // 업로드된 파일 접근 허용
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger UI 허용
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**").permitAll()     // API 문서 허용

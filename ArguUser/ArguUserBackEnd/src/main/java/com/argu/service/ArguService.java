@@ -124,17 +124,24 @@ public class ArguService {
      * 
      * @param pageable 페이징 정보
      * @param sort 정렬 기준 (latest, popular, comments, views)
+     * @param status 논쟁 상태 (선택적: SCHEDULED, ACTIVE, ENDED)
      * @return 논쟁 목록 (좋아요 수, 댓글 수 포함)
      */
-    public Page<ArguResponse> getAllArgus(Pageable pageable, String sort) {
+    public Page<ArguResponse> getAllArgus(Pageable pageable, String sort, Argu.ArguStatus status) {
         // 정렬 기준에 따라 Pageable 수정
         Pageable sortedPageable = getSortedPageable(pageable, sort);
         
         // 정렬 기준이 popular 또는 comments인 경우, 모든 데이터를 가져와서 정렬 후 페이징
         if ("popular".equals(sort) || "comments".equals(sort)) {
             // 모든 데이터 가져오기 (페이징 없이)
-            List<ArguResponse> allArgus = arguRepository.findByIsHiddenFalse(Sort.by(Sort.Direction.DESC, "createdAt"))
-                    .stream()
+            List<Argu> allArgus;
+            if (status != null) {
+                allArgus = arguRepository.findByIsHiddenFalseAndStatus(status, Sort.by(Sort.Direction.DESC, "createdAt"));
+            } else {
+                allArgus = arguRepository.findByIsHiddenFalse(Sort.by(Sort.Direction.DESC, "createdAt"));
+            }
+            
+            List<ArguResponse> allArguResponses = allArgus.stream()
                     .map(argu -> {
                         Long likeCount = likeRepository.countByArgu(argu);
                         Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
@@ -144,27 +151,35 @@ public class ArguService {
             
             // 정렬 기준에 따라 정렬
             if ("popular".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getLikeCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getLikeCount() != null ? a.getLikeCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             } else if ("comments".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getCommentCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getCommentCount() != null ? a.getCommentCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             }
             
             // 페이징 적용
             int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), allArgus.size());
-            List<ArguResponse> pagedArgus = allArgus.subList(start, end);
+            int end = Math.min((start + pageable.getPageSize()), allArguResponses.size());
+            List<ArguResponse> pagedArgus = allArguResponses.subList(start, end);
             
-            return new PageImpl<>(pagedArgus, pageable, allArgus.size());
+            return new PageImpl<>(pagedArgus, pageable, allArguResponses.size());
         } else {
             // latest, views는 DB에서 정렬 가능
-            return arguRepository.findByIsHiddenFalse(sortedPageable)
-                    .map(argu -> {
-                        Long likeCount = likeRepository.countByArgu(argu);
-                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
-                        return ArguResponse.from(argu, likeCount, commentCount);
-                    });
+            Page<Argu> arguPage;
+            if (status != null) {
+                arguPage = arguRepository.findByIsHiddenFalseAndStatus(status, sortedPageable);
+            } else {
+                arguPage = arguRepository.findByIsHiddenFalse(sortedPageable);
+            }
+            
+            return arguPage.map(argu -> {
+                Long likeCount = likeRepository.countByArgu(argu);
+                Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                return ArguResponse.from(argu, likeCount, commentCount);
+            });
         }
     }
     
@@ -203,10 +218,11 @@ public class ArguService {
      * @param categoryId 카테고리 ID
      * @param pageable 페이징 정보
      * @param sort 정렬 기준 (latest, popular, comments, views)
+     * @param status 논쟁 상태 (선택적: SCHEDULED, ACTIVE, ENDED)
      * @return 해당 카테고리의 논쟁 목록 (좋아요 수, 댓글 수 포함)
      * @throws ResourceNotFoundException 카테고리를 찾을 수 없는 경우
      */
-    public Page<ArguResponse> getArgusByCategory(Long categoryId, Pageable pageable, String sort) {
+    public Page<ArguResponse> getArgusByCategory(Long categoryId, Pageable pageable, String sort, Argu.ArguStatus status) {
         // 카테고리 조회 및 검증
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("카테고리를 찾을 수 없습니다"));
@@ -217,8 +233,14 @@ public class ArguService {
         // 정렬 기준이 popular 또는 comments인 경우, 모든 데이터를 가져와서 정렬 후 페이징
         if ("popular".equals(sort) || "comments".equals(sort)) {
             // 모든 데이터 가져오기 (페이징 없이)
-            List<ArguResponse> allArgus = arguRepository.findByCategoryAndIsHiddenFalse(category, Sort.by(Sort.Direction.DESC, "createdAt"))
-                    .stream()
+            List<Argu> allArgus;
+            if (status != null) {
+                allArgus = arguRepository.findByCategoryAndIsHiddenFalseAndStatus(category, status, Sort.by(Sort.Direction.DESC, "createdAt"));
+            } else {
+                allArgus = arguRepository.findByCategoryAndIsHiddenFalse(category, Sort.by(Sort.Direction.DESC, "createdAt"));
+            }
+            
+            List<ArguResponse> allArguResponses = allArgus.stream()
                     .map(argu -> {
                         Long likeCount = likeRepository.countByArgu(argu);
                         Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
@@ -228,27 +250,35 @@ public class ArguService {
             
             // 정렬 기준에 따라 정렬
             if ("popular".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getLikeCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getLikeCount() != null ? a.getLikeCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             } else if ("comments".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getCommentCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getCommentCount() != null ? a.getCommentCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             }
             
             // 페이징 적용
             int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), allArgus.size());
-            List<ArguResponse> pagedArgus = allArgus.subList(start, end);
+            int end = Math.min((start + pageable.getPageSize()), allArguResponses.size());
+            List<ArguResponse> pagedArgus = allArguResponses.subList(start, end);
             
-            return new PageImpl<>(pagedArgus, pageable, allArgus.size());
+            return new PageImpl<>(pagedArgus, pageable, allArguResponses.size());
         } else {
             // latest, views는 DB에서 정렬 가능
-            return arguRepository.findByCategoryAndIsHiddenFalse(category, sortedPageable)
-                    .map(argu -> {
-                        Long likeCount = likeRepository.countByArgu(argu);
-                        Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
-                        return ArguResponse.from(argu, likeCount, commentCount);
-                    });
+            Page<Argu> arguPage;
+            if (status != null) {
+                arguPage = arguRepository.findByCategoryAndIsHiddenFalseAndStatus(category, status, sortedPageable);
+            } else {
+                arguPage = arguRepository.findByCategoryAndIsHiddenFalse(category, sortedPageable);
+            }
+            
+            return arguPage.map(argu -> {
+                Long likeCount = likeRepository.countByArgu(argu);
+                Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
+                return ArguResponse.from(argu, likeCount, commentCount);
+            });
         }
     }
 
@@ -272,21 +302,17 @@ public class ArguService {
                     .orElse(null); // 카테고리를 찾을 수 없으면 null
         }
         
-        // 정렬 기준에 따라 Pageable 수정
-        Pageable sortedPageable = getSortedPageable(pageable, sort);
-        
-        // 검색 실행
-        Page<Argu> searchResults = arguRepository.searchByKeyword(
-                keyword != null && !keyword.trim().isEmpty() ? keyword : null,
-                category,
-                status,
-                sortedPageable
-        );
-        
-        // 정렬 기준이 popular 또는 comments인 경우, 메모리에서 정렬
+        // 정렬 기준이 popular 또는 comments인 경우, 모든 데이터를 가져와서 정렬 후 페이징
         if ("popular".equals(sort) || "comments".equals(sort)) {
-            List<ArguResponse> allArgus = searchResults.getContent()
-                    .stream()
+            // 모든 데이터 가져오기 (페이징 없이)
+            List<Argu> allArgus = arguRepository.searchByKeywordWithoutPaging(
+                    keyword != null && !keyword.trim().isEmpty() ? keyword : null,
+                    category,
+                    status,
+                    Sort.by(Sort.Direction.DESC, "createdAt")
+            );
+            
+            List<ArguResponse> allArguResponses = allArgus.stream()
                     .map(argu -> {
                         Long likeCount = likeRepository.countByArgu(argu);
                         Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
@@ -296,21 +322,34 @@ public class ArguService {
             
             // 정렬 기준에 따라 정렬
             if ("popular".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getLikeCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getLikeCount() != null ? a.getLikeCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             } else if ("comments".equals(sort)) {
-                allArgus.sort(Comparator.comparing(ArguResponse::getCommentCount).reversed()
-                        .thenComparing(ArguResponse::getCreatedAt).reversed());
+                allArguResponses.sort(Comparator
+                        .comparing((ArguResponse a) -> a.getCommentCount() != null ? a.getCommentCount() : 0L, Comparator.reverseOrder())
+                        .thenComparing((ArguResponse a) -> a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.MIN, Comparator.reverseOrder()));
             }
             
             // 페이징 적용
             int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), allArgus.size());
-            List<ArguResponse> pagedArgus = allArgus.subList(start, end);
+            int end = Math.min((start + pageable.getPageSize()), allArguResponses.size());
+            List<ArguResponse> pagedArgus = allArguResponses.subList(start, end);
             
-            return new PageImpl<>(pagedArgus, pageable, allArgus.size());
+            return new PageImpl<>(pagedArgus, pageable, allArguResponses.size());
         } else {
             // latest, views는 DB에서 정렬 가능
+            // 정렬 기준에 따라 Pageable 수정
+            Pageable sortedPageable = getSortedPageable(pageable, sort);
+            
+            // 검색 실행
+            Page<Argu> searchResults = arguRepository.searchByKeyword(
+                    keyword != null && !keyword.trim().isEmpty() ? keyword : null,
+                    category,
+                    status,
+                    sortedPageable
+            );
+            
             return searchResults.map(argu -> {
                 Long likeCount = likeRepository.countByArgu(argu);
                 Long commentCount = commentRepository.countByArguAndIsHiddenFalse(argu);
