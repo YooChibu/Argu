@@ -34,6 +34,8 @@ const MyPage = () => {
   const [myComments, setMyComments] = useState([])
   const [likedArgus, setLikedArgus] = useState([])
   const [loadingData, setLoadingData] = useState(false)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const [isMoreMenuModalOpen, setIsMoreMenuModalOpen] = useState(false)
 
   // 초기 로딩
   useEffect(() => {
@@ -202,8 +204,57 @@ const MyPage = () => {
   return (
     <div className="my-page">
       <div className="container">
+        {/* 모바일 프로필 헤더 */}
+        {profile && (
+          <div className="mobile-profile-header">
+            <div className="mobile-profile-info">
+              <div className="mobile-profile-avatar">
+                {profile.profileImage ? (
+                  <img src={profile.profileImage} alt={profile.nickname} />
+                ) : (
+                  '👤'
+                )}
+              </div>
+              <div className="mobile-profile-details">
+                <h2 className="mobile-profile-name">{profile.nickname || '이름 없음'}</h2>
+                <div className="mobile-profile-stats">
+                  <button 
+                    className="mobile-stat-item"
+                    onClick={() => handleTabChange('my-argu')}
+                  >
+                    <span className="mobile-stat-value">{profile.arguCount ?? 0}</span>
+                    <span className="mobile-stat-label">작성한 논쟁</span>
+                  </button>
+                  <button 
+                    className="mobile-stat-item"
+                    onClick={() => handleTabChange('participated')}
+                  >
+                    <span className="mobile-stat-value">{profile.participatedCount ?? 0}</span>
+                    <span className="mobile-stat-label">참여한 논쟁</span>
+                  </button>
+                  <button 
+                    className="mobile-stat-item"
+                    onClick={() => handleTabChange('likes')}
+                  >
+                    <span className="mobile-stat-value">{profile.likeCount ?? 0}</span>
+                    <span className="mobile-stat-label">받은 좋아요</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="mobile-profile-actions">
+              <Link to="/my/edit" className="btn btn-outline btn-sm">
+                프로필 수정
+              </Link>
+              <Link to="/my/settings" className="btn btn-outline btn-sm">
+                계정 설정
+              </Link>
+            </div>
+          </div>
+        )}
+
         <div className="my-page-layout">
-          {/* 사이드바 */}
+          {/* 사이드바 (데스크톱만 표시) */}
           <aside className="my-page-sidebar">
             {profile && (
               <>
@@ -601,6 +652,188 @@ const MyPage = () => {
             )}
           </div>
         </div>
+
+        {/* 모바일 하단 탭 네비게이션 */}
+        <nav className="mobile-bottom-nav">
+          <button 
+            onClick={() => setIsProfileModalOpen(true)} 
+            className="mobile-nav-item mobile-nav-item-profile"
+          >
+            <span className="mobile-nav-icon">👤</span>
+            <span className="mobile-nav-label">프로필</span>
+          </button>
+          <button 
+            onClick={() => handleTabChange('dashboard')} 
+            className={`mobile-nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
+          >
+            <span className="mobile-nav-icon">📊</span>
+            <span className="mobile-nav-label">대시보드</span>
+          </button>
+          <button 
+            onClick={() => handleTabChange('my-argu')} 
+            className={`mobile-nav-item ${activeTab === 'my-argu' ? 'active' : ''}`}
+          >
+            <span className="mobile-nav-icon">📝</span>
+            <span className="mobile-nav-label">내 논쟁</span>
+          </button>
+          <button 
+            onClick={() => handleTabChange('participated')} 
+            className={`mobile-nav-item ${activeTab === 'participated' ? 'active' : ''}`}
+          >
+            <span className="mobile-nav-icon">🏆</span>
+            <span className="mobile-nav-label">참여한 논쟁</span>
+          </button>
+          <button 
+            onClick={() => handleTabChange('comments')} 
+            className={`mobile-nav-item ${activeTab === 'comments' ? 'active' : ''}`}
+          >
+            <span className="mobile-nav-icon">💬</span>
+            <span className="mobile-nav-label">내 댓글</span>
+          </button>
+          <button 
+            onClick={() => handleTabChange('likes')} 
+            className={`mobile-nav-item ${activeTab === 'likes' ? 'active' : ''}`}
+          >
+            <span className="mobile-nav-icon">👍</span>
+            <span className="mobile-nav-label">받은 좋아요</span>
+          </button>
+          <button 
+            onClick={() => setIsMoreMenuModalOpen(true)} 
+            className="mobile-nav-item mobile-nav-item-more"
+          >
+            <span className="mobile-nav-icon">⋯</span>
+            <span className="mobile-nav-label">더보기</span>
+          </button>
+        </nav>
+
+        {/* 더보기 메뉴 모달 (모바일) */}
+        {isMoreMenuModalOpen && (
+          <>
+            <div 
+              className="more-menu-modal-overlay"
+              onClick={() => setIsMoreMenuModalOpen(false)}
+            ></div>
+            <div className="more-menu-modal">
+              <div className="more-menu-modal-header">
+                <h2>더보기</h2>
+                <button 
+                  className="more-menu-modal-close"
+                  onClick={() => setIsMoreMenuModalOpen(false)}
+                  aria-label="닫기"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="more-menu-modal-content">
+                <nav className="more-menu-modal-nav">
+                  <button 
+                    onClick={() => {
+                      setIsMoreMenuModalOpen(false)
+                      handleTabChange('bookmarks')
+                    }}
+                    className="more-menu-nav-item"
+                  >
+                    <span className="more-menu-nav-icon">🔖</span>
+                    <span className="more-menu-nav-label">북마크</span>
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setIsMoreMenuModalOpen(false)
+                      handleTabChange('activity')
+                    }}
+                    className="more-menu-nav-item"
+                  >
+                    <span className="more-menu-nav-icon">📋</span>
+                    <span className="more-menu-nav-label">활동 내역</span>
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 프로필 모달 (모바일) */}
+        {isProfileModalOpen && profile && (
+          <>
+            <div 
+              className="profile-modal-overlay"
+              onClick={() => setIsProfileModalOpen(false)}
+            ></div>
+            <div className="profile-modal">
+              <div className="profile-modal-header">
+                <h2>프로필</h2>
+                <button 
+                  className="profile-modal-close"
+                  onClick={() => setIsProfileModalOpen(false)}
+                  aria-label="닫기"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="profile-modal-content">
+                <div className="profile-modal-avatar">
+                  {profile.profileImage ? (
+                    <img src={profile.profileImage} alt={profile.nickname} />
+                  ) : (
+                    '👤'
+                  )}
+                </div>
+                <h2 className="profile-modal-name">{profile.nickname || '이름 없음'}</h2>
+                {profile.bio && <p className="profile-modal-bio">{profile.bio}</p>}
+                
+                <div className="profile-modal-stats">
+                  <button 
+                    className="profile-modal-stat-item"
+                    onClick={() => {
+                      setIsProfileModalOpen(false)
+                      handleTabChange('my-argu')
+                    }}
+                  >
+                    <span className="profile-modal-stat-value">{profile.arguCount ?? 0}</span>
+                    <span className="profile-modal-stat-label">작성한 논쟁</span>
+                  </button>
+                  <button 
+                    className="profile-modal-stat-item"
+                    onClick={() => {
+                      setIsProfileModalOpen(false)
+                      handleTabChange('participated')
+                    }}
+                  >
+                    <span className="profile-modal-stat-value">{profile.participatedCount ?? 0}</span>
+                    <span className="profile-modal-stat-label">참여한 논쟁</span>
+                  </button>
+                  <button 
+                    className="profile-modal-stat-item"
+                    onClick={() => {
+                      setIsProfileModalOpen(false)
+                      handleTabChange('likes')
+                    }}
+                  >
+                    <span className="profile-modal-stat-value">{profile.likeCount ?? 0}</span>
+                    <span className="profile-modal-stat-label">받은 좋아요</span>
+                  </button>
+                </div>
+
+                <div className="profile-modal-actions">
+                  <Link 
+                    to="/my/edit" 
+                    className="btn btn-primary"
+                    onClick={() => setIsProfileModalOpen(false)}
+                  >
+                    프로필 수정
+                  </Link>
+                  <Link 
+                    to="/my/settings" 
+                    className="btn btn-outline"
+                    onClick={() => setIsProfileModalOpen(false)}
+                  >
+                    계정 설정
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
