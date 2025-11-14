@@ -30,6 +30,9 @@ const ArguListPage = () => {
   const [loading, setLoading] = useState(true) // 로딩 상태
   const [page, setPage] = useState(0) // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0) // 전체 페이지 수
+  const [isMobile, setIsMobile] = useState(false) // 모바일 여부
+  const [loadingMore, setLoadingMore] = useState(false) // 더보기 로딩 상태
+  const [currentLoadedPage, setCurrentLoadedPage] = useState(0) // 현재 로드된 페이지 추적 (더보기용)
   
   // 필터 상태 (URL 변경 없이)
   const [categoryId, setCategoryId] = useState('') // 카테고리 필터
@@ -38,13 +41,34 @@ const ArguListPage = () => {
   const [keyword, setKeyword] = useState('') // 검색어
   const [searchInput, setSearchInput] = useState('') // 검색 입력 필드
 
+  /**
+   * 모바일 사이즈 감지
+   */
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
 
   /**
    * 필터 또는 페이지 변경 시 데이터 로딩
+   * 더보기로 로드한 페이지가 아닐 때만 실행 (중복 호출 방지)
    */
   useEffect(() => {
-    fetchArgus()
+    // 더보기로 로드한 페이지가 아닐 때만 실행 (필터 변경 또는 첫 페이지 로드)
+    // currentLoadedPage는 의존성 배열에 포함하지 않음 (더보기에서만 업데이트)
+    if (page === 0 || page !== currentLoadedPage) {
+      fetchArgus()
+      setCurrentLoadedPage(page) // 현재 페이지 추적
+    }
     fetchCategories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, status, sort, page, keyword])
 
   /**
@@ -52,10 +76,17 @@ const ArguListPage = () => {
    * 
    * 검색어가 있으면 검색 API를 사용하고 (필터 포함),
    * 없으면 카테고리 필터에 따라 일반 목록 API를 사용합니다.
+   * 
+   * @param {boolean} append - 기존 목록에 추가할지 여부 (더보기 기능용)
    */
-  const fetchArgus = async () => {
+  const fetchArgus = async (append = false) => {
     try {
-      setLoading(true)
+      if (append) {
+        setLoadingMore(true)
+      } else {
+        setLoading(true)
+      }
+      
       let response
       
       // 검색어가 있으면 검색 API 사용 (카테고리, 상태, 정렬 필터 포함)
@@ -66,24 +97,33 @@ const ArguListPage = () => {
           status || undefined,
           sort,
           page,
-          20
+          10
         )
       } else if (categoryId) {
         // 카테고리 필터가 있으면 카테고리별 논쟁 가져오기
-        response = await arguService.getArgusByCategory(parseInt(categoryId), page, 20, sort)
+        response = await arguService.getArgusByCategory(parseInt(categoryId), page, 10, sort)
       } else {
         // 전체 논쟁 목록 가져오기
-        response = await arguService.getAllArgus(page, 20, sort)
+        response = await arguService.getAllArgus(page, 10, sort)
       }
       
       // ApiResponse 구조에서 data 추출
       const pageData = response.data || response
-      setArgus(pageData.content || [])
+      
+      if (append) {
+        // 더보기: 기존 목록에 추가
+        setArgus(prev => [...prev, ...(pageData.content || [])])
+      } else {
+        // 새로 로드: 기존 목록 교체
+        setArgus(pageData.content || [])
+      }
+      
       setTotalPages(pageData.totalPages || 0)
     } catch (error) {
       console.error('논쟁 목록 로딩 실패:', error)
     } finally {
       setLoading(false)
+      setLoadingMore(false)
     }
   }
 
@@ -115,6 +155,7 @@ const ArguListPage = () => {
   const handleFilterChange = (key, value) => {
     // 필터 변경 시 페이지를 첫 페이지로 초기화
     setPage(0)
+    setCurrentLoadedPage(0) // 페이지 추적 초기화
     
     // 필터 키에 따라 해당 상태 업데이트
     switch (key) {
@@ -133,6 +174,56 @@ const ArguListPage = () => {
   }
 
   /**
+   * 더보기 버튼 클릭 처리 (모바일용)
+   * 기존 목록에 다음 페이지 데이터를 추가합니다.
+   * setPage를 호출하지 않아 useEffect가 재실행되지 않도록 합니다.
+   */
+  const handleLoadMore = async () => {
+    const nextPage = currentLoadedPage + 1
+    
+    if (nextPage < totalPages && !loadingMore) {
+      setLoadingMore(true)
+      
+      try {
+        let response
+        
+        // 검색어가 있으면 검색 API 사용 (카테고리, 상태, 정렬 필터 포함)
+        if (keyword && keyword.trim()) {
+          response = await arguService.searchArgus(
+            keyword,
+            categoryId ? parseInt(categoryId) : undefined,
+            status || undefined,
+            sort,
+            nextPage,
+            10
+          )
+        } else if (categoryId) {
+          // 카테고리 필터가 있으면 카테고리별 논쟁 가져오기
+          response = await arguService.getArgusByCategory(parseInt(categoryId), nextPage, 10, sort)
+        } else {
+          // 전체 논쟁 목록 가져오기
+          response = await arguService.getAllArgus(nextPage, 10, sort)
+        }
+        
+        // ApiResponse 구조에서 data 추출
+        const pageData = response.data || response
+        
+        // 더보기: 기존 목록에 추가 (기존 데이터는 유지)
+        setArgus(prev => [...prev, ...(pageData.content || [])])
+        setTotalPages(pageData.totalPages || 0)
+        
+        // 페이지 추적 업데이트 (내부적으로만 관리, useEffect 재실행 방지)
+        setCurrentLoadedPage(nextPage)
+        // setPage를 호출하지 않음 - useEffect가 재실행되지 않도록
+      } catch (error) {
+        console.error('더보기 로딩 실패:', error)
+      } finally {
+        setLoadingMore(false)
+      }
+    }
+  }
+
+  /**
    * 검색 처리
    * 
    * 검색어를 상태로 설정하고 페이지를 초기화합니다.
@@ -145,6 +236,7 @@ const ArguListPage = () => {
     const trimmedKeyword = searchInput.trim()
     setKeyword(trimmedKeyword)
     setPage(0) // 검색 시 페이지를 첫 페이지로 초기화
+    setCurrentLoadedPage(0) // 페이지 추적 초기화
   }
 
   /**
@@ -154,6 +246,7 @@ const ArguListPage = () => {
     setSearchInput('')
     setKeyword('')
     setPage(0)
+    setCurrentLoadedPage(0) // 페이지 추적 초기화
   }
 
   if (loading) {
@@ -249,33 +342,49 @@ const ArguListPage = () => {
           )}
         </div>
 
-        {/* 페이지네이션 */}
-        {totalPages > 1 && (
-          <div className="pagination">
-            <button
-              className="page-link"
-              onClick={() => setPage(Math.max(0, page - 1))}
-              disabled={page === 0}
-            >
-              이전
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
+        {/* 페이지네이션 (데스크톱) / 더보기 (모바일) */}
+        {totalPages > 0 && (
+          <>
+            {/* 데스크톱: 기존 페이징 */}
+            <div className="pagination desktop-pagination">
               <button
-                key={i}
-                className={`page-link ${page === i ? 'active' : ''}`}
-                onClick={() => setPage(i)}
+                className="page-link"
+                onClick={() => setPage(Math.max(0, page - 1))}
+                disabled={page === 0}
               >
-                {i + 1}
+                이전
               </button>
-            ))}
-            <button
-              className="page-link"
-              onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-              disabled={page === totalPages - 1}
-            >
-              다음
-            </button>
-          </div>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`page-link ${page === i ? 'active' : ''}`}
+                  onClick={() => setPage(i)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                className="page-link"
+                onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
+                disabled={page === totalPages - 1}
+              >
+                다음
+              </button>
+            </div>
+
+            {/* 모바일: 더보기 버튼 */}
+            {currentLoadedPage < totalPages - 1 && (
+              <div className="load-more mobile-load-more">
+                <button
+                  className="btn btn-outline load-more-btn"
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? '로딩 중...' : '더보기'}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

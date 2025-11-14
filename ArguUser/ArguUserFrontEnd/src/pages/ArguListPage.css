@@ -180,6 +180,48 @@
   cursor: not-allowed;
 }
 
+/* ============================================
+   더보기 버튼 (Load More Button)
+   ============================================ */
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.load-more-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ============================================
+   반응형 디자인 (Responsive Design)
+   ============================================ */
+/* 모바일: 데스크톱 페이징 숨기기, 더보기 버튼 표시 */
+@media (max-width: 768px) {
+  .desktop-pagination {
+    display: none;
+  }
+
+  .mobile-load-more {
+    display: flex;
+  }
+}
+
+/* 데스크톱: 더보기 버튼 숨기기, 페이징 표시 */
+@media (min-width: 769px) {
+  .mobile-load-more {
+    display: none;
+  }
+
+  .desktop-pagination {
+    display: flex;
+  }
+}
+
 
 
 
