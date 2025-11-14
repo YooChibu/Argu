@@ -11,6 +11,20 @@
  */
 
 /* ============================================
+   카드 링크 (Card Link)
+   ============================================ */
+/* 
+ * 카드 전체를 링크로 감싸기
+ * 텍스트 장식 제거 및 블록 레벨 요소로 설정
+ */
+.argu-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
    카드 컨테이너 (Card Container)
    ============================================ */
 /* 
@@ -23,11 +37,11 @@
   padding: 1.5rem;
   box-shadow: var(--shadow);
   transition: transform 0.3s, box-shadow 0.3s; /* 부드러운 전환 효과 */
-  margin-bottom: 1.5rem;
+  cursor: pointer;
 }
 
 /* 호버 효과: 카드가 위로 살짝 올라가고 그림자가 강해짐 */
-.argu-card:hover {
+.argu-card-link:hover .argu-card {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -93,17 +107,12 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-}
-
-/* 제목 링크 스타일 */
-.argu-title a {
   color: var(--text-primary);
-  text-decoration: none;
   transition: color 0.3s;
 }
 
-/* 제목 링크 호버 효과 */
-.argu-title a:hover {
+/* 카드 호버 시 제목 색상 변경 */
+.argu-card-link:hover .argu-title {
   color: var(--primary-color);
 }
 
@@ -128,13 +137,15 @@
 }
 
 /* 메타 정보 내 링크 (작성자 이름 등) */
-.argu-meta a {
+.argu-meta .author-link {
   color: var(--primary-color);
   text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.3s;
 }
 
 /* 메타 정보 링크 호버 효과 */
-.argu-meta a:hover {
+.argu-meta .author-link:hover {
   text-decoration: underline;
 }
 
