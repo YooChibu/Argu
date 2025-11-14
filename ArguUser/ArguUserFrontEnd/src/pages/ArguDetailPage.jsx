@@ -39,6 +39,7 @@ const ArguDetailPage = () => {
   const [opinions, setOpinions] = useState([]) // 의견 목록 (찬성/반대)
   const [isLiked, setIsLiked] = useState(false) // 좋아요 여부
   const [loading, setLoading] = useState(true) // 로딩 상태
+  const [error, setError] = useState(null) // 에러 상태
   const [commentContent, setCommentContent] = useState('') // 댓글 작성 내용
   const [selectedSide, setSelectedSide] = useState(null) // 선택한 입장 (찬성/반대)
   const [opinionContent, setOpinionContent] = useState('') // 의견 작성 내용
@@ -47,6 +48,7 @@ const ArguDetailPage = () => {
    * 논쟁 ID 변경 시 데이터 로딩
    */
   useEffect(() => {
+    setError(null) // 에러 상태 초기화
     fetchData()
   }, [id])
 
@@ -59,6 +61,8 @@ const ArguDetailPage = () => {
   const fetchData = async () => {
     try {
       setLoading(true)
+      setError(null) // 에러 상태 초기화
+      
       // 논쟁 정보, 댓글 목록, 의견 목록을 병렬로 가져오기
       const [arguResponse, commentsResponse, opinionsResponse] = await Promise.all([
         arguService.getArguById(id),
@@ -73,11 +77,20 @@ const ArguDetailPage = () => {
 
       // 로그인한 경우 좋아요 여부 확인
       if (isAuthenticated) {
-        const liked = await likeService.isLiked(id)
-        setIsLiked(liked)
+        try {
+          const liked = await likeService.isLiked(id)
+          setIsLiked(liked)
+        } catch (likeError) {
+          // 좋아요 여부 확인 실패는 무시 (비로그인 사용자일 수 있음)
+          console.warn('좋아요 여부 확인 실패:', likeError)
+        }
       }
     } catch (error) {
       console.error('데이터 로딩 실패:', error)
+      // 에러 메시지 설정
+      const errorMessage = error.response?.data?.message || error.message || '논쟁을 불러오는 중 오류가 발생했습니다.'
+      setError(errorMessage)
+      setArgu(null) // 논쟁 정보 초기화
     } finally {
       setLoading(false)
     }
@@ -183,8 +196,22 @@ const ArguDetailPage = () => {
     return <div className="container">로딩 중...</div>
   }
 
-  if (!argu) {
-    return <div className="container">논쟁을 찾을 수 없습니다.</div>
+  if (error || !argu) {
+    return (
+      <div className="container">
+        <div className="error-message" style={{ padding: '2rem', textAlign: 'center' }}>
+          <h2>논쟁을 찾을 수 없습니다</h2>
+          <p>{error || '요청하신 논쟁이 존재하지 않거나 삭제되었습니다.'}</p>
+          <button 
+            onClick={handleBackToList}
+            className="btn btn-primary"
+            style={{ marginTop: '1rem' }}
+          >
+            목록으로 돌아가기
+          </button>
+        </div>
+      </div>
+    )
   }
 
   const isOwner = user && argu && user.id === argu.userId
