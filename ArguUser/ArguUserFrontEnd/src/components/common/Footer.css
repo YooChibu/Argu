@@ -1,0 +1,90 @@
+/**
+ * Footer 컴포넌트 스타일
+ * 
+ * 애플리케이션 하단 푸터의 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 사이트 정보 및 링크 표시
+ * - 반응형 그리드 레이아웃
+ * - 저작권 정보 표시
+ */
+
+/* ============================================
+   푸터 컨테이너 (Footer Container)
+   ============================================ */
+/* 
+ * 푸터 기본 스타일
+ * 상단 테두리로 메인 콘텐츠와 구분
+ */
+.footer {
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 0 1.5rem;
+  margin-top: 4rem;
+}
+
+/* ============================================
+   푸터 레이아웃 (Footer Layout)
+   ============================================ */
+/* 
+ * 푸터 콘텐츠 그리드 레이아웃
+ * auto-fit과 minmax를 사용하여 반응형 그리드 생성
+ * 최소 200px 너비의 컬럼을 자동으로 배치
+ */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* ============================================
+   푸터 섹션 (Footer Sections)
+   ============================================ */
+/* 섹션 제목 (h4) */
+.footer-section h4 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* 섹션 텍스트 (p) */
+.footer-section p {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* 섹션 링크 (a) */
+.footer-section a {
+  display: block;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+
+/* 섹션 링크 호버 효과 */
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+/* ============================================
+   푸터 하단 (Footer Bottom)
+   ============================================ */
+/* 
+ * 저작권 정보 영역
+ * 중앙 정렬 및 상단 테두리로 구분
+ */
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,231 @@
+/**
+ * ArguListPage 스타일 (논쟁 목록 페이지)
+ * 
+ * 논쟁 목록 페이지의 스타일을 정의합니다.
+ * 
+ * 주요 기능:
+ * - 페이지 헤더 및 필터 섹션
+ * - 논쟁 목록 레이아웃
+ * - 페이지네이션
+ * - 빈 상태 표시
+ */
+
+/* ============================================
+   페이지 헤더 (Page Header)
+   ============================================ */
+/* 
+ * 페이지 제목과 액션 버튼을 나란히 배치
+ * Flexbox를 사용하여 양쪽 정렬
+ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* 페이지 제목 */
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* ============================================
+   필터 섹션 (Filter Section)
+   ============================================ */
+/* 
+ * 필터 컨테이너
+ * 카테고리, 상태, 정렬 옵션 및 검색을 포함하는 섹션
+ */
+.filter-section {
+  background-color: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+}
+
+/* 필터 옵션 컨테이너 */
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+  margin-bottom: 1rem;
+}
+
+/* 검색 폼 */
+.filter-section .search-form {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+/* 검색 박스 */
+.filter-section .search-box {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* 검색 입력 필드 */
+.filter-section .search-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.filter-section .search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.filter-section .search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* 검색 정보 (검색어 표시) */
+.filter-section .search-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.filter-section .search-info span {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   선택 필드 (Select Field)
+   ============================================ */
+/* 필터용 선택 드롭다운 */
+.form-select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* 포커스 상태: 테두리 색상 변경 및 그림자 효과 */
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+/* ============================================
+   논쟁 목록 (Argu List)
+   ============================================ */
+/* 논쟁 카드 목록 컨테이너 */
+.argu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ============================================
+   빈 상태 (Empty State)
+   ============================================ */
+/* 논쟁이 없을 때 표시되는 메시지 */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   페이지네이션 (Pagination)
+   ============================================ */
+/* 페이지네이션 컨테이너 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+
+/* 페이지 링크 버튼 */
+.page-link {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+/* 페이지 링크 호버 및 활성 상태 */
+.page-link:hover:not(:disabled),
+.page-link.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* 비활성화된 페이지 링크 (첫 페이지/마지막 페이지) */
+.page-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   더보기 버튼 (Load More Button)
+   ============================================ */
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.load-more-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ============================================
+   반응형 디자인 (Responsive Design)
+   ============================================ */
+/* 모바일: 데스크톱 페이징 숨기기, 더보기 버튼 표시 */
+@media (max-width: 768px) {
+  .desktop-pagination {
+    display: none;
+  }
+
+  .mobile-load-more {
+    display: flex;
+  }
+}
+
+/* 데스크톱: 더보기 버튼 숨기기, 페이징 표시 */
+@media (min-width: 769px) {
+  .mobile-load-more {
+    display: none;
+  }
+
+  .desktop-pagination {
+    display: flex;
+  }
+}
+
+
+
+
+
+
+
+

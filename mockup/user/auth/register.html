@@ -59,35 +59,36 @@
                         <div class="form-group">
                             <label class="form-label">이메일 *</label>
                             <div class="input-with-button">
-                                <input type="email" class="form-input" placeholder="이메일을 입력하세요" required>
-                                <button type="button" class="btn btn-outline" style="white-space: nowrap;">인증하기</button>
+                                <input type="email" id="email-input" class="form-input" placeholder="이메일을 입력하세요" required>
+                                <button type="button" id="email-check-btn" class="btn btn-outline" style="white-space: nowrap;" onclick="checkEmailDuplicate()">중복확인</button>
                             </div>
-                            <p class="form-hint">이메일 인증은 추후 지원 예정입니다</p>
+                            <p class="form-hint" id="email-hint">이메일은 아이디로 사용됩니다</p>
+                            <p class="form-message" id="email-message"></p>
                         </div>
-
                         <div class="form-group">
-                            <label class="form-label">아이디 *</label>
-                            <input type="text" class="form-input" placeholder="아이디를 입력하세요" required>
-                            <p class="form-hint">영문, 숫자, 언더스코어(_)만 사용 가능 (3-20자)</p>
+                            <label class="form-label">닉네임 *</label>
+                            <div class="input-with-button">
+                                <input type="text" id="nickname-input" class="form-input" placeholder="닉네임을 입력하세요" required>
+                                <button type="button" id="nickname-check-btn" class="btn btn-outline" style="white-space: nowrap;" onclick="checkNicknameDuplicate()">중복확인</button>
+                            </div>
+                            <p class="form-hint">다른 사용자에게 표시될 이름입니다 (2-20자)</p>
+                            <p class="form-message" id="nickname-message"></p>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">비밀번호 *</label>
                             <input type="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
                             <p class="form-hint">영문, 숫자, 특수문자 포함 8자 이상</p>
+                            <p class="form-message"></p>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">비밀번호 확인 *</label>
                             <input type="password" class="form-input" placeholder="비밀번호를 다시 입력하세요" required>
+                            <p class="form-message"></p>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">닉네임 *</label>
-                            <input type="text" class="form-input" placeholder="닉네임을 입력하세요" required>
-                            <p class="form-hint">다른 사용자에게 표시될 이름입니다 (2-20자)</p>
-                        </div>
-
+                        
                         <div class="form-section-terms">
                             <h3>약관 동의 *</h3>
                             
@@ -195,6 +196,10 @@
             margin-bottom: 2rem;
         }
 
+        .auth-form .form-group {
+            margin-bottom: 1rem;
+        }
+
         .input-with-button {
             display: flex;
             gap: 0.5rem;
@@ -202,6 +207,20 @@
 
         .input-with-button .form-input {
             flex: 1;
+        }
+
+        .auth-form .form-hint {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-form .form-message {
+            margin-top: 0.25rem;
+            margin-bottom: 0;
+            min-height: 1rem;
+            line-height: 1.25;
         }
 
         .form-section-terms {
@@ -331,8 +350,159 @@
         .auth-footer a:hover {
             text-decoration: underline;
         }
+
+        .form-message {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            min-height: 1rem;
+            line-height: 1.25;
+        }
+
+        .form-message.success {
+            color: #10b981;
+        }
+
+        .form-message.error {
+            color: #ef4444;
+        }
+
+        .form-message.checking {
+            color: var(--text-secondary);
+        }
+
+        .form-input.checked {
+            border-color: #10b981;
+        }
+
+        .form-input.duplicate {
+            border-color: #ef4444;
+        }
     </style>
     <script src="../js/theme.js"></script>
+    <script>
+        let emailChecked = false;
+        let nicknameChecked = false;
+
+        function checkEmailDuplicate() {
+            const emailInput = document.getElementById('email-input');
+            const email = emailInput.value.trim();
+            const messageEl = document.getElementById('email-message');
+            const checkBtn = document.getElementById('email-check-btn');
+
+            // 이메일 형식 검증
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                messageEl.textContent = '올바른 이메일 형식을 입력해주세요.';
+                messageEl.className = 'form-message error';
+                emailInput.classList.remove('checked');
+                emailInput.classList.add('duplicate');
+                emailChecked = false;
+                return;
+            }
+
+            // 중복확인 중
+            messageEl.textContent = '확인 중...';
+            messageEl.className = 'form-message checking';
+            checkBtn.disabled = true;
+            checkBtn.textContent = '확인 중...';
+
+            // 실제로는 서버 API를 호출해야 합니다
+            // 여기서는 모의 응답입니다
+            setTimeout(() => {
+                // 모의 응답: 이메일이 중복되지 않은 경우
+                const isDuplicate = false; // 실제로는 API 응답에 따라 결정
+
+                if (isDuplicate) {
+                    messageEl.textContent = '이미 사용 중인 이메일입니다.';
+                    messageEl.className = 'form-message error';
+                    emailInput.classList.remove('checked');
+                    emailInput.classList.add('duplicate');
+                    emailChecked = false;
+                } else {
+                    messageEl.textContent = '사용 가능한 이메일입니다.';
+                    messageEl.className = 'form-message success';
+                    emailInput.classList.remove('duplicate');
+                    emailInput.classList.add('checked');
+                    emailChecked = true;
+                }
+                checkBtn.disabled = false;
+                checkBtn.textContent = '중복확인';
+            }, 500);
+        }
+
+        function checkNicknameDuplicate() {
+            const nicknameInput = document.getElementById('nickname-input');
+            const nickname = nicknameInput.value.trim();
+            const messageEl = document.getElementById('nickname-message');
+            const checkBtn = document.getElementById('nickname-check-btn');
+
+            // 닉네임 길이 검증
+            if (nickname.length < 2 || nickname.length > 20) {
+                messageEl.textContent = '닉네임은 2-20자 사이여야 합니다.';
+                messageEl.className = 'form-message error';
+                nicknameInput.classList.remove('checked');
+                nicknameInput.classList.add('duplicate');
+                nicknameChecked = false;
+                return;
+            }
+
+            // 중복확인 중
+            messageEl.textContent = '확인 중...';
+            messageEl.className = 'form-message checking';
+            checkBtn.disabled = true;
+            checkBtn.textContent = '확인 중...';
+
+            // 실제로는 서버 API를 호출해야 합니다
+            // 여기서는 모의 응답입니다
+            setTimeout(() => {
+                // 모의 응답: 닉네임이 중복되지 않은 경우
+                const isDuplicate = false; // 실제로는 API 응답에 따라 결정
+
+                if (isDuplicate) {
+                    messageEl.textContent = '이미 사용 중인 닉네임입니다.';
+                    messageEl.className = 'form-message error';
+                    nicknameInput.classList.remove('checked');
+                    nicknameInput.classList.add('duplicate');
+                    nicknameChecked = false;
+                } else {
+                    messageEl.textContent = '사용 가능한 닉네임입니다.';
+                    messageEl.className = 'form-message success';
+                    nicknameInput.classList.remove('duplicate');
+                    nicknameInput.classList.add('checked');
+                    nicknameChecked = true;
+                }
+                checkBtn.disabled = false;
+                checkBtn.textContent = '중복확인';
+            }, 500);
+        }
+
+        // 이메일이나 닉네임이 변경되면 중복확인 상태 초기화
+        document.getElementById('email-input').addEventListener('input', function() {
+            emailChecked = false;
+            this.classList.remove('checked', 'duplicate');
+            document.getElementById('email-message').textContent = '';
+        });
+
+        document.getElementById('nickname-input').addEventListener('input', function() {
+            nicknameChecked = false;
+            this.classList.remove('checked', 'duplicate');
+            document.getElementById('nickname-message').textContent = '';
+        });
+
+        // 폼 제출 시 중복확인 여부 확인
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            if (!emailChecked) {
+                e.preventDefault();
+                alert('이메일 중복확인을 해주세요.');
+                return false;
+            }
+            if (!nicknameChecked) {
+                e.preventDefault();
+                alert('닉네임 중복확인을 해주세요.');
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>
 
