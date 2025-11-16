@@ -115,7 +115,6 @@ const DashboardPage = () => {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>아이디</th>
                 <th>이메일</th>
                 <th>닉네임</th>
                 <th>가입일시</th>
@@ -125,7 +124,6 @@ const DashboardPage = () => {
               {recentUsers.length > 0 ? (
                 recentUsers.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.username}</td>
                     <td>{user.email}</td>
                     <td>{user.nickname}</td>
                     <td>
@@ -138,7 +136,7 @@ const DashboardPage = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" style={{ textAlign: 'center' }}>
+                  <td colSpan="3" style={{ textAlign: 'center' }}>
                     데이터가 없습니다
                   </td>
                 </tr>
@@ -201,7 +199,7 @@ const DashboardPage = () => {
                   <td>
                     {format(new Date(report.createdAt), 'yyyy-MM-dd HH:mm')}
                   </td>
-                  <td>{report.reporter?.username || 'N/A'}</td>
+                  <td>{report.reporter?.nickname || report.reporter?.email || 'N/A'}</td>
                   <td>{report.targetType}</td>
                   <td>{report.reason}</td>
                   <td>
